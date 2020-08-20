@@ -8,6 +8,11 @@ const { check, validationResult } = require("express-validator");
 
 const User = require("../../models/User");
 
+router.get("/test", async (req, res) => {
+  const data = "HELLO FROM SNOOTBOOK";
+  res.send(data);
+});
+
 // @route POST api/users
 // @desc Register a user
 // @access Public
