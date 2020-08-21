@@ -58,6 +58,10 @@ userSchema.methods = {
       return "";
     }
   },
+  authenticate: function (plainText) {
+    console.log(plainText, this.hashed_password);
+    return bcrypt.compareSync(plainText, this.hashed_password);
+  },
 };
 
 module.exports = mongoose.model("user", userSchema);
