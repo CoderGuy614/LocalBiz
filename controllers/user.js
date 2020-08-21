@@ -1,6 +1,19 @@
-const express = require("express");
-const router = express.Router();
+const User = require("../models/User");
 
-const { signup } = require("../controllers/user");
+//Get a User By Id
+exports.userById = (req, res, next, id) => {
+  User.findById(id).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: "User not found",
+      });
+    }
+    req.profile = user;
+    next();
+  });
+};
 
-router.post("/api/signup", signup);
+exports.read = (req, res) => {
+  req.profile.password = undefined;
+  return res.json(req.profile);
+};

@@ -22,8 +22,8 @@ app.use(cookieParser());
 
 app.use(cors());
 
-app.use("/api/users", userRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api", userRoutes);
+app.use("/api", authRoutes);
 
 // Serve static assets in production
 
