@@ -9,7 +9,7 @@ const { check, validationResult } = require("express-validator");
 const User = require("../../models/User");
 
 router.get("/test", async (req, res) => {
-  const data = "HELLO FROM SNOOTBOOK";
+  const data = "HELLO FROM LocalBiz";
   res.send(data);
 });
 
