@@ -57,6 +57,7 @@ exports.signup = async (req, res) => {
   }
 };
 
+//SignIn a current User
 exports.signin = (req, res) => {
   // find the user based on email
   const { email, password } = req.body;
@@ -84,6 +85,7 @@ exports.signin = (req, res) => {
   });
 };
 
+//Sign out a user
 exports.signout = (req, res) => {
   res.clearCookie("t");
   res.json({ message: "Signout success" });
