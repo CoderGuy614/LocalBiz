@@ -12,7 +12,6 @@ module.exports = mongoose.model("users", {
   },
   phone: {
     type: String,
-    unique: true,
   },
   password: {
     type: String,

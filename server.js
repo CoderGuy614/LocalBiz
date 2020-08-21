@@ -1,18 +1,29 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const path = require("path");
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+require("dotenv").config();
+
+const authRoutes = require("./routes/api/auth");
+const userRoutes = require("./routes/api/users");
 
 const app = express();
 
 //Connect Database
 connectDB();
 
-app.use(express.json({ extended: false }));
+// middlewares
+app.use(morgan("dev"));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
-app.use("/api/users", require("./routes/api/users"));
-// app.use("/api/auth", require("./routes/api/auth"));
-// app.use("/api/profile", require("./routes/api/profile"));
-// app.use("/api/posts", require("./routes/api/posts"));
+app.use(cors());
+
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 // Serve static assets in production
 
