@@ -13,11 +13,13 @@ exports.userById = (req, res, next, id) => {
   });
 };
 
+//Get a users profile info
 exports.read = (req, res) => {
   req.profile.hashed_password = undefined;
   return res.json(req.profile);
 };
 
+//Update a user's name or password
 exports.update = (req, res) => {
   const { name, password } = req.body;
   User.findOne({ _id: req.profile._id }, (err, user) => {
@@ -50,6 +52,21 @@ exports.update = (req, res) => {
         });
       }
       res.json(updatedUser);
+    });
+  });
+};
+
+// Delete a user
+
+exports.remove = (req, res) => {
+  User.findOneAndDelete({ _id: req.profile._id }, (err) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Something went wrong, could not delete this user",
+      });
+    }
+    return res.json({
+      message: "User Was Deleted Successfully",
     });
   });
 };
