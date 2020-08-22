@@ -2,17 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 //Checks that the request belongs to the currently logged in user
-const auth = require("../../middleware/auth");
+const { requireSignIn, isAuth } = require("../../middleware/auth");
+
 const { userById, read, update, remove } = require("../../controllers/user");
 
 // Get a registered user by their ID
 router.get("/users/:userId", read);
 
 //Update a User
-router.put("/users/:userId", auth, update);
+router.put("/users/:userId", requireSignIn, isAuth, update);
 
 //Delete a User
-router.delete("/users/:userId", auth, remove);
+router.delete("/users/:userId", requireSignIn, isAuth, remove);
 
 router.param("userId", userById);
 
