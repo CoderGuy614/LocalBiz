@@ -1,18 +1,18 @@
 import React from "react";
 import "./App.scss";
-import { Button } from "react-bootstrap";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import FBLogin from "./components/FBLogin";
+import LoginSuccess from "./components/LoginSuccess";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Button variant="primary">Click ME</Button>
-      <Button variant="secondary">Click ME</Button>
-      <Button variant="success">Click ME</Button>
-      <Button variant="info">Click ME</Button>
-      <Button variant="warning">Click ME</Button>
-      <Button variant="danger">Click ME</Button>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" component={FBLogin}></Route>
+        <Route path="/authenticate/facebook" component={LoginSuccess}></Route>
+      </Switch>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
