@@ -1,11 +1,12 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
+
 import * as queryString from "query-string";
 
-import { Button } from "react-bootstrap";
 const FBLogin = () => {
   const stringifiedParams = queryString.stringify({
     client_id: `${process.env.REACT_APP_ID}`,
-    redirect_uri: "https://localhost:5000/authenticate/facebook/",
+    redirect_uri: "https://localhost:3000/authenticate/facebook/",
     scope: ["email", "user_friends"].join(","), // comma seperated string
     response_type: "code",
     auth_type: "rerequest",

@@ -8,8 +8,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" component={FBLogin}></Route>
-        <Route path="/authenticate/facebook" component={LoginSuccess}></Route>
+        <Route exact path="/" component={FBLogin}></Route>
+        <Route path="/authenticate/facebook/" component={LoginSuccess}></Route>
       </Switch>
     </BrowserRouter>
   );
