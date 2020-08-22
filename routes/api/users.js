@@ -15,6 +15,11 @@ router.put("/users/:userId", requireSignIn, isAuth, update);
 //Delete a User
 router.delete("/users/:userId", requireSignIn, isAuth, remove);
 
+//Test if logged in or not
+router.get("/test", requireSignIn, (req, res) => {
+  res.send("The test was successful");
+});
+
 router.param("userId", userById);
 
 module.exports = router;
