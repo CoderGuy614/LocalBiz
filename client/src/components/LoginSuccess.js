@@ -27,7 +27,28 @@ const LoginSuccess = () => {
     return data.access_token;
   };
 
-  return <div>LOGGED IN SUCCESFULLY! The code is {urlParams.code}</div>;
+  const getFacebookUserData = async (access_token) => {
+    const { data } = await axios({
+      url: "https://graph.facebook.com/me",
+      method: "get",
+      params: {
+        fields: ["id", "email", "first_name", "last_name"].join(","),
+        access_token: token,
+      },
+    });
+    console.log(data); // { id, email, first_name, last_name }
+    return data;
+  };
+
+  const test = () => {
+    console.log("Token", token);
+  };
+  return (
+    <div>
+      LOGGED IN SUCCESFULLY! The code is {urlParams.code}
+      {token ? test() : "Not Yet!"}
+    </div>
+  );
 };
 
 export default LoginSuccess;
