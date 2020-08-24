@@ -3,7 +3,7 @@ import * as queryString from "query-string";
 import axios from "axios";
 
 const LoginSuccess = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   const urlParams = queryString.parse(window.location.search);
   console.log(`The code is: ${urlParams.code}`);
@@ -43,7 +43,11 @@ const LoginSuccess = () => {
     return data;
   };
 
-  return <div>{"This is a test!"}</div>;
+  return (
+    <div>
+      {user ? `${user.email} Logged in with Facebook` : "Welcome Guest!"}
+    </div>
+  );
 };
 
 export default LoginSuccess;
