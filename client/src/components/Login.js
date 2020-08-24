@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Alert, Button, Row, Col, Container } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
+import FBLogin from "./FBLogin";
 
 import { signin, authenticate, isAuthenticated } from "../auth/Index";
 
@@ -95,6 +96,11 @@ const Login = () => {
               Submit
             </Button>
           </Form>
+        </Col>
+      </Row>
+      <Row className="mt-4">
+        <Col md={{ span: 6, offset: 3 }}>
+          <FBLogin />
         </Col>
       </Row>
     </Container>

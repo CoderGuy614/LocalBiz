@@ -14,6 +14,14 @@ const LoginSuccess = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      checkCurrentUser(user.email).then((response) =>
+        console.log(response.data.user)
+      );
+    }
+  }, [user]);
+
   const getAccessTokenFromCode = async (code) => {
     const { data } = await axios({
       url: "https://graph.facebook.com/v4.0/oauth/access_token",
@@ -30,7 +38,6 @@ const LoginSuccess = () => {
   };
 
   const getFacebookUserData = async (access_token) => {
-    console.log("GET FB DATA FUNCTION RAN");
     const { data } = await axios({
       url: "https://graph.facebook.com/me",
       method: "get",
@@ -41,6 +48,13 @@ const LoginSuccess = () => {
     });
     console.log(data); // { id, email, first_name, last_name }
     return data;
+  };
+
+  const checkCurrentUser = async (email) => {
+    const isRegistered = await axios.get(
+      `${process.env.REACT_APP_API}/checkStatus?email=${email}`
+    );
+    return isRegistered;
   };
 
   return (

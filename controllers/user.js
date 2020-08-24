@@ -5,7 +5,7 @@ exports.userById = (req, res, next, id) => {
   User.findById(id).exec((err, user) => {
     if (err || !user) {
       return res.status(400).json({
-        error: "User not found",
+        error: "User not found...",
       });
     }
     req.profile = user;
@@ -68,5 +68,15 @@ exports.remove = (req, res) => {
     return res.json({
       message: "User Was Deleted Successfully",
     });
+  });
+};
+
+exports.checkStatus = (req, res) => {
+  User.findOne({ email: req.query.email }).then((user, err) => {
+    if (!user || err) {
+      return res.status(400).send(false);
+    } else {
+      return res.json({ user });
+    }
   });
 };

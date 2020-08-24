@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import FBLogin from "./FBLogin";
 import { signup } from "../auth/Index";
 const Signup = () => {
   const [values, setValues] = useState({
@@ -111,6 +112,11 @@ const Signup = () => {
               Submit
             </Button>
           </Form>
+        </Col>
+      </Row>
+      <Row className="mt-4">
+        <Col md={{ span: 6, offset: 3 }}>
+          <FBLogin />
         </Col>
       </Row>
     </Container>
