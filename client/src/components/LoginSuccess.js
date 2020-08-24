@@ -3,13 +3,15 @@ import * as queryString from "query-string";
 import axios from "axios";
 
 const LoginSuccess = () => {
-  const [token, setToken] = useState(null);
+  const [user, setUser] = useState({});
 
   const urlParams = queryString.parse(window.location.search);
   console.log(`The code is: ${urlParams.code}`);
 
   useEffect(() => {
-    getAccessTokenFromCode(urlParams.code).then((token) => setToken(token));
+    getAccessTokenFromCode(urlParams.code).then((token) => {
+      getFacebookUserData(token).then((user) => setUser(user));
+    });
   }, []);
 
   const getAccessTokenFromCode = async (code) => {
@@ -28,27 +30,20 @@ const LoginSuccess = () => {
   };
 
   const getFacebookUserData = async (access_token) => {
+    console.log("GET FB DATA FUNCTION RAN");
     const { data } = await axios({
       url: "https://graph.facebook.com/me",
       method: "get",
       params: {
         fields: ["id", "email", "first_name", "last_name"].join(","),
-        access_token: token,
+        access_token: access_token,
       },
     });
     console.log(data); // { id, email, first_name, last_name }
     return data;
   };
 
-  const test = () => {
-    console.log("Token", token);
-  };
-  return (
-    <div>
-      LOGGED IN SUCCESFULLY! The code is {urlParams.code}
-      {token ? test() : "Not Yet!"}
-    </div>
-  );
+  return <div>{"This is a test!"}</div>;
 };
 
 export default LoginSuccess;
