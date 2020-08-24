@@ -44,8 +44,23 @@ export const isAuthenticated = () => {
     return false;
   }
   if (localStorage.getItem("jwt")) {
+    console.log(localStorage.getItem("jwt"));
     return JSON.parse(localStorage.getItem("jwt"));
   } else {
     return false;
+  }
+};
+
+export const signout = () => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("jwt");
+
+    return fetch(`${process.env.REACT_APP_API}/signout`, {
+      method: "POST",
+    })
+      .then((response) => {
+        console.log("signout", response);
+      })
+      .catch((err) => console.log(err));
   }
 };
