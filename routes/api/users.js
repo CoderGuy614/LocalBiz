@@ -5,7 +5,7 @@ const router = express.Router();
 const { requireSignIn, isAuth } = require("../../middleware/auth");
 
 const {
-  checkStatus,
+  checkExisting,
   userById,
   read,
   update,
@@ -22,7 +22,7 @@ router.put("/users/:userId", requireSignIn, isAuth, update);
 router.delete("/users/:userId", requireSignIn, isAuth, remove);
 
 //Check User Status
-router.get("/checkStatus", checkStatus);
+router.get("/checkExisting", checkExisting);
 
 //Test if logged in or not
 router.get("/test", requireSignIn, (req, res) => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as queryString from "query-string";
+import { signup } from "../auth/Index";
 import axios from "axios";
 
 const LoginSuccess = () => {
@@ -15,10 +16,8 @@ const LoginSuccess = () => {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      checkCurrentUser(user.email).then((response) =>
-        console.log(response.data.user)
-      );
+    if (user && user.email) {
+      checkExisting(user.email);
     }
   }, [user]);
 
@@ -50,11 +49,27 @@ const LoginSuccess = () => {
     return data;
   };
 
-  const checkCurrentUser = async (email) => {
-    const isRegistered = await axios.get(
-      `${process.env.REACT_APP_API}/checkStatus?email=${email}`
+  const checkExisting = async (email) => {
+    const isExisting = await axios.get(
+      `${process.env.REACT_APP_API}/checkExisting?email=${email}`
     );
-    return isRegistered;
+    console.log(isExisting, "IS EXISTING");
+    if (!isExisting.data) {
+      signupNewFacebookUser();
+    } else {
+      return isExisting;
+    }
+  };
+
+  const signupNewFacebookUser = () => {
+    const name = user.first_name + " " + user.last_name;
+    const password = user.id;
+    const email = user.email;
+    console.log("SIGNUP NEW USER RAN");
+
+    signup({ name, email, password }).then((response) => {
+      console.log(response);
+    });
   };
 
   return (

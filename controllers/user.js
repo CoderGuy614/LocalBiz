@@ -71,11 +71,13 @@ exports.remove = (req, res) => {
   });
 };
 
-exports.checkStatus = (req, res) => {
+// Checks is a user has already registered and returns false if not
+exports.checkExisting = (req, res) => {
   User.findOne({ email: req.query.email }).then((user, err) => {
     if (!user || err) {
-      return res.status(400).send(false);
+      return res.send(false);
     } else {
+      user.hashed_password = undefined;
       return res.json({ user });
     }
   });

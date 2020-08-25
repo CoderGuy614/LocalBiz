@@ -19,7 +19,9 @@ exports.signup = async (req, res) => {
 
     // See if the user exists already
     if (user) {
-      return res.status(400).json({ errors: [{ msg: "User already exists" }] });
+      return res
+        .status(400)
+        .json({ error: "User Already Exists, Please Sign In" });
     }
 
     const avatar = gravatar.url(email, {
