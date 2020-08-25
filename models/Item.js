@@ -37,7 +37,6 @@ module.exports = mongoose.model("items", {
     ref: "Biz",
   },
   photo: {
-    data: Buffer,
-    contentType: String,
+    type: String,
   },
 });
