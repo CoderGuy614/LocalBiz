@@ -9,6 +9,7 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/api/auth");
 const userRoutes = require("./routes/api/users");
+const categoryRoutes = require("./routes/api/categories");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(cors());
 
 app.use("/api", userRoutes);
 app.use("/api", authRoutes);
+app.use("/api", categoryRoutes);
 
 // Serve static assets in production
 
