@@ -47,7 +47,7 @@ const Signup = () => {
   const showSuccess = () => (
     <Alert variant="success" style={{ display: success ? "" : "none" }}>
       {" "}
-      You Have Succesfully Signed Up! Please <Link to="/signin">Sign in</Link>
+      You Have Succesfully Signed Up! Please <Link to="/login">Sign in</Link>
     </Alert>
   );
 
