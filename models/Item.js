@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 module.exports = mongoose.model("items", {
   name: {
@@ -34,7 +35,6 @@ module.exports = mongoose.model("items", {
   business: {
     type: ObjectId,
     ref: "Biz",
-    required: true,
   },
   photo: {
     data: Buffer,
