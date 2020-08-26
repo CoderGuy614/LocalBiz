@@ -7,12 +7,11 @@ const BizSchema = new Schema({
     type: ObjectId,
     ref: "users",
   },
-  categories: [
-    {
-      type: ObjectId,
-      ref: "categories",
-    },
-  ],
+  category: {
+    type: ObjectId,
+    ref: "category",
+  },
+
   items: [
     {
       type: ObjectId,
@@ -44,6 +43,9 @@ const BizSchema = new Schema({
   },
   hours: {
     type: Array,
+  },
+  photo: {
+    type: String,
   },
   date: {
     type: Date,

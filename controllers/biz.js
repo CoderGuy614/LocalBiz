@@ -1,4 +1,4 @@
-const Item = require("../models/Item");
+const Biz = require("../models/Biz");
 const formidable = require("formidable");
 const config = require("config");
 const cloudinary = require("cloudinary").v2;
@@ -12,23 +12,24 @@ cloudinary.config({
   api_secret: config.get("CLOUDINARY_API_SECRET"),
 });
 
-exports.itemById = (req, res, next, id) => {
-  Item.findById(id)
-    .populate("Category")
-    .exec((err, item) => {
+exports.bizById = (req, res, next, id) => {
+  Biz.findById(id)
+    .populate("items")
+    .exec((err, biz) => {
+      console.log(err);
       if (err || !item) {
         return res.status(400).json({
           error: "Item not found",
         });
       }
-      req.item = item;
+      req.biz = biz;
       next();
     });
 };
 
 exports.read = (req, res) => {
   // req.item.photo = undefined;
-  return res.json(req.item);
+  return res.json(req.biz);
 };
 
 exports.create = (req, res) => {
@@ -38,28 +39,29 @@ exports.create = (req, res) => {
     const {
       name,
       description,
-      price,
       category,
-      business,
-      canDeliver,
-      inStock,
-      photo,
+      items,
+      lat,
+      lng,
+      rating,
+      hours,
+      date,
     } = fields;
 
-    if (!name || !description || !price || !category) {
+    if (!name || !description || !category) {
       return res.status(400).json({
-        error: "All Fields are Required",
+        error: "Name, Description and Category are Required",
       });
     }
-
+    fields.user = req.profile._id;
     if (files.photo) {
       upload.single("file");
       cloudinary.uploader.upload(files.photo.path).then((cloudinaryFile) => {
         fields.photo = cloudinaryFile.url;
-        let item = new Item(fields);
-        item.save((err, result) => {
+        let biz = new Biz(fields);
+        biz.save((err, result) => {
           if (err) {
-            console.log("Item Create Error ", err);
+            console.log("Biz Create Error ", err);
             return res.status(400).json({
               error: err,
             });
@@ -68,10 +70,10 @@ exports.create = (req, res) => {
         });
       });
     } else {
-      let item = new Item(fields);
-      item.save((err, result) => {
+      let biz = new Biz(fields);
+      biz.save((err, result) => {
         if (err) {
-          console.log("Item Create Error ", err);
+          console.log("Biz Create Error ", err);
           return res.status(400).json({
             error: err,
           });
