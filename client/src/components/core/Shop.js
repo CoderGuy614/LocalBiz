@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
+import { Container } from "react-bootstrap";
 import { getBusinesses, getCategories } from "./apiCore";
-import { Button } from "react-bootstrap";
+import BizListCard from "./BizListCard";
 
 const Shop = () => {
   const [businesses, setBusinesses] = useState([]);
@@ -36,7 +37,21 @@ const Shop = () => {
     <Layout
       title="LocalBiz"
       description="Browse Local Businesses in your city."
-    ></Layout>
+    >
+      <Container>
+        {businesses &&
+          businesses.map((biz, i) => (
+            <div key={i} className="mb-3">
+              <BizListCard
+                name={biz.name}
+                description={biz.description}
+                photo={biz.photo}
+                id={biz._id}
+              />
+            </div>
+          ))}
+      </Container>
+    </Layout>
   );
 };
 
