@@ -1,4 +1,5 @@
 const Item = require("../models/Item");
+const Biz = require("../models/Biz");
 const formidable = require("formidable");
 const config = require("config");
 const cloudinary = require("cloudinary").v2;
@@ -14,7 +15,7 @@ cloudinary.config({
 
 exports.itemById = (req, res, next, id) => {
   Item.findById(id)
-    .populate("Category")
+    // .populate("Category")
     .exec((err, item) => {
       if (err || !item) {
         return res.status(400).json({
@@ -29,6 +30,19 @@ exports.itemById = (req, res, next, id) => {
 exports.read = (req, res) => {
   // req.item.photo = undefined;
   return res.json(req.item);
+};
+
+exports.listItems = (req, res) => {
+  console.log("Req.BIZ._ID", req.biz._id);
+  Item.find({ business: req.biz._id }).exec((err, items) => {
+    console.log(items);
+    if (err || !items) {
+      return res
+        .status(400)
+        .json({ error: "No Items Found for This Business" });
+    }
+    return res.json({ items });
+  });
 };
 
 exports.create = (req, res) => {
