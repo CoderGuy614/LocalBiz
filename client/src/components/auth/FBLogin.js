@@ -18,7 +18,8 @@ const FBLogin = () => {
   return (
     <div>
       <Button block href={facebookLoginUrl} className="mb-4">
-        Continue With Facebook
+        Continue With Facebook{" "}
+        <i className="fab fa-facebook-square" style={{ marginLeft: "5px" }}></i>
       </Button>
     </div>
   );

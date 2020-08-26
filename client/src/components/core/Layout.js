@@ -11,7 +11,7 @@ const Layout = ({
   return (
     <div>
       <Navigation />
-      <Jumbotron>
+      <Jumbotron className="text-dark mt-4 mx-3">
         <h2>{title}</h2>
         <p className="lead">{description}</p>
       </Jumbotron>

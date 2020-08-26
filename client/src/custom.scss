@@ -1,10 +1,16 @@
 $theme-colors: (
-  "primary": #0e34a0,
-  "secondary": #5f5980,
-  "info": #dfdfdf,
-  "success": #6a8d73,
-  "danger": #ac3931,
+  "primary": #9ad1d4,
+  "secondary": #735290,
+  "info": #b7d0d1,
+  "warning": #e8871e,
+  "dark": #595a4a,
+  "light": #e5cedc,
+  "success": #97d8b2,
+  "danger": #994636,
 );
+
+$jumbotron-padding: 1rem;
+$jumbotron-bg: #9ad1d4;
 
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";

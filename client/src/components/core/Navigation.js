@@ -5,7 +5,7 @@ import { Navbar, Nav } from "react-bootstrap";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
-    return { color: "#ff9900" };
+    return { color: "#9ad1d4" };
   } else {
     return { color: "#ffffff" };
   }
@@ -13,8 +13,10 @@ const isActive = (history, path) => {
 
 const Navigation = ({ history }) => {
   return (
-    <Navbar collapseOnSelect expand="md" bg="secondary" variant="dark">
-      <Navbar.Brand href="/">LocalBiz</Navbar.Brand>
+    <Navbar collapseOnSelect expand="md" bg="secondary">
+      <Navbar.Brand className="text-white" href="/">
+        LocalBiz
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">

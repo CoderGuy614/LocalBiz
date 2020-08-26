@@ -61,7 +61,7 @@ const Login = () => {
   };
 
   return (
-    <Layout title="Login" description="Sign In with email or Facebook">
+    <Layout title="Login" description="Sign In with Email or Facebook">
       <Container>
         {showLoading()}
         {showError()}
