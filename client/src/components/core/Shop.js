@@ -4,10 +4,10 @@ import { Button } from "react-bootstrap";
 
 const Shop = () => {
   return (
-    <Layout>
-      Welcome to the Shop
-      <Button variant="primary">TEST COLORS</Button>
-    </Layout>
+    <Layout
+      title="LocalBiz"
+      description="Browse Local Businesses in your city."
+    ></Layout>
   );
 };
 
