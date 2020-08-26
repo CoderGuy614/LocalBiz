@@ -1,19 +1,17 @@
 import React from "react";
 import { Container, Button, Row, Col } from "react-bootstrap";
-
-import { isAuthenticated, signout } from "../../auth/Index";
+import Layout from "../core/Layout";
 
 const UserDashboard = () => {
-  const {
-    user: { _id, name, email, role },
-  } = isAuthenticated();
   return (
-    <Container>
-      <Row>{`Welcome to the User Dashboard ${name}`}</Row>
-      <Row>
-        <Button onClick={signout}>Logout</Button>
-      </Row>
-    </Container>
+    <Layout
+      title="User Dashboard"
+      description="Manage your business and account info"
+    >
+      <Container>
+        <Row>{`Welcome to the User Dashboard`}</Row>
+      </Container>
+    </Layout>
   );
 };
 

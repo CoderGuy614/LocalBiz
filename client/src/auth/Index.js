@@ -51,10 +51,10 @@ export const isAuthenticated = () => {
   }
 };
 
-export const signout = () => {
+export const signout = (next) => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");
-
+    next();
     return fetch(`${process.env.REACT_APP_API}/signout`, {
       method: "POST",
     })

@@ -27,6 +27,33 @@ const Navigation = ({ history }) => {
           <Nav.Link style={isActive(history, "/signup")} href="/signup">
             Sign up
           </Nav.Link>
+          {isAuthenticated() && isAuthenticated().user.role === 0 && (
+            <Nav.Link
+              href="/user/dashboard"
+              style={isActive(history, "/user/dashboard")}
+            >
+              Dashboard
+            </Nav.Link>
+          )}
+          {isAuthenticated() && isAuthenticated().user.role === 1 && (
+            <Nav.Link
+              href="/admin/dashboard"
+              style={isActive(history, "/admin/dashboard")}
+            >
+              Dashboard
+            </Nav.Link>
+          )}
+          {isAuthenticated() && (
+            <Nav.Link
+              onClick={() =>
+                signout(() => {
+                  history.push("/");
+                })
+              }
+            >
+              Sign Out
+            </Nav.Link>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

@@ -1,17 +1,17 @@
 import React from "react";
-import { Container, Button } from "react-bootstrap";
-import { signout } from "../../auth/Index";
-import { isAuthenticated } from "../../auth/Index";
+import { Container, Button, Row, Col } from "react-bootstrap";
+import Layout from "../core/Layout";
 
 const AdminDashboard = () => {
-  const {
-    user: { _id, name, email, role },
-  } = isAuthenticated();
   return (
-    <Container>
-      {`Welcome to the Admin Dashboard ${name}`}
-      <Button onClick={signout}>Logout</Button>
-    </Container>
+    <Layout
+      title="User Dashboard"
+      description="Manage your business and account info"
+    >
+      <Container>
+        <Row>{`Welcome to the User Dashboard`}</Row>
+      </Container>
+    </Layout>
   );
 };
 
