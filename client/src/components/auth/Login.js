@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Form, Alert, Button, Row, Col, Container } from "react-bootstrap";
+import Layout from "../core/Layout";
 import { Redirect } from "react-router-dom";
 import FBLogin from "./FBLogin";
 
-import { signin, authenticate, isAuthenticated } from "../auth/Index";
+import { signin, authenticate, isAuthenticated } from "../../auth/Index";
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -60,50 +61,52 @@ const Login = () => {
   };
 
   return (
-    <Container>
-      {showLoading()}
-      {showError()}
-      {redirectUser()}
-      <Row className="mt-4">
-        <Col md={{ span: 6, offset: 3 }}>
-          <Form>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                onChange={handleChange("email")}
-                value={email}
-              />
-              <Form.Text className="text-muted"></Form.Text>
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                onChange={handleChange("password")}
-                value={password}
-              />
-            </Form.Group>
+    <Layout title="Login" description="Sign In with email or Facebook">
+      <Container>
+        {showLoading()}
+        {showError()}
+        {redirectUser()}
+        <Row className="mt-4">
+          <Col md={{ span: 6, offset: 3 }}>
+            <Form>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  onChange={handleChange("email")}
+                  value={email}
+                />
+                <Form.Text className="text-muted"></Form.Text>
+              </Form.Group>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={handleChange("password")}
+                  value={password}
+                />
+              </Form.Group>
 
-            <Button
-              variant="primary"
-              block
-              type="submit"
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-      <Row className="mt-4">
-        <Col md={{ span: 6, offset: 3 }}>
-          <FBLogin />
-        </Col>
-      </Row>
-    </Container>
+              <Button
+                variant="primary"
+                block
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+        <Row className="mt-4">
+          <Col md={{ span: 6, offset: 3 }}>
+            <FBLogin />
+          </Col>
+        </Row>
+      </Container>
+    </Layout>
   );
 };
 

@@ -3,20 +3,18 @@ import "./App.scss";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AdminRoute from "./auth/AdminRoute";
 import PrivateRoute from "./auth/PrivateRoute";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Homepage from "./components/Homepage";
+import Login from "./components/auth/Login";
+import Signup from "./components/auth/Signup";
+import Shop from "./components/core/Shop";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import UserDashboard from "./components/user/UserDashboard";
-import FBLogin from "./components/FBLogin";
-import LoginSuccess from "./components/LoginSuccess";
-import { isAuthenticated } from "./auth/Index";
+import LoginSuccess from "./components/auth/LoginSuccess";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Homepage}></Route>
+        <Route exact path="/" component={Shop}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/login" component={Login}></Route>
         <AdminRoute

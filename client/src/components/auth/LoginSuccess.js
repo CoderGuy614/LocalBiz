@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as queryString from "query-string";
-import { signup } from "../auth/Index";
+import { signup } from "../../auth/Index";
 import axios from "axios";
 
 const LoginSuccess = () => {

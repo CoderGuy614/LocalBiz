@@ -17,7 +17,7 @@ const FBLogin = () => {
 
   return (
     <div>
-      <Button block href={facebookLoginUrl}>
+      <Button block href={facebookLoginUrl} className="mb-4">
         Continue With Facebook
       </Button>
     </div>

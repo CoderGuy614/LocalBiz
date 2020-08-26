@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "./Nav";
+import Navigation from "./Navigation";
 import { Jumbotron } from "react-bootstrap";
 
 const Layout = ({
@@ -10,7 +10,7 @@ const Layout = ({
 }) => {
   return (
     <div>
-      <Nav />
+      <Navigation />
       <Jumbotron>
         <h2>{title}</h2>
         <p className="lead">{description}</p>
