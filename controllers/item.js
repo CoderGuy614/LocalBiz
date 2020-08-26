@@ -1,10 +1,7 @@
 const Item = require("../models/Item");
 const formidable = require("formidable");
-const fs = require("fs");
 const config = require("config");
-const db = config.get("mongoURI");
 const cloudinary = require("cloudinary").v2;
-const path = require("path");
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage });
 
@@ -16,9 +13,11 @@ cloudinary.config({
 });
 
 exports.itemById = (req, res, next, id) => {
+  console.log("The id is:", id);
   Item.findById(id)
-    .populate("category")
+    .populate("Category")
     .exec((err, item) => {
+      console.log(err);
       if (err || !item) {
         return res.status(400).json({
           error: "Item not found",
@@ -30,7 +29,7 @@ exports.itemById = (req, res, next, id) => {
 };
 
 exports.read = (req, res) => {
-  req.item.photo = undefined;
+  // req.item.photo = undefined;
   return res.json(req.item);
 };
 
