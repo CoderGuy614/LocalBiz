@@ -11,13 +11,6 @@ const BizSchema = new Schema({
     type: ObjectId,
     ref: "category",
   },
-
-  items: [
-    {
-      type: ObjectId,
-      ref: "items",
-    },
-  ],
   name: {
     type: String,
     required: [true, "name is required"],

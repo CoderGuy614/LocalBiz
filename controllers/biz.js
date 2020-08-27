@@ -12,20 +12,26 @@ cloudinary.config({
   api_secret: config.get("CLOUDINARY_API_SECRET"),
 });
 
+exports.bizList = (req, res) => {
+  Biz.find().exec((err, biz) => {
+    if (err || !biz) {
+      return res.status(400).json({ error: "No Businesses Found" });
+    }
+    return res.json(biz);
+  });
+};
+
 exports.bizById = (req, res, next, id) => {
-  Biz.findById(id)
-    .populate("items")
-    .exec((err, biz) => {
-      console.log(err);
-      if (err || !biz) {
-        return res.status(400).json({
-          error: "Item not found",
-        });
-      }
-      req.biz = biz;
-      console.log("BIZ BY ID RAN", req.biz);
-      next();
-    });
+  Biz.findById(id).exec((err, biz) => {
+    console.log(err);
+    if (err || !biz) {
+      return res.status(400).json({
+        error: "Item not found",
+      });
+    }
+    req.biz = biz;
+    next();
+  });
 };
 
 exports.read = (req, res) => {

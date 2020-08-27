@@ -1,5 +1,4 @@
 const Item = require("../models/Item");
-const Biz = require("../models/Biz");
 const formidable = require("formidable");
 const config = require("config");
 const cloudinary = require("cloudinary").v2;
@@ -33,15 +32,13 @@ exports.read = (req, res) => {
 };
 
 exports.listItems = (req, res) => {
-  console.log("Req.BIZ._ID", req.biz._id);
   Item.find({ business: req.biz._id }).exec((err, items) => {
-    console.log(items);
     if (err || !items) {
       return res
         .status(400)
         .json({ error: "No Items Found for This Business" });
     }
-    return res.json({ items });
+    return res.json(items);
   });
 };
 

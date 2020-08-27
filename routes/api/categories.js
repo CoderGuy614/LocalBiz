@@ -29,7 +29,7 @@ router.delete(
   isAdmin,
   remove
 );
-router.get("/categories", list);
+router.get("/categories/list", list);
 
 router.param("categoryId", categoryById);
 router.param("userId", userById);
