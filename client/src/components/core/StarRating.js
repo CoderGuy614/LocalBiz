@@ -4,7 +4,7 @@ import { Container, Row } from "react-bootstrap";
 const StarRating = ({ rating }) => {
   console.log(rating);
   return (
-    <div className="bg-primary rating">
+    <div className="bg-primary border rounded">
       <Row className="justify-content-center pt-2">
         <p>Rating</p>
       </Row>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getBusiness, getItems } from "./apiCore";
 import { Row, Col, Container } from "react-bootstrap";
 import ItemCard from "./ItemCard";
+import ItemCardHorizontal from "./ItemCardHorizontal";
 import Layout from "./Layout";
 
 const Biz = ({ match }) => {
@@ -39,12 +40,14 @@ const Biz = ({ match }) => {
 
   return (
     <Layout title={business.name} description={business.description}>
-      <Container>
+      <Container fluid>
         <Row>
-          <Col sm={4}>This is the SideBar</Col>
-          <Col sm={8}>
+          <Col sm={3}>This is the SideBar</Col>
+          <Col sm={9}>
             {items.length > 0 &&
-              items.map((item) => <ItemCard key={item._id} item={item} />)}
+              items.map((item) => (
+                <ItemCardHorizontal key={item._id} item={item} />
+              ))}
           </Col>
         </Row>
       </Container>
