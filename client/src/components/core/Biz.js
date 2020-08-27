@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getBusiness, getItems } from "./apiCore";
 import { Row, Col, Container } from "react-bootstrap";
-import ItemCard from "./ItemCard";
+import BizSidebar from "./BizSidebar";
 import ItemCardHorizontal from "./ItemCardHorizontal";
 import Layout from "./Layout";
 
@@ -36,13 +36,15 @@ const Biz = ({ match }) => {
     loadItems();
   }, []);
 
-  const { city, hours, lat, lng, user, rating, photo, date } = business;
+  const { name, description, photo } = business;
 
   return (
-    <Layout title={business.name} description={business.description}>
+    <Layout title={name} description={description} photo={photo}>
       <Container fluid>
         <Row>
-          <Col sm={3}>This is the SideBar</Col>
+          <Col sm={3}>
+            <BizSidebar business={business} />
+          </Col>
           <Col sm={9}>
             {items.length > 0 &&
               items.map((item) => (
