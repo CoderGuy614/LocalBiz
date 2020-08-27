@@ -1,16 +1,9 @@
 import React from "react";
 
-const Pin = ({ property, lat, lng, showPrice }) => {
-  const formatPrice = (price) => {
-    return (price / 1000).toString().concat("K");
-  };
+const Pin = ({ lat, lng, rating }) => {
   return (
-    <div
-      className={property.selected ? "pin selected" : "pin"}
-      lat={lat}
-      lng={lng}
-    >
-      {showPrice ? <label>${formatPrice(property.Price)}</label> : null}
+    <div className="pin" lat={lat} lng={lng}>
+      {rating ? <label>{rating.toFixed(2)}</label> : null}
     </div>
   );
 };

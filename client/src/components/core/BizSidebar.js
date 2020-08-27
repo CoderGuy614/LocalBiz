@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import GoogleMap from "google-map-react";
+import Pin from "./Pin";
 import { Card, Image, Container, Row, Col } from "react-bootstrap";
 
 const BizSidebar = ({ business }) => {
@@ -14,7 +15,11 @@ const BizSidebar = ({ business }) => {
   };
 
   return (
-    <GoogleMap bootstrapURLKeys={map.key} center={map.center} zoom={map.zoom} />
+    <div className="sidebar-map">
+      <GoogleMap bootstrapURLKeys={map.key} center={map.center} zoom={map.zoom}>
+        <Pin lat={lat} lng={lng} rating={rating} />
+      </GoogleMap>
+    </div>
   );
 };
 
