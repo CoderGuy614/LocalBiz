@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
-import { Container } from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 import { getBusinesses, getCategories } from "./apiCore";
+import Filters from "./Filters";
 import BizListCard from "./BizListCard";
 
 const Shop = () => {
@@ -39,6 +40,8 @@ const Shop = () => {
       description="Browse Local Businesses in your city."
     >
       <Container>
+        <Filters categories={categories} />
+
         {businesses &&
           businesses.map((biz, i) => (
             <div key={i} className="mb-3">
@@ -46,6 +49,7 @@ const Shop = () => {
                 name={biz.name}
                 description={biz.description}
                 photo={biz.photo}
+                rating={biz.rating}
                 id={biz._id}
               />
             </div>
