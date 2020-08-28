@@ -50,14 +50,13 @@ exports.create = (req, res) => {
       name,
       description,
       price,
-      category,
       business,
       canDeliver,
       inStock,
       photo,
     } = fields;
 
-    if (!name || !description || !price || !category) {
+    if (!name || !description || !price || !business) {
       return res.status(400).json({
         error: "All Fields are Required",
       });

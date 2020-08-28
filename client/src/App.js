@@ -20,7 +20,7 @@ const App = () => {
         <Route exact path="/" component={Shop}></Route>
         <Route exact path="/biz/:id" component={Biz}></Route>
         <Route exact path="/post/biz" component={AddBizForm}></Route>
-        <Route exact path="/post/item" component={AddItemForm}></Route>
+        <Route exact path="/post/item/:bizId" component={AddItemForm}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/login" component={Login}></Route>
         <AdminRoute

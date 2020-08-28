@@ -36,7 +36,7 @@ const Biz = ({ match }) => {
     loadItems();
   }, []);
 
-  const { name, description, photo, user } = business;
+  const { name, description, photo, user, _id } = business;
 
   return (
     <Layout title={name} description={description} photo={photo} user={user}>
@@ -46,7 +46,10 @@ const Biz = ({ match }) => {
             <BizSidebar business={business} user={user} />
           </Col>
           <Col sm={9}>
-            <Button block> Add An Item</Button>
+            <Button href={`/post/item/${_id}`} block>
+              {" "}
+              Add An Item
+            </Button>
             {items.length > 0 ? (
               items.map((item) => <ItemCard key={item._id} item={item} />)
             ) : (

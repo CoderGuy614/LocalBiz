@@ -8,7 +8,7 @@ const { bizById } = require("../../controllers/biz");
 
 router.get("/item/:itemId", read);
 router.get("/items/:bizId", listItems);
-router.post("/item/create/:userId", requireSignIn, isAuth, create);
+router.post("/item/create/:userId", create);
 
 router.param("userId", userById);
 router.param("itemId", itemById);

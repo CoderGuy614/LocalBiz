@@ -28,15 +28,13 @@ module.exports = mongoose.model("items", {
     type: Boolean,
     default: false,
   },
-  category: {
-    type: ObjectId,
-    ref: "Category",
-  },
   business: {
     type: ObjectId,
-    ref: "Biz",
+    ref: "biz",
+    required: true,
   },
   photo: {
     type: String,
+    default: "https://via.placeholder.com/300",
   },
 });

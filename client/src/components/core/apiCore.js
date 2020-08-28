@@ -34,9 +34,28 @@ export const getCategories = () => {
     .catch((err) => console.log(err));
 };
 
-export const createBiz = (item) => {
+export const createBiz = (biz) => {
   return fetch(
     `${process.env.REACT_APP_API}/biz/create/5f4493e81ab0002d9945e5b8`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: biz,
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      return console.log(err);
+    });
+};
+
+export const createItem = (item) => {
+  return fetch(
+    `${process.env.REACT_APP_API}/item/create/5f4493e81ab0002d9945e5b8`,
     {
       method: "POST",
       headers: {
