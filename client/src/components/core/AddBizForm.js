@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+import { Form, Button, Container, Alert } from "react-bootstrap";
 import { createBiz, getCategories } from "./apiCore";
 import Layout from "./Layout";
 
@@ -11,10 +12,11 @@ const AddBizForm = () => {
     bizEmail: "",
     bizPhone: "",
     photo: "",
-    loading: false,
-    success: false,
     error: "",
     categories: [],
+    loading: false,
+    redirect: false,
+    newBizId: "",
     formData: "",
   });
 
@@ -26,21 +28,23 @@ const AddBizForm = () => {
     photo,
     category,
     categories,
+    redirect,
+    newBizId,
+    loading,
     error,
-    success,
     formData,
   } = values;
 
   const handleChange = (name) => (e) => {
     const value = name === "photo" ? e.target.files[0] : e.target.value;
-
     formData.set(name, value);
-    setValues({ ...values, [name]: value });
+    setValues({ ...values, error: "", [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     createBiz(formData).then((data) => {
+      console.log(data);
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
@@ -53,7 +57,8 @@ const AddBizForm = () => {
           category: "",
           loading: false,
           error: "",
-          success: true,
+          redirect: true,
+          newBizId: data._id,
         });
       }
     });
@@ -72,6 +77,20 @@ const AddBizForm = () => {
   useEffect(() => {
     init();
   }, []);
+
+  const showError = () => (
+    <Alert variant="danger" style={{ display: error ? "" : "none" }}>
+      {error}
+    </Alert>
+  );
+
+  const showLoading = () => loading && <Alert variant="info">Loading...</Alert>;
+
+  const redirectUser = () => {
+    if (redirect && !error) {
+      return <Redirect to={`/biz/${newBizId}`} />;
+    }
+  };
 
   return (
     <Layout title="Post A New Business" description="Enter Details Below">
@@ -139,6 +158,9 @@ const AddBizForm = () => {
               custom
             />
           </Form.Group>
+          {showError()}
+          {showLoading()}
+          {redirectUser()}
           <Button type="submit" onClick={handleSubmit} block>
             {" "}
             Continue to Add Items

@@ -52,6 +52,7 @@ const BizSchema = new Schema({
   },
   photo: {
     type: String,
+    default: "https://via.placeholder.com/300",
   },
   date: {
     type: Date,

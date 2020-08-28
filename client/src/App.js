@@ -8,6 +8,7 @@ import Signup from "./components/auth/Signup";
 import Shop from "./components/core/Shop";
 import Biz from "./components/core/Biz";
 import AddBizForm from "./components/core/AddBizForm";
+import AddItemForm from "./components/core/AddItemForm";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import UserDashboard from "./components/user/UserDashboard";
 import LoginSuccess from "./components/auth/LoginSuccess";
@@ -19,6 +20,7 @@ const App = () => {
         <Route exact path="/" component={Shop}></Route>
         <Route exact path="/biz/:id" component={Biz}></Route>
         <Route exact path="/post/biz" component={AddBizForm}></Route>
+        <Route exact path="/post/item" component={AddItemForm}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/login" component={Login}></Route>
         <AdminRoute
