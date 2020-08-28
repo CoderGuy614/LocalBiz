@@ -1,31 +1,78 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
+import { createBiz, getCategories } from "./apiCore";
 import Layout from "./Layout";
 
 const AddBizForm = () => {
   const [values, setValues] = useState({
-    bizName: "",
+    name: "",
+    category: "",
     description: "",
     bizEmail: "",
     bizPhone: "",
     photo: "",
-    error: "",
+    loading: false,
     success: false,
+    error: "",
+    categories: [],
+    formData: "",
   });
 
-  const handleChange = (name) => (e) => {
-    setValues({ ...values, error: "", [name]: e.target.value });
-  };
-
   const {
-    bizName,
+    name,
     description,
     bizEmail,
     bizPhone,
     photo,
+    category,
+    categories,
     error,
     success,
+    formData,
   } = values;
+
+  const handleChange = (name) => (e) => {
+    const value = name === "photo" ? e.target.files[0] : e.target.value;
+
+    formData.set(name, value);
+    setValues({ ...values, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createBiz(formData).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({
+          ...values,
+          name: "",
+          description: "",
+          bizEmail: "",
+          bizPhone: "",
+          category: "",
+          loading: false,
+          error: "",
+          success: true,
+        });
+      }
+    });
+  };
+
+  const init = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setValues({ ...values, categories: data, formData: new FormData() });
+      }
+    });
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <Layout title="Post A New Business" description="Enter Details Below">
       <Container className="mb-3">
@@ -36,9 +83,25 @@ const AddBizForm = () => {
             <Form.Control
               type="text"
               placeholder="Business Name"
-              value={bizName}
-              onChange={handleChange("bizName")}
+              value={name}
+              onChange={handleChange("name")}
             />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Category</Form.Label>
+            <Form.Control
+              as="select"
+              type="large"
+              value={category}
+              onChange={handleChange("category")}
+            >
+              <option>Choose a Category</option>
+              {categories.map((cat, i) => (
+                <option key={i} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </Form.Control>
           </Form.Group>
           <Form.Group>
             <Form.Label>Description</Form.Label>
@@ -69,12 +132,14 @@ const AddBizForm = () => {
           </Form.Group>
           <Form.Group>
             <Form.File
-              label="Profile Photo"
-              value={photo}
+              id="custom-file"
+              label="Choose a Photo"
+              name={photo}
               onChange={handleChange("photo")}
+              custom
             />
           </Form.Group>
-          <Button type="submit" block>
+          <Button type="submit" onClick={handleSubmit} block>
             {" "}
             Continue to Add Items
           </Button>

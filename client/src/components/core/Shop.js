@@ -41,8 +41,10 @@ const Shop = () => {
     >
       <Container fluid>
         <Filters categories={categories} />
-        <Button href="/post/biz">Create New Business</Button>
-        <Container fluid className="d-flex">
+        <Button block href="/post/biz">
+          Create New Business
+        </Button>
+        <Container fluid className="d-flex flex-wrap">
           {businesses &&
             businesses.map((biz, i) => (
               <div key={i} className="m-3">

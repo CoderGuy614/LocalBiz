@@ -7,7 +7,7 @@ const { userById } = require("../../controllers/user");
 
 router.get("/biz/list", bizList);
 router.get("/biz/:bizId", read);
-router.post("/biz/create/:userId", requireSignIn, isAuth, create);
+router.post("/biz/create/:userId", create);
 
 router.param("userId", userById);
 router.param("bizId", bizById);

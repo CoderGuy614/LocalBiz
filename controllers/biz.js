@@ -39,13 +39,13 @@ exports.bizById = (req, res, next, id) => {
 };
 
 exports.read = (req, res) => {
-  // req.item.photo = undefined;
   return res.json(req.biz);
 };
 
 exports.create = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
+
   form.parse(req, (err, fields, files) => {
     const {
       name,
@@ -70,6 +70,7 @@ exports.create = (req, res) => {
       upload.single("file");
       cloudinary.uploader.upload(files.photo.path).then((cloudinaryFile) => {
         fields.photo = cloudinaryFile.url;
+
         let biz = new Biz(fields);
         biz.save((err, result) => {
           if (err) {
