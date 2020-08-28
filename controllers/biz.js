@@ -13,25 +13,29 @@ cloudinary.config({
 });
 
 exports.bizList = (req, res) => {
-  Biz.find().exec((err, biz) => {
-    if (err || !biz) {
-      return res.status(400).json({ error: "No Businesses Found" });
-    }
-    return res.json(biz);
-  });
+  Biz.find()
+    .populate("user")
+    .exec((err, biz) => {
+      if (err || !biz) {
+        return res.status(400).json({ error: "No Businesses Found" });
+      }
+      return res.json(biz);
+    });
 };
 
 exports.bizById = (req, res, next, id) => {
-  Biz.findById(id).exec((err, biz) => {
-    console.log(err);
-    if (err || !biz) {
-      return res.status(400).json({
-        error: "Item not found",
-      });
-    }
-    req.biz = biz;
-    next();
-  });
+  Biz.findById(id)
+    .populate("user")
+    .exec((err, biz) => {
+      console.log(err);
+      if (err || !biz) {
+        return res.status(400).json({
+          error: "Business not found",
+        });
+      }
+      req.biz = biz;
+      next();
+    });
 };
 
 exports.read = (req, res) => {
@@ -47,7 +51,8 @@ exports.create = (req, res) => {
       name,
       description,
       category,
-      items,
+      bizEmail,
+      bizPhone,
       lat,
       lng,
       rating,
@@ -55,9 +60,9 @@ exports.create = (req, res) => {
       date,
     } = fields;
 
-    if (!name || !description || !category) {
+    if (!name || !description || !category || !bizEmail || !bizPhone) {
       return res.status(400).json({
-        error: "Name, Description and Category are Required",
+        error: "Name, Description, Category, Email and Phone are Required",
       });
     }
     fields.user = req.profile._id;

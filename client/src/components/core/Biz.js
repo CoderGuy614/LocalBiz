@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getBusiness, getItems } from "./apiCore";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import BizSidebar from "./BizSidebar";
 import ItemCard from "./ItemCard";
 import Layout from "./Layout";
@@ -46,8 +46,14 @@ const Biz = ({ match }) => {
             <BizSidebar business={business} user={user} />
           </Col>
           <Col sm={9}>
-            {items.length > 0 &&
-              items.map((item) => <ItemCard key={item._id} item={item} />)}
+            <Button block> Add An Item</Button>
+            {items.length > 0 ? (
+              items.map((item) => <ItemCard key={item._id} item={item} />)
+            ) : (
+              <div className="text-center mt-4">
+                <h3>No Items to Show</h3>
+              </div>
+            )}
           </Col>
         </Row>
       </Container>

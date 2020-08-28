@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
   hashed_password: {
     type: String,
     required: true,
+    select: false,
   },
   avatar: {
     type: String,

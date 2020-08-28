@@ -1,4 +1,4 @@
-const Category = require("../models/Category");
+const Category = require("../models/category");
 const Item = require("../models/Item");
 
 exports.categoryById = (req, res, next, id) => {

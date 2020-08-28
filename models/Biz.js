@@ -5,7 +5,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const BizSchema = new Schema({
   user: {
     type: ObjectId,
-    ref: "users",
+    ref: "user",
   },
   category: {
     type: ObjectId,
@@ -25,11 +25,23 @@ const BizSchema = new Schema({
     required: [true, "city is required"],
     default: "Siem Reap",
   },
+  bizEmail: {
+    type: String,
+    required: true,
+    default: "myBusiness@localBiz.com",
+  },
+  bizPhone: {
+    type: String,
+    required: true,
+    default: "000-000-0000",
+  },
   lat: {
     type: Number,
+    default: 13.3633,
   },
   lng: {
     type: Number,
+    default: 103.8564,
   },
   rating: {
     type: Number,
