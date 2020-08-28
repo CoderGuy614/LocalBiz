@@ -39,21 +39,22 @@ const Shop = () => {
       title="LocalBiz"
       description="Browse Local Businesses in your city."
     >
-      <Container>
+      <Container fluid>
         <Filters categories={categories} />
-
-        {businesses &&
-          businesses.map((biz, i) => (
-            <div key={i} className="mb-3">
-              <BizListCard
-                name={biz.name}
-                description={biz.description}
-                photo={biz.photo}
-                rating={biz.rating}
-                id={biz._id}
-              />
-            </div>
-          ))}
+        <Container fluid className="d-flex">
+          {businesses &&
+            businesses.map((biz, i) => (
+              <div key={i} className="m-3">
+                <BizListCard
+                  name={biz.name}
+                  description={biz.description}
+                  photo={biz.photo}
+                  rating={biz.rating}
+                  id={biz._id}
+                />
+              </div>
+            ))}
+        </Container>
       </Container>
     </Layout>
   );

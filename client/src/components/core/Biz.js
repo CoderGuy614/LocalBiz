@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getBusiness, getItems } from "./apiCore";
 import { Row, Col, Container } from "react-bootstrap";
 import BizSidebar from "./BizSidebar";
-import ItemCardHorizontal from "./ItemCardHorizontal";
+import ItemCard from "./ItemCard";
 import Layout from "./Layout";
 
 const Biz = ({ match }) => {
@@ -36,20 +36,18 @@ const Biz = ({ match }) => {
     loadItems();
   }, []);
 
-  const { name, description, photo } = business;
+  const { name, description, photo, user } = business;
 
   return (
     <Layout title={name} description={description} photo={photo}>
       <Container fluid>
         <Row>
           <Col sm={3}>
-            <BizSidebar business={business} />
+            <BizSidebar business={business} user={user} />
           </Col>
           <Col sm={9}>
             {items.length > 0 &&
-              items.map((item) => (
-                <ItemCardHorizontal key={item._id} item={item} />
-              ))}
+              items.map((item) => <ItemCard key={item._id} item={item} />)}
           </Col>
         </Row>
       </Container>
