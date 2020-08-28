@@ -1,12 +1,13 @@
 import React from "react";
 import Navigation from "./Navigation";
-import { Jumbotron } from "react-bootstrap";
+import { Jumbotron, Image } from "react-bootstrap";
 
 const Layout = ({
   title = "Title",
   description = "Description",
   className,
   photo,
+  user,
   children,
 }) => {
   return (
@@ -28,6 +29,9 @@ const Layout = ({
               />
             )}
           </div>
+        </div>
+        <div className="user-profile ">
+          {/* <Image className="roundedCircle" src={user.avatar} /> */}
         </div>
       </Jumbotron>
       <div className={className}>{children}</div>

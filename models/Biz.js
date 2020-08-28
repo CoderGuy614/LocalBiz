@@ -45,6 +45,7 @@ const BizSchema = new Schema({
   },
   rating: {
     type: Number,
+    default: 0,
   },
   hours: {
     type: Array,

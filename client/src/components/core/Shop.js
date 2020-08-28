@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
-import { Container, Col } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import { getBusinesses, getCategories } from "./apiCore";
 import Filters from "./Filters";
 import BizListCard from "./BizListCard";
@@ -41,6 +41,7 @@ const Shop = () => {
     >
       <Container fluid>
         <Filters categories={categories} />
+        <Button href="/post/biz">Create New Business</Button>
         <Container fluid className="d-flex">
           {businesses &&
             businesses.map((biz, i) => (

@@ -39,7 +39,7 @@ const Biz = ({ match }) => {
   const { name, description, photo, user } = business;
 
   return (
-    <Layout title={name} description={description} photo={photo}>
+    <Layout title={name} description={description} photo={photo} user={user}>
       <Container fluid>
         <Row>
           <Col sm={3}>
