@@ -1,12 +1,8 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import TimePicker from "react-bootstrap-time-picker";
+import TimePicker from "./TimePicker";
 
 const HourInputRow = ({ day, openTime, closeTime, handleTimeChange }) => {
-  const handleOtherChange = (day) => {
-    handleTimeChange();
-    console.log(day);
-  };
   return (
     <tr>
       <td>{day}</td>
@@ -20,10 +16,18 @@ const HourInputRow = ({ day, openTime, closeTime, handleTimeChange }) => {
         </div>
       </td>
       <td>
-        <TimePicker value={openTime} onChange={() => handleOtherChange(day)} />
+        <TimePicker
+          handleTimeChange={handleTimeChange}
+          openOrClose="open"
+          day={day}
+        />
       </td>
       <td>
-        <TimePicker value={closeTime} onChange={handleTimeChange} />
+        <TimePicker
+          handleTimeChange={handleTimeChange}
+          openOrClose="close"
+          day={day}
+        />
       </td>
     </tr>
   );

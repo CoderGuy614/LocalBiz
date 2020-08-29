@@ -44,20 +44,13 @@ const HoursForm = () => {
     Sunday: true,
   });
 
-  //   const handleTimeChange = (openOrClose, day, time) => {
-  //     if (openOrClose === "open") {
-  //       console.log("OPEN TIME is", day, time);
-  //     } else {
-  //       console.log("CLOSE TIME is", day, time);
-  //     }
-  //   };
-
-  const handleTimeChange = (time) => {
-    console.log(time);
-  };
-
-  const handleOtherChange = () => {
-    console.log("Other CHange");
+  const handleTimeChange = (day, openOrClose) => (e) => {
+    console.log(e.target.value);
+    if (openOrClose === "open") {
+      console.log("OPEN TIME is", day);
+    } else {
+      console.log("CLOSE TIME is", day);
+    }
   };
 
   return (
