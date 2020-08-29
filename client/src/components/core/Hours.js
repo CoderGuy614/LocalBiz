@@ -1,6 +1,5 @@
 import React from "react";
-import Moment from "react-moment";
-import { ListGroup, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
 const Hours = ({}) => {
   const hoursArray = [
@@ -18,6 +17,66 @@ const Hours = ({}) => {
     },
     {
       day: "Tuesday",
+      closed: false,
+      open: {
+        hour: 8,
+        minutes: 30,
+      },
+      close: {
+        hour: 20,
+        minutes: 30,
+      },
+    },
+    {
+      day: "Wednesday",
+      closed: false,
+      open: {
+        hour: 8,
+        minutes: 30,
+      },
+      close: {
+        hour: 20,
+        minutes: 30,
+      },
+    },
+    {
+      day: "Thursday",
+      closed: false,
+      open: {
+        hour: 8,
+        minutes: 30,
+      },
+      close: {
+        hour: 20,
+        minutes: 30,
+      },
+    },
+    {
+      day: "Friday",
+      closed: false,
+      open: {
+        hour: 8,
+        minutes: 30,
+      },
+      close: {
+        hour: 20,
+        minutes: 30,
+      },
+    },
+    {
+      day: "Saturday",
+      closed: true,
+      open: {
+        hour: 8,
+        minutes: 30,
+      },
+      close: {
+        hour: 20,
+        minutes: 30,
+      },
+    },
+    {
+      day: "Sunday",
       closed: true,
       open: {
         hour: 8,
@@ -40,6 +99,21 @@ const Hours = ({}) => {
     }
   };
 
+  const showClosed = (d) => {
+    return (
+      <td className="text-center" colSpan="2">
+        Closed
+      </td>
+    );
+  };
+
+  const showHours = (d) => (
+    <>
+      <td>{formatTime(d.open.hour, d.open.minutes)}</td>
+      <td>{formatTime(d.close.hour, d.close.minutes)}</td>
+    </>
+  );
+
   return (
     <>
       <h5 className="text-center mt-3">Hours of Operation</h5>
@@ -53,14 +127,9 @@ const Hours = ({}) => {
         </thead>
         <tbody>
           {hoursArray.map((d, i) => (
-            <tr>
+            <tr key={i}>
               <td>{d.day}</td>
-              <td>
-                {d.closed ? "Closed" : formatTime(d.open.hour, d.open.minutes)}
-              </td>
-              <td>
-                {d.closed ? " -- " : formatTime(d.close.hour, d.close.minutes)}
-              </td>
+              {d.closed ? showClosed(d) : showHours(d)}
             </tr>
           ))}
         </tbody>
