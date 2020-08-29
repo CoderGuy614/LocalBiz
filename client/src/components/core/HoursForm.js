@@ -1,21 +1,64 @@
 import React, { useState } from "react";
 import { Form, Container, Button, Row, Col, Table } from "react-bootstrap";
 import Layout from "./Layout";
-import TimePicker from "react-bootstrap-time-picker";
-
+import HourInputRow from "./HourInputRow";
 const HoursForm = () => {
-  const [monday, setMonday] = useState({
-    day: "Monday",
-    closed: true,
-    open: {
-      hour: 9,
-      minute: "00",
-    },
-    close: {
-      hour: 17,
-      minute: "00",
-    },
+  //   const [values, setValues] = useState({
+  //     Monday: {
+  //       open: 0,
+  //       close: 0,
+  //     },
+  //     Tuesday: {
+  //       open: 0,
+  //       close: 0,
+  //     },
+  //   });
+
+  const [openTimes, setOpenTimes] = useState({
+    Monday: 0,
+    Tuesday: 0,
+    Wednesday: 0,
+    Thursday: 0,
+    Friday: 0,
+    Saturday: 0,
+    Sunday: 0,
   });
+
+  const [closeTimes, setCloseTimes] = useState({
+    Monday: 0,
+    Tuesday: 0,
+    Wednesday: 0,
+    Thursday: 0,
+    Friday: 0,
+    Saturday: 0,
+    Sunday: 0,
+  });
+
+  const [isClosed, setIsClosed] = useState({
+    Monday: true,
+    Tuesday: true,
+    Wednesday: true,
+    Thursday: true,
+    Friday: true,
+    Saturday: true,
+    Sunday: true,
+  });
+
+  //   const handleTimeChange = (openOrClose, day, time) => {
+  //     if (openOrClose === "open") {
+  //       console.log("OPEN TIME is", day, time);
+  //     } else {
+  //       console.log("CLOSE TIME is", day, time);
+  //     }
+  //   };
+
+  const handleTimeChange = (time) => {
+    console.log(time);
+  };
+
+  const handleOtherChange = () => {
+    console.log("Other CHange");
+  };
 
   return (
     <Layout
@@ -33,24 +76,12 @@ const HoursForm = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Monday</td>
-              <td>
-                <div className="d-flex justify-content-center">
-                  <Form.Check
-                    style={{
-                      transform: "scale(2, 2)",
-                    }}
-                  />
-                </div>
-              </td>
-              <td>
-                <TimePicker />
-              </td>
-              <td>
-                <TimePicker />
-              </td>
-            </tr>
+            <HourInputRow
+              day="Monday"
+              openTime={openTimes.Monday}
+              closeTime={closeTimes.Tuesday}
+              handleTimeChange={handleTimeChange}
+            />
           </tbody>
         </Table>
       </Container>
