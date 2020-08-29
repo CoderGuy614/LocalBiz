@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import GoogleMap from "google-map-react";
 import Pin from "./Pin";
-import Hours from "./Hours";
+import Hours2 from "./Hours2";
 import ContactInfo from "./ContactInfo";
 
 const BizSidebar = ({ business }) => {
@@ -20,7 +20,7 @@ const BizSidebar = ({ business }) => {
       <GoogleMap bootstrapURLKeys={map.key} center={map.center} zoom={map.zoom}>
         <Pin lat={lat} lng={lng} rating={rating} />
       </GoogleMap>
-      <Hours hours={hours} />
+      <Hours2 hours={hours} />
       <ContactInfo email={bizEmail} phone={bizPhone} />
     </div>
   );

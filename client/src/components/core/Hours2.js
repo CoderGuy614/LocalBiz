@@ -2,7 +2,7 @@ import React from "react";
 import Moment from "react-moment";
 import { ListGroup, Table } from "react-bootstrap";
 
-const Hours = ({}) => {
+const Hours2 = ({}) => {
   const hoursArray = [
     {
       day: "Monday",
@@ -40,6 +40,21 @@ const Hours = ({}) => {
     }
   };
 
+  const showClosed = (d) => {
+    return (
+      <td className="text-center" colSpan="2">
+        Closed
+      </td>
+    );
+  };
+
+  const showHours = (d) => (
+    <>
+      <td>{formatTime(d.open.hour, d.open.minutes)}</td>
+      <td>{formatTime(d.close.hour, d.close.minutes)}</td>
+    </>
+  );
+
   return (
     <>
       <h5 className="text-center mt-3">Hours of Operation</h5>
@@ -55,12 +70,7 @@ const Hours = ({}) => {
           {hoursArray.map((d, i) => (
             <tr>
               <td>{d.day}</td>
-              <td>
-                {d.closed ? "Closed" : formatTime(d.open.hour, d.open.minutes)}
-              </td>
-              <td>
-                {d.closed ? " -- " : formatTime(d.close.hour, d.close.minutes)}
-              </td>
+              {d.closed ? showClosed(d) : showHours(d)}
             </tr>
           ))}
         </tbody>
@@ -69,4 +79,4 @@ const Hours = ({}) => {
   );
 };
 
-export default Hours;
+export default Hours2;
