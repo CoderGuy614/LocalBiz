@@ -1,9 +1,13 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-const TimePicker = ({ day, openOrClose, handleTimeChange }) => {
+const TimePicker = ({ day, openOrClose, isClosed, handleTimeChange }) => {
   return (
-    <Form.Control as="select" onChange={handleTimeChange(day, openOrClose)}>
+    <Form.Control
+      disabled={isClosed}
+      as="select"
+      onChange={handleTimeChange(day, openOrClose)}
+    >
       <option value="12:00 AM">12:00 AM</option>
       <option value="12:30 AM">12:30 AM</option>
       <option value="1:00 AM">1:00 AM</option>
