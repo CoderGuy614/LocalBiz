@@ -1,6 +1,8 @@
 import React from "react";
 import Navigation from "./Navigation";
 import { Jumbotron, Image } from "react-bootstrap";
+import MiniUserProfile from "./MiniUserProfile";
+import Moment from "react-moment";
 
 const Layout = ({
   title = "Title",
@@ -30,9 +32,7 @@ const Layout = ({
             )}
           </div>
         </div>
-        <div className="user-profile ">
-          {/* <Image className="roundedCircle" src={user.avatar} /> */}
-        </div>
+        {user && <MiniUserProfile user={user} />}
       </Jumbotron>
       <div className={className}>{children}</div>
     </div>
