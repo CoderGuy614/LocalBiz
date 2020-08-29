@@ -26,7 +26,7 @@ module.exports = mongoose.model("items", {
   },
   canDeliver: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   business: {
     type: ObjectId,

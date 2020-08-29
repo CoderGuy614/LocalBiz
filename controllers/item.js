@@ -46,19 +46,11 @@ exports.create = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.parse(req, (err, fields, files) => {
-    const {
-      name,
-      description,
-      price,
-      business,
-      canDeliver,
-      inStock,
-      photo,
-    } = fields;
+    const { name, description, price, business } = fields;
 
     if (!name || !description || !price || !business) {
       return res.status(400).json({
-        error: "All Fields are Required",
+        error: "Name, Description and Price are Required",
       });
     }
 
