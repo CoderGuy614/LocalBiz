@@ -7,6 +7,7 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Shop from "./components/core/Shop";
 import Biz from "./components/core/Biz";
+import HoursForm from "./components/core/HoursForm";
 import AddBizForm from "./components/core/AddBizForm";
 import AddItemForm from "./components/core/AddItemForm";
 import AdminDashboard from "./components/admin/AdminDashboard";
@@ -21,6 +22,7 @@ const App = () => {
         <Route exact path="/biz/:id" component={Biz}></Route>
         <Route exact path="/post/biz" component={AddBizForm}></Route>
         <Route exact path="/post/item/:bizId" component={AddItemForm}></Route>
+        <Route exact path="/post/hours/:bizId" component={HoursForm}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/login" component={Login}></Route>
         <AdminRoute

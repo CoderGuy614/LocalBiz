@@ -8,11 +8,11 @@ const Hours = ({}) => {
       closed: false,
       open: {
         hour: 8,
-        minutes: 30,
+        minutes: "30",
       },
       close: {
         hour: 20,
-        minutes: 30,
+        minutes: "30",
       },
     },
     {
@@ -20,11 +20,11 @@ const Hours = ({}) => {
       closed: false,
       open: {
         hour: 8,
-        minutes: 30,
+        minutes: "30",
       },
       close: {
         hour: 20,
-        minutes: 30,
+        minutes: "30",
       },
     },
     {
@@ -32,11 +32,11 @@ const Hours = ({}) => {
       closed: false,
       open: {
         hour: 8,
-        minutes: 30,
+        minutes: "30",
       },
       close: {
         hour: 20,
-        minutes: 30,
+        minutes: "30",
       },
     },
     {
@@ -44,11 +44,11 @@ const Hours = ({}) => {
       closed: false,
       open: {
         hour: 8,
-        minutes: 30,
+        minutes: "30",
       },
       close: {
         hour: 20,
-        minutes: 30,
+        minutes: "30",
       },
     },
     {
@@ -56,11 +56,11 @@ const Hours = ({}) => {
       closed: false,
       open: {
         hour: 8,
-        minutes: 30,
+        minutes: "30",
       },
       close: {
         hour: 20,
-        minutes: 30,
+        minutes: "30",
       },
     },
     {
@@ -68,23 +68,23 @@ const Hours = ({}) => {
       closed: true,
       open: {
         hour: 8,
-        minutes: 30,
+        minutes: "30",
       },
       close: {
         hour: 20,
-        minutes: 30,
+        minutes: "30",
       },
     },
     {
       day: "Sunday",
-      closed: true,
+      closed: false,
       open: {
         hour: 8,
-        minutes: 30,
+        minutes: "00",
       },
       close: {
         hour: 20,
-        minutes: 30,
+        minutes: "30",
       },
     },
   ];
