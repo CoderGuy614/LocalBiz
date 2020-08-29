@@ -10,14 +10,16 @@ const AddItemForm = ({ match }) => {
     description: "",
     price: "",
     business: match.params.bizId,
-    inStock: false,
-    canDeliver: false,
+    inStock: true,
+    canDeliver: true,
     photo: "",
     error: "",
     loading: false,
     redirect: false,
     formData: new FormData(),
   });
+
+  const [photoName, setPhotoName] = useState("");
 
   const {
     name,
@@ -35,6 +37,9 @@ const AddItemForm = ({ match }) => {
 
   const handleChange = (name) => (e) => {
     const value = name === "photo" ? e.target.files[0] : e.target.value;
+    if (name === "photo") {
+      setPhotoName(e.target.files[0].name);
+    }
     formData.set(name, value);
     setValues({ ...values, error: "", [name]: value });
   };
@@ -52,8 +57,8 @@ const AddItemForm = ({ match }) => {
           name: "",
           description: "",
           price: "",
-          canDeliver: "",
-          inStock: "",
+          canDeliver: true,
+          inStock: true,
           loading: false,
           error: "",
           redirect: true,
@@ -67,6 +72,13 @@ const AddItemForm = ({ match }) => {
       {error}
     </Alert>
   );
+
+  const showFileName = (fileName) =>
+    photoName && (
+      <Alert variant="info">
+        <span className="text-success">{photoName}</span> Selected
+      </Alert>
+    );
 
   const showLoading = () => loading && <Alert variant="info">Loading...</Alert>;
 
@@ -116,8 +128,8 @@ const AddItemForm = ({ match }) => {
               value={inStock}
               onChange={handleChange("inStock")}
             >
-              <option value={true}>Yes</option>
               <option value={false}>No</option>
+              <option value={true}>Yes</option>
             </Form.Control>
           </Form.Group>
           <Form.Group>
@@ -128,12 +140,14 @@ const AddItemForm = ({ match }) => {
               value={canDeliver}
               onChange={handleChange("canDeliver")}
             >
-              <option value={true}>Yes</option>
+              {" "}
               <option value={false}>No</option>
+              <option value={true}>Yes</option>
             </Form.Control>
           </Form.Group>
 
           <Form.Group>
+            <Form.Label>Item Photo</Form.Label>
             <Form.File
               id="custom-file"
               label="Choose a Photo"
@@ -142,6 +156,7 @@ const AddItemForm = ({ match }) => {
               custom
             />
           </Form.Group>
+          {showFileName()}
           {showError()}
           {showLoading()}
           {redirectUser()}

@@ -20,6 +20,8 @@ const AddBizForm = () => {
     formData: "",
   });
 
+  const [photoName, setPhotoName] = useState("");
+
   const {
     name,
     description,
@@ -37,6 +39,9 @@ const AddBizForm = () => {
 
   const handleChange = (name) => (e) => {
     const value = name === "photo" ? e.target.files[0] : e.target.value;
+    if (name === "photo") {
+      setPhotoName(e.target.files[0].name);
+    }
     formData.set(name, value);
     setValues({ ...values, error: "", [name]: value });
   };
@@ -85,6 +90,13 @@ const AddBizForm = () => {
   );
 
   const showLoading = () => loading && <Alert variant="info">Loading...</Alert>;
+
+  const showFileName = (fileName) =>
+    photoName && (
+      <Alert variant="info">
+        <span className="text-success">{photoName}</span> Selected
+      </Alert>
+    );
 
   const redirectUser = () => {
     if (redirect && !error) {
@@ -150,6 +162,7 @@ const AddBizForm = () => {
             />
           </Form.Group>
           <Form.Group>
+            <Form.Label>Profile Photo</Form.Label>
             <Form.File
               id="custom-file"
               label="Choose a Photo"
@@ -158,6 +171,7 @@ const AddBizForm = () => {
               custom
             />
           </Form.Group>
+          {showFileName()}
           {showError()}
           {showLoading()}
           {redirectUser()}
