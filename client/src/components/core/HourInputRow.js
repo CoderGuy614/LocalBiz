@@ -17,6 +17,7 @@ const HourInputRow = ({
         <div className="d-flex justify-content-center">
           <Form.Check
             type="checkbox"
+            checked={isClosed}
             onChange={(e) => handleIsClosed(e, day)}
             style={{
               transform: "scale(2, 2)",
@@ -26,7 +27,7 @@ const HourInputRow = ({
       </td>
       <td>
         <TimePicker
-          value={openTime}
+          time={openTime}
           handleTimeChange={handleTimeChange}
           openOrClose="open"
           isClosed={isClosed}
@@ -35,7 +36,7 @@ const HourInputRow = ({
       </td>
       <td>
         <TimePicker
-          value={closeTime}
+          time={closeTime}
           handleTimeChange={handleTimeChange}
           openOrClose="close"
           isClosed={isClosed}

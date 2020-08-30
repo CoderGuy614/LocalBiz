@@ -73,32 +73,27 @@ export const createItem = (item) => {
     });
 };
 
-// export const updateHours = (hours) => {
-//   console.log("The NEW HOURS", hours);
-//   return fetch(
-//     `${process.env.REACT_APP_API}/biz/hours/5f486d70c670fe40cef6d353/5f4493e81ab0002d9945e5b8`,
-//     {
-//       method: "PUT",
-//       headers: {
-//         Accept: "application/json",
-//       },
-//       body: JSON.stringify(hours),
-//     }
-//   )
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .catch((err) => {
-//       return console.log(err);
-//     });
-// };
-
-export const updateHours = (hours) => {
+export const updateHours = (
+  hours,
+  bizId,
+  userId = "5f4493e81ab0002d9945e5b8"
+) => {
   return axios({
     method: "put",
     headers: { "Content-Type": "application/json" },
-    url: `${process.env.REACT_APP_API}/biz/hours/5f486d70c670fe40cef6d353/5f4493e81ab0002d9945e5b8`,
+    url: `${process.env.REACT_APP_API}/biz/hours/${bizId}/${userId}`,
     data: JSON.stringify(hours),
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getHours = (bizId) => {
+  return axios({
+    method: "get",
+    url: `${process.env.REACT_APP_API}/biz/hours/${bizId}`,
   })
     .then((response) => {
       return response.data;

@@ -1,48 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 import Layout from "./Layout";
-import { updateHours } from "./apiCore";
+import { getHours, updateHours } from "./apiCore";
 import HourInputRow from "./HourInputRow";
 
 const HoursForm = ({ match }) => {
   const [values, setValues] = useState({
     Monday: {
-      open: "12:00 AM",
-      close: "12:00 AM",
+      open: "",
+      close: "",
       isClosed: false,
     },
     Tuesday: {
-      open: "12:00 AM",
-      close: "12:00 AM",
+      open: "",
+      close: "",
       isClosed: false,
     },
     Wednesday: {
-      open: "12:00 AM",
-      close: "12:00 AM",
+      open: "",
+      close: "",
       isClosed: false,
     },
     Thursday: {
-      open: "12:00 AM",
-      close: "12:00 AM",
+      open: "",
+      close: "",
       isClosed: false,
     },
     Friday: {
-      open: "12:00 AM",
-      close: "12:00 AM",
+      open: "",
+      close: "",
       isClosed: false,
     },
     Saturday: {
-      open: "12:00 AM",
-      close: "12:00 AM",
+      open: "",
+      close: "",
       isClosed: false,
     },
     Sunday: {
-      open: "12:00 AM",
-      close: "12:00 AM",
+      open: "",
+      close: "",
       isClosed: false,
     },
   });
+
+  const id = match.params.bizId;
+  useEffect(() => {
+    getHours(id)
+      .then(({ hours }) => setValues(hours))
+      .catch((err) => console.log(err));
+  }, []);
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -65,7 +73,7 @@ const HoursForm = ({ match }) => {
   };
 
   const handleSubmit = () => {
-    updateHours(values).then((data) => {
+    updateHours(values, id).then((data) => {
       if (data.error) {
         setError(data.error);
       } else {

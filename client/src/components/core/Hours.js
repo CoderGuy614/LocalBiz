@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Button } from "react-bootstrap";
 
 const Hours = ({ hours, id }) => {
-  const showClosed = (d) => {
+  const showClosed = () => {
     return (
       <td className="text-center" colSpan="2">
         Closed
