@@ -1,104 +1,7 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 
-const Hours = ({}) => {
-  const hoursArray = [
-    {
-      day: "Monday",
-      closed: false,
-      open: {
-        hour: 8,
-        minutes: "30",
-      },
-      close: {
-        hour: 20,
-        minutes: "30",
-      },
-    },
-    {
-      day: "Tuesday",
-      closed: false,
-      open: {
-        hour: 8,
-        minutes: "30",
-      },
-      close: {
-        hour: 20,
-        minutes: "30",
-      },
-    },
-    {
-      day: "Wednesday",
-      closed: false,
-      open: {
-        hour: 8,
-        minutes: "30",
-      },
-      close: {
-        hour: 20,
-        minutes: "30",
-      },
-    },
-    {
-      day: "Thursday",
-      closed: false,
-      open: {
-        hour: 8,
-        minutes: "30",
-      },
-      close: {
-        hour: 20,
-        minutes: "30",
-      },
-    },
-    {
-      day: "Friday",
-      closed: false,
-      open: {
-        hour: 8,
-        minutes: "30",
-      },
-      close: {
-        hour: 20,
-        minutes: "30",
-      },
-    },
-    {
-      day: "Saturday",
-      closed: true,
-      open: {
-        hour: 8,
-        minutes: "30",
-      },
-      close: {
-        hour: 20,
-        minutes: "30",
-      },
-    },
-    {
-      day: "Sunday",
-      closed: false,
-      open: {
-        hour: 8,
-        minutes: "00",
-      },
-      close: {
-        hour: 20,
-        minutes: "30",
-      },
-    },
-  ];
-
-  const formatTime = (hour, minutes) => {
-    if (hour > 12) {
-      return hour - 12 + ":" + minutes + "pm";
-    } else if (hour === 12) {
-      return hour + ":" + minutes + "pm";
-    } else {
-      return hour + ":" + minutes + "am";
-    }
-  };
-
+const Hours = ({ hours, id }) => {
   const showClosed = (d) => {
     return (
       <td className="text-center" colSpan="2">
@@ -109,10 +12,20 @@ const Hours = ({}) => {
 
   const showHours = (d) => (
     <>
-      <td>{formatTime(d.open.hour, d.open.minutes)}</td>
-      <td>{formatTime(d.close.hour, d.close.minutes)}</td>
+      <td>{hours && hours[d].open}</td>
+      <td>{hours && hours[d].close}</td>
     </>
   );
+
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
 
   return (
     <>
@@ -126,14 +39,17 @@ const Hours = ({}) => {
           </tr>
         </thead>
         <tbody>
-          {hoursArray.map((d, i) => (
+          {days.map((d, i) => (
             <tr key={i}>
-              <td>{d.day}</td>
-              {d.closed ? showClosed(d) : showHours(d)}
+              <td>{d}</td>
+              {hours && hours[d].isClosed ? showClosed(d) : showHours(d)}
             </tr>
           ))}
         </tbody>
       </Table>
+      <Button href={`/post/hours/${id}`} block>
+        Update Hours
+      </Button>
     </>
   );
 };

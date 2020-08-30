@@ -2,6 +2,44 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
+const defaultHours = {
+  Monday: {
+    open: "12:00 AM",
+    close: "12:00 AM",
+    isClosed: true,
+  },
+  Tuesday: {
+    open: "12:00 AM",
+    close: "12:00 AM",
+    isClosed: true,
+  },
+  Wednesday: {
+    open: "12:00 AM",
+    close: "12:00 AM",
+    isClosed: true,
+  },
+  Thursday: {
+    open: "12:00 AM",
+    close: "12:00 AM",
+    isClosed: true,
+  },
+  Friday: {
+    open: "12:00 AM",
+    close: "12:00 AM",
+    isClosed: true,
+  },
+  Saturday: {
+    open: "12:00 AM",
+    close: "12:00 AM",
+    isClosed: true,
+  },
+  Sunday: {
+    open: "12:00 AM",
+    close: "12:00 AM",
+    isClosed: true,
+  },
+};
+
 const BizSchema = new Schema({
   user: {
     type: ObjectId,
@@ -48,7 +86,8 @@ const BizSchema = new Schema({
     default: 0,
   },
   hours: {
-    type: Array,
+    type: Object,
+    default: defaultHours,
   },
   photo: {
     type: String,

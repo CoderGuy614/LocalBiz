@@ -47,18 +47,7 @@ exports.create = (req, res) => {
   form.keepExtensions = true;
 
   form.parse(req, (err, fields, files) => {
-    const {
-      name,
-      description,
-      category,
-      bizEmail,
-      bizPhone,
-      lat,
-      lng,
-      rating,
-      hours,
-      date,
-    } = fields;
+    const { name, description, category, bizEmail, bizPhone } = fields;
 
     if (!name || !description || !category || !bizEmail || !bizPhone) {
       return res.status(400).json({
@@ -95,4 +84,21 @@ exports.create = (req, res) => {
       });
     }
   });
+};
+
+exports.postHours = async (req, res) => {
+  try {
+    const id = req.biz._id;
+    const updated = await Biz.findByIdAndUpdate(
+      id,
+      { hours: req.body },
+      { new: true }
+    );
+    return res.json(updated);
+  } catch (error) {
+    console.log(err);
+    return res.status(400).json({
+      error: err,
+    });
+  }
 };

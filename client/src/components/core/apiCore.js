@@ -1,4 +1,5 @@
 import { json } from "body-parser";
+import axios from "axios";
 
 export const getBusinesses = () => {
   return fetch(`${process.env.REACT_APP_API}/biz/list`, { method: "GET" })
@@ -70,4 +71,37 @@ export const createItem = (item) => {
     .catch((err) => {
       return console.log(err);
     });
+};
+
+// export const updateHours = (hours) => {
+//   console.log("The NEW HOURS", hours);
+//   return fetch(
+//     `${process.env.REACT_APP_API}/biz/hours/5f486d70c670fe40cef6d353/5f4493e81ab0002d9945e5b8`,
+//     {
+//       method: "PUT",
+//       headers: {
+//         Accept: "application/json",
+//       },
+//       body: JSON.stringify(hours),
+//     }
+//   )
+//     .then((response) => {
+//       return response.json();
+//     })
+//     .catch((err) => {
+//       return console.log(err);
+//     });
+// };
+
+export const updateHours = (hours) => {
+  return axios({
+    method: "put",
+    headers: { "Content-Type": "application/json" },
+    url: `${process.env.REACT_APP_API}/biz/hours/5f486d70c670fe40cef6d353/5f4493e81ab0002d9945e5b8`,
+    data: JSON.stringify(hours),
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => console.log(err));
 };

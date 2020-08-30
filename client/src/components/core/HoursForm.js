@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 import Layout from "./Layout";
+import { updateHours } from "./apiCore";
 import HourInputRow from "./HourInputRow";
-const HoursForm = () => {
+
+const HoursForm = ({ match }) => {
   const [values, setValues] = useState({
     Monday: {
       open: "12:00 AM",
@@ -40,6 +43,8 @@ const HoursForm = () => {
       isClosed: false,
     },
   });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleTimeChange = (day, openOrClose) => (e) => {
     if (openOrClose === "open") {
@@ -59,6 +64,23 @@ const HoursForm = () => {
     setValues({ ...values, [day]: prevState });
   };
 
+  const handleSubmit = () => {
+    updateHours(values).then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setSuccess(true);
+      }
+    });
+  };
+
+  const redirectUser = () => {
+    const id = match.params.bizId;
+    if (success && !error) {
+      return <Redirect to={`/biz/${id}`} />;
+    }
+  };
+
   const daysArray = [
     "Monday",
     "Tuesday",
@@ -68,7 +90,6 @@ const HoursForm = () => {
     "Saturday",
     "Sunday",
   ];
-
   return (
     <Layout
       title="Set Business Hours"
@@ -98,8 +119,11 @@ const HoursForm = () => {
             ))}
           </tbody>
         </Table>
-        <Button block>Save Changes</Button>
+        <Button block onClick={handleSubmit}>
+          Save Changes
+        </Button>
       </Container>
+      {redirectUser()}
     </Layout>
   );
 };
