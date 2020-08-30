@@ -6,37 +6,37 @@ const defaultHours = {
   Monday: {
     open: "12:00 AM",
     close: "12:00 AM",
-    isClosed: true,
+    isClosed: false,
   },
   Tuesday: {
     open: "12:00 AM",
     close: "12:00 AM",
-    isClosed: true,
+    isClosed: false,
   },
   Wednesday: {
     open: "12:00 AM",
     close: "12:00 AM",
-    isClosed: true,
+    isClosed: false,
   },
   Thursday: {
     open: "12:00 AM",
     close: "12:00 AM",
-    isClosed: true,
+    isClosed: false,
   },
   Friday: {
     open: "12:00 AM",
     close: "12:00 AM",
-    isClosed: true,
+    isClosed: false,
   },
   Saturday: {
     open: "12:00 AM",
     close: "12:00 AM",
-    isClosed: true,
+    isClosed: false,
   },
   Sunday: {
     open: "12:00 AM",
     close: "12:00 AM",
-    isClosed: true,
+    isClosed: false,
   },
 };
 

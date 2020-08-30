@@ -102,3 +102,14 @@ exports.postHours = async (req, res) => {
     });
   }
 };
+
+exports.getHours = (req, res) => {
+  Biz.findById(req.biz._id)
+    .select("hours")
+    .exec((err, hours) => {
+      if (err || !hours) {
+        return res.status(400).json({ error: "Error Getting Business Hours" });
+      }
+      return res.json(hours);
+    });
+};
