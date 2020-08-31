@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
-import Layout from "./Layout";
 import { getHours, updateHours } from "./apiCore";
 import HourInputRow from "./HourInputRow";
 
@@ -97,40 +96,35 @@ const HoursForm = ({ id }) => {
     "Sunday",
   ];
   return (
-    <Layout
-      title="Set Business Hours"
-      description="Enter Your Business Hours Below"
-    >
-      <Container className="border-bottom mb-3">
-        <Table>
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th style={{ width: "50px" }}>Closed</th>
-              <th className="text-center">Open</th>
-              <th className="text-center">Close</th>
-            </tr>
-          </thead>
-          <tbody>
-            {daysArray.map((d, i) => (
-              <HourInputRow
-                key={i}
-                day={d}
-                openTime={values[d].open}
-                closeTime={values[d].close}
-                isClosed={values[d].isClosed}
-                handleIsClosed={handleIsClosed}
-                handleTimeChange={handleTimeChange}
-              />
-            ))}
-          </tbody>
-        </Table>
-        <Button block onClick={handleSubmit}>
-          Save Changes
-        </Button>
-      </Container>
+    <Container className="border-bottom mb-3">
+      <Table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th style={{ width: "50px" }}>Closed</th>
+            <th className="text-center">Open</th>
+            <th className="text-center">Close</th>
+          </tr>
+        </thead>
+        <tbody>
+          {daysArray.map((d, i) => (
+            <HourInputRow
+              key={i}
+              day={d}
+              openTime={values[d].open}
+              closeTime={values[d].close}
+              isClosed={values[d].isClosed}
+              handleIsClosed={handleIsClosed}
+              handleTimeChange={handleTimeChange}
+            />
+          ))}
+        </tbody>
+      </Table>
+      <Button block onClick={handleSubmit} className="mb-3">
+        Save Changes
+      </Button>
       {redirectUser()}
-    </Layout>
+    </Container>
   );
 };
 

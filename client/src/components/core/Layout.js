@@ -18,19 +18,12 @@ const Layout = ({
           <div>
             <h2>{title}</h2>
             <p className="lead">{description}</p>
+            {user && <MiniUserProfile user={user} />}
           </div>
           <div className="ml-auto">
-            {photo && (
-              <img
-                className="roundedCircle"
-                style={{ maxWidth: "150px" }}
-                src={photo}
-                alt=""
-              />
-            )}
+            {photo && <img style={{ maxWidth: "150px" }} src={photo} alt="" />}
           </div>
         </div>
-        {user && <MiniUserProfile user={user} />}
       </Jumbotron>
       <div className={className}>{children}</div>
     </div>
