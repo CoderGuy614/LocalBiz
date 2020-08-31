@@ -5,7 +5,7 @@ import Layout from "./Layout";
 import { getHours, updateHours } from "./apiCore";
 import HourInputRow from "./HourInputRow";
 
-const HoursForm = ({ match }) => {
+const HoursForm = ({ id }) => {
   const [values, setValues] = useState({
     Monday: {
       open: "",
@@ -44,7 +44,6 @@ const HoursForm = ({ match }) => {
     },
   });
 
-  const id = match.params.bizId;
   useEffect(() => {
     getHours(id)
       .then(({ hours }) => setValues(hours))
@@ -83,7 +82,6 @@ const HoursForm = ({ match }) => {
   };
 
   const redirectUser = () => {
-    const id = match.params.bizId;
     if (success && !error) {
       return <Redirect to={`/biz/${id}`} />;
     }

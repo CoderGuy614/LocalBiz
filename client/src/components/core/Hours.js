@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
 const Hours = ({ hours, id }) => {
   const showClosed = () => {
@@ -47,9 +47,9 @@ const Hours = ({ hours, id }) => {
           ))}
         </tbody>
       </Table>
-      <Button href={`/post/hours/${id}`} block>
+      {/* <Button href={`/post/hours/${id}`} block>
         Update Hours
-      </Button>
+      </Button> */}
     </>
   );
 };

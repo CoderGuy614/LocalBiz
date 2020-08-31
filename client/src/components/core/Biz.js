@@ -34,7 +34,7 @@ const Biz = ({ match }) => {
   useEffect(() => {
     loadBusiness();
     loadItems();
-  }, []);
+  }, [business]);
 
   const { name, description, photo, user, _id } = business;
 
