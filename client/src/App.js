@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.scss";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Navigation from "./components/core/Navigation";
 import AdminRoute from "./auth/AdminRoute";
 import PrivateRoute from "./auth/PrivateRoute";
 import Login from "./components/auth/Login";
@@ -17,6 +18,7 @@ import LoginSuccess from "./components/auth/LoginSuccess";
 const App = () => {
   return (
     <BrowserRouter>
+      <Navigation />
       <Switch>
         <Route exact path="/" component={Shop}></Route>
         <Route exact path="/biz/:id" component={Biz}></Route>

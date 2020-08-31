@@ -1,5 +1,4 @@
 import React from "react";
-import Navigation from "./Navigation";
 import { Jumbotron, Image } from "react-bootstrap";
 import MiniUserProfile from "./MiniUserProfile";
 import Moment from "react-moment";
@@ -14,7 +13,6 @@ const Layout = ({
 }) => {
   return (
     <div>
-      <Navigation />
       <Jumbotron className="text-dark mt-4 mx-3">
         <div className="d-flex">
           <div>

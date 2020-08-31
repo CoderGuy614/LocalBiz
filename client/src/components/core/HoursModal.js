@@ -11,12 +11,10 @@ const HoursModal = ({ show, handleClose, id }) => {
         </Modal.Header>
         <Modal.Body>
           <HoursForm id={id} />
-        </Modal.Body>
-        <Modal.Footer>
           <Button block variant="secondary" onClick={handleClose}>
             Close
           </Button>
-        </Modal.Footer>
+        </Modal.Body>
       </Modal>
     </>
   );
