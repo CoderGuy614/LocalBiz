@@ -8,9 +8,9 @@ import Layout from "./Layout";
 const Biz = ({ match }) => {
   const { id } = match.params;
   const [business, setBusiness] = useState({});
-  const [hours, setHours] = useState({});
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
+  const [hoursUpdated, setHoursUpdated] = useState(false);
 
   const loadBusiness = () => {
     getBusiness(id).then((data) => {
@@ -18,7 +18,6 @@ const Biz = ({ match }) => {
         setError(data.error);
       } else {
         setBusiness(data);
-        setHours(data.hours);
       }
     });
   };
@@ -39,7 +38,11 @@ const Biz = ({ match }) => {
 
   useEffect(() => {
     loadBusiness();
-  }, [hours]);
+  }, [hoursUpdated]);
+
+  const sawHoursUpdate = () => {
+    setHoursUpdated(!hoursUpdated);
+  };
 
   const { name, description, photo, user, _id } = business;
 
@@ -48,7 +51,11 @@ const Biz = ({ match }) => {
       <Container fluid>
         <Row>
           <Col sm={3}>
-            <BizSidebar business={business} user={user} />
+            <BizSidebar
+              business={business}
+              user={user}
+              sawHoursUpdate={sawHoursUpdate}
+            />
           </Col>
           <Col sm={9}>
             <Button href={`/post/item/${_id}`} block>

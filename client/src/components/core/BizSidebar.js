@@ -6,7 +6,7 @@ import HoursModal from "./HoursModal";
 import ContactInfo from "./ContactInfo";
 import { Button } from "react-bootstrap";
 
-const BizSidebar = ({ business }) => {
+const BizSidebar = ({ business, sawHoursUpdate }) => {
   const { rating, hours, lat, lng, bizEmail, bizPhone, _id } = business;
 
   const [show, setShow] = useState(false);
@@ -39,6 +39,7 @@ const BizSidebar = ({ business }) => {
         show={show}
         handleShow={handleShow}
         handleClose={handleClose}
+        sawHoursUpdate={sawHoursUpdate}
       />
       <ContactInfo email={bizEmail} phone={bizPhone} />
     </div>

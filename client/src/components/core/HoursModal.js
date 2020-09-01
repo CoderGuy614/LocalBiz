@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import HoursForm from "./HoursForm";
 import { Modal, Button, Container } from "react-bootstrap";
 
-const HoursModal = ({ show, handleClose, id }) => {
+const HoursModal = ({ show, handleClose, id, sawHoursUpdate }) => {
   return (
     <>
       <Modal show={show} onHide={handleClose} dialogClassName="modal-lg">
@@ -10,7 +10,7 @@ const HoursModal = ({ show, handleClose, id }) => {
           <Modal.Title>Edit Business Hours</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <HoursForm id={id} />
+          <HoursForm id={id} sawHoursUpdate={sawHoursUpdate} />
           <Container>
             <Button block variant="secondary" onClick={handleClose}>
               Close

@@ -4,7 +4,7 @@ import { Container, Button, Table } from "react-bootstrap";
 import { getHours, updateHours } from "./apiCore";
 import HourInputRow from "./HourInputRow";
 
-const HoursForm = ({ id }) => {
+const HoursForm = ({ id, sawHoursUpdate }) => {
   const [values, setValues] = useState({
     Monday: {
       open: "",
@@ -76,6 +76,7 @@ const HoursForm = ({ id }) => {
         setError(data.error);
       } else {
         setSuccess(true);
+        sawHoursUpdate();
       }
     });
   };
