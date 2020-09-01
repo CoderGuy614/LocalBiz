@@ -8,6 +8,7 @@ import Layout from "./Layout";
 const Biz = ({ match }) => {
   const { id } = match.params;
   const [business, setBusiness] = useState({});
+  const [hours, setHours] = useState({});
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
 
@@ -17,6 +18,7 @@ const Biz = ({ match }) => {
         setError(data.error);
       } else {
         setBusiness(data);
+        setHours(data.hours);
       }
     });
   };
@@ -32,9 +34,12 @@ const Biz = ({ match }) => {
   };
 
   useEffect(() => {
-    loadBusiness();
     loadItems();
-  }, [business]);
+  }, []);
+
+  useEffect(() => {
+    loadBusiness();
+  }, [hours]);
 
   const { name, description, photo, user, _id } = business;
 
