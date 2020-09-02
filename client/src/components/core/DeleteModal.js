@@ -1,8 +1,21 @@
 import React, { useState } from "react";
+import { deleteItem } from "./apiCore";
 import { Modal, Button } from "react-bootstrap";
 
-const DeleteModal = ({ showDelete, setShowDelete, id }) => {
+const DeleteModal = ({
+  showDelete,
+  setShowDelete,
+  itemsUpdated,
+  setItemsUpdated,
+  id,
+}) => {
   const handleClose = () => {
+    setShowDelete(false);
+  };
+
+  const handleDelete = () => {
+    deleteItem(id).then((response) => setItemsUpdated(!itemsUpdated));
+
     setShowDelete(false);
   };
 
@@ -13,7 +26,7 @@ const DeleteModal = ({ showDelete, setShowDelete, id }) => {
       </Modal.Header>
       <Modal.Body>Are you sure you want to delete this item?</Modal.Body>
       <Modal.Footer>
-        <Button variant="success" onClick={handleClose}>
+        <Button variant="success" onClick={handleDelete}>
           Yes
         </Button>
         <Button variant="danger" onClick={handleClose}>

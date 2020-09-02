@@ -100,3 +100,15 @@ export const getHours = (bizId) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const deleteItem = (itemId, userId = "5f4493e81ab0002d9945e5b8") => {
+  return axios({
+    method: "delete",
+    // Put Authorization Token Here Later
+    url: `${process.env.REACT_APP_API}/item/delete/${userId}/${itemId}`,
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => console.log(err));
+};

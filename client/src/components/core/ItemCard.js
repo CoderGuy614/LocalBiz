@@ -4,7 +4,7 @@ import EditModal from "./EditModal";
 
 import { Row, Col, Image, ListGroup, Button } from "react-bootstrap";
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
@@ -19,7 +19,6 @@ const ItemCard = ({ item }) => {
   };
 
   const handleDeleteItem = () => {
-    console.log(`DELETE ITEM ${_id} `);
     setShowDelete(true);
 
     // Open a delete Item Modal
@@ -64,6 +63,8 @@ const ItemCard = ({ item }) => {
       <DeleteModal
         id={_id}
         showDelete={showDelete}
+        itemsUpdated={itemsUpdated}
+        setItemsUpdated={setItemsUpdated}
         setShowDelete={setShowDelete}
       />
       <EditModal id={_id} showEdit={showEdit} setShowEdit={setShowEdit} />

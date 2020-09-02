@@ -11,7 +11,7 @@ const Biz = ({ match }) => {
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
   const [hoursUpdated, setHoursUpdated] = useState(false);
-
+  const [itemsUpdated, setItemsUpdated] = useState(false);
   const loadBusiness = () => {
     getBusiness(id).then((data) => {
       if (data.error) {
@@ -34,7 +34,7 @@ const Biz = ({ match }) => {
 
   useEffect(() => {
     loadItems();
-  }, []);
+  }, [itemsUpdated]);
 
   useEffect(() => {
     loadBusiness();
@@ -63,7 +63,14 @@ const Biz = ({ match }) => {
               Add An Item
             </Button>
             {items.length > 0 ? (
-              items.map((item) => <ItemCard key={item._id} item={item} />)
+              items.map((item) => (
+                <ItemCard
+                  key={item._id}
+                  item={item}
+                  itemsUpdated={itemsUpdated}
+                  setItemsUpdated={setItemsUpdated}
+                />
+              ))
             ) : (
               <div className="text-center mt-4">
                 <h3>No Items to Show</h3>
