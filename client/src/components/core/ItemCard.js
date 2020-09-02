@@ -1,15 +1,54 @@
-import React from "react";
-import { Row, Col, Image, ListGroup } from "react-bootstrap";
+import React, { useState } from "react";
+import DeleteModal from "./DeleteModal";
+import EditModal from "./EditModal";
+
+import { Row, Col, Image, ListGroup, Button } from "react-bootstrap";
 
 const ItemCard = ({ item }) => {
+  const [showDelete, setShowDelete] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+
   const translateBool = (bool) => {
     return bool ? "Yes" : "False";
   };
   const { name, description, photo, price, inStock, canDeliver, _id } = item;
+
+  const handleEditItem = () => {
+    console.log(`EDIT ITEM ${_id} `);
+    setShowEdit(true);
+  };
+
+  const handleDeleteItem = () => {
+    console.log(`DELETE ITEM ${_id} `);
+    setShowDelete(true);
+
+    // Open a delete Item Modal
+    // Pass the item ID Into the Modal
+    // The modal will have a function imported from apiCore that will send the delete request to server, passing the item id
+  };
+
   return (
     <Row className="m-2 border rounded">
-      <Col xs={4} className="d-flex align-items-center">
-        <Image src={photo} thumbnail fluid />
+      <Col xs={4}>
+        <Row className="d-flex align-items-center">
+          <Image src={photo} thumbnail fluid />
+        </Row>
+        <Row>
+          <Button
+            onClick={handleEditItem}
+            style={{ width: "50%" }}
+            variant="dark"
+          >
+            Edit
+          </Button>
+          <Button
+            onClick={handleDeleteItem}
+            style={{ width: "50%" }}
+            variant="danger"
+          >
+            Delete
+          </Button>
+        </Row>
       </Col>
       <Col xs={8}>
         <ListGroup variant="flush">
@@ -22,6 +61,12 @@ const ItemCard = ({ item }) => {
           </ListGroup.Item>
         </ListGroup>
       </Col>
+      <DeleteModal
+        id={_id}
+        showDelete={showDelete}
+        setShowDelete={setShowDelete}
+      />
+      <EditModal id={_id} showEdit={showEdit} setShowEdit={setShowEdit} />
     </Row>
   );
 };
