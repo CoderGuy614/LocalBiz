@@ -84,6 +84,49 @@ exports.create = (req, res) => {
   });
 };
 
+exports.update = (req, res) => {
+  console.log(req.body);
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+  form.parse(req, (err, fields, files) => {
+    const { name, description, price, business } = fields;
+
+    if (!name || !description || !price || !business) {
+      return res.status(400).json({
+        error: "Name, Description and Price are Required",
+      });
+    }
+
+    if (files.photo) {
+      upload.single("file");
+      cloudinary.uploader.upload(files.photo.path).then((cloudinaryFile) => {
+        fields.photo = cloudinaryFile.url;
+        let item = new Item(fields);
+        item.save((err, result) => {
+          if (err) {
+            console.log("Item Create Error ", err);
+            return res.status(400).json({
+              error: err,
+            });
+          }
+          res.json(result);
+        });
+      });
+    } else {
+      let item = new Item(fields);
+      item.save((err, result) => {
+        if (err) {
+          console.log("Item Create Error ", err);
+          return res.status(400).json({
+            error: err,
+          });
+        }
+        res.json(result);
+      });
+    }
+  });
+};
+
 exports.deleteItem = (req, res) => {
   let item = req.item;
   item.remove((err, deletedProduct) => {

@@ -64,17 +64,14 @@ export const createBiz = (biz) => {
     });
 };
 
-export const createItem = (item) => {
-  return fetch(
-    `${process.env.REACT_APP_API}/item/create/5f4493e81ab0002d9945e5b8`,
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-      },
-      body: item,
-    }
-  )
+export const createItem = (item, userId = "5f4493e81ab0002d9945e5b8") => {
+  return fetch(`${process.env.REACT_APP_API}/item/create/${userId}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
+    body: item,
+  })
     .then((response) => {
       return response.json();
     })
@@ -83,24 +80,18 @@ export const createItem = (item) => {
     });
 };
 
-export const updateItem = (itemId) => {
-  console.log("UPDATE ITEM", itemId);
-  // return fetch(
-  //   `${process.env.REACT_APP_API}/item/update/${itemId}`,
-  //   {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //     },
-  //     body: item,
-  //   }
-  // )
-  //   .then((response) => {
-  //     return response.json();
-  //   })
-  //   .catch((err) => {
-  //     return console.log(err);
-  //   });
+export const updateItem = (itemId, item) => {
+  return fetch(`${process.env.REACT_APP_API}/item/update/${itemId}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+    },
+    body: item,
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
 };
 
 export const updateHours = (

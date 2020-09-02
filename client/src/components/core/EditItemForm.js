@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Image } from "react-bootstrap";
 import { updateItem, getItem } from "./apiCore";
 
 const EditItemForm = ({ itemId, setSuccess }) => {
@@ -7,6 +7,7 @@ const EditItemForm = ({ itemId, setSuccess }) => {
     name: "",
     description: "",
     price: "",
+    business: "",
     inStock: true,
     canDeliver: true,
     photo: "",
@@ -17,11 +18,43 @@ const EditItemForm = ({ itemId, setSuccess }) => {
 
   const [photoName, setPhotoName] = useState("");
 
+  useEffect(() => {
+    getItem(itemId)
+      .then((response) => {
+        const {
+          name,
+          description,
+          price,
+          inStock,
+          canDeliver,
+          photo,
+          business,
+        } = response;
+        setValues({
+          ...values,
+          name,
+          description,
+          price,
+          inStock,
+          canDeliver,
+          photo,
+          business,
+        });
+        formData.set("name", name);
+        formData.set("description", description);
+        formData.set("price", price);
+        formData.set("inStock", inStock);
+        formData.set("canDeliver", canDeliver);
+        formData.set("business", business);
+        formData.set("photo", photo);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const {
     name,
     description,
     price,
-    business,
     photo,
     inStock,
     canDeliver,
@@ -29,13 +62,6 @@ const EditItemForm = ({ itemId, setSuccess }) => {
     error,
     formData,
   } = values;
-
-  useEffect(() => {
-    console.log(itemId);
-    getItem(itemId)
-      .then((response) => setValues(response))
-      .catch((err) => console.log(err));
-  }, []);
 
   const handleChange = (name) => (e) => {
     const value = name === "photo" ? e.target.files[0] : e.target.value;
@@ -48,22 +74,12 @@ const EditItemForm = ({ itemId, setSuccess }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    formData.set("business", business);
-    updateItem(formData).then((data) => {
+
+    updateItem(itemId, formData).then((data) => {
       console.log(data);
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
-        setValues({
-          ...values,
-          name: "",
-          description: "",
-          price: "",
-          canDeliver: true,
-          inStock: true,
-          loading: false,
-          error: "",
-        });
         setSuccess(true);
       }
     });
@@ -138,8 +154,10 @@ const EditItemForm = ({ itemId, setSuccess }) => {
           <option value={true}>Yes</option>
         </Form.Control>
       </Form.Group>
+      <h6>Current Photo</h6>
+      {!photoName && <Image src={photo} thumbnail fluid className="my-2" />}
 
-      {/* <Form.Group>
+      <Form.Group>
         <Form.Label>Item Photo</Form.Label>
         <Form.File
           id="custom-file"
@@ -148,7 +166,7 @@ const EditItemForm = ({ itemId, setSuccess }) => {
           onChange={handleChange("photo")}
           custom
         />
-      </Form.Group> */}
+      </Form.Group>
       {showFileName()}
       {showError()}
       {showLoading()}

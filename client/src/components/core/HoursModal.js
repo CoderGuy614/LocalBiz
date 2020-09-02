@@ -12,7 +12,7 @@ const HoursModal = ({ show, handleClose, id, sawHoursUpdate }) => {
         <Modal.Body>
           <HoursForm id={id} sawHoursUpdate={sawHoursUpdate} />
           <Container>
-            <Button block variant="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
           </Container>
