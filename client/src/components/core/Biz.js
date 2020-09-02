@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getBusiness, getItems } from "./apiCore";
 import { Row, Col, Container, Button } from "react-bootstrap";
+import AddItemModal from "./AddItemModal";
 import BizSidebar from "./BizSidebar";
 import ItemCard from "./ItemCard";
 import Layout from "./Layout";
@@ -10,6 +11,7 @@ const Biz = ({ match }) => {
   const [business, setBusiness] = useState({});
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [hoursUpdated, setHoursUpdated] = useState(false);
   const [itemsUpdated, setItemsUpdated] = useState(false);
   const loadBusiness = () => {
@@ -58,7 +60,7 @@ const Biz = ({ match }) => {
             />
           </Col>
           <Col sm={9}>
-            <Button href={`/post/item/${_id}`} block>
+            <Button onClick={() => setShowAddModal(true)} block>
               {" "}
               Add An Item
             </Button>
@@ -79,6 +81,13 @@ const Biz = ({ match }) => {
           </Col>
         </Row>
       </Container>
+      <AddItemModal
+        showAddModal={showAddModal}
+        setShowAddModal={setShowAddModal}
+        itemsUpdated={itemsUpdated}
+        setItemsUpdated={setItemsUpdated}
+        bizId={id}
+      />
     </Layout>
   );
 };

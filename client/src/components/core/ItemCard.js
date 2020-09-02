@@ -13,36 +13,23 @@ const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
   };
   const { name, description, photo, price, inStock, canDeliver, _id } = item;
 
-  const handleEditItem = () => {
-    console.log(`EDIT ITEM ${_id} `);
-    setShowEdit(true);
-  };
-
-  const handleDeleteItem = () => {
-    setShowDelete(true);
-
-    // Open a delete Item Modal
-    // Pass the item ID Into the Modal
-    // The modal will have a function imported from apiCore that will send the delete request to server, passing the item id
-  };
-
   return (
     <Row className="m-2 border rounded">
       <Col xs={4}>
         <Row className="d-flex align-items-center">
           <Image src={photo} thumbnail fluid />
         </Row>
-        <Row>
+        <Row className="m-2 d-flex justify-content-center">
           <Button
-            onClick={handleEditItem}
-            style={{ width: "50%" }}
+            onClick={() => setShowEdit(true)}
+            className="item-card-button w-auto mx-1"
             variant="dark"
           >
             Edit
           </Button>
           <Button
-            onClick={handleDeleteItem}
-            style={{ width: "50%" }}
+            onClick={() => setShowDelete(true)}
+            className="item-card-button w-auto mx-1"
             variant="danger"
           >
             Delete

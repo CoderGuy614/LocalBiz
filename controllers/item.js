@@ -83,3 +83,17 @@ exports.create = (req, res) => {
     }
   });
 };
+
+exports.deleteItem = (req, res) => {
+  let item = req.item;
+  item.remove((err, deletedProduct) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+    res.json({
+      message: "Item deleted successfully",
+    });
+  });
+};

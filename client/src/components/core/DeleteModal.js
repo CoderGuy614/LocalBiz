@@ -26,13 +26,10 @@ const DeleteModal = ({
       </Modal.Header>
       <Modal.Body>Are you sure you want to delete this item?</Modal.Body>
       <Modal.Footer>
-        <Button variant="success" onClick={handleDelete}>
-          Yes
+        <Button variant="danger" onClick={handleDelete}>
+          Delete
         </Button>
-        <Button variant="danger" onClick={handleClose}>
-          No
-        </Button>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="success" onClick={handleClose}>
           Cancel
         </Button>
       </Modal.Footer>

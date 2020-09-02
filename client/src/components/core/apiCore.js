@@ -17,8 +17,18 @@ export const getBusiness = (id) => {
     .catch((err) => console.log(err));
 };
 
-export const getItems = (id) => {
-  return fetch(`${process.env.REACT_APP_API}/items/${id}`, { method: "GET" })
+//Get All The Items for a Business by ID
+export const getItems = (bizId) => {
+  return fetch(`${process.env.REACT_APP_API}/items/${bizId}`, { method: "GET" })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+//Get one Item By It's ID
+export const getItem = (itemId) => {
+  return fetch(`${process.env.REACT_APP_API}/item/${itemId}`, { method: "GET" })
     .then((response) => {
       return response.json();
     })
