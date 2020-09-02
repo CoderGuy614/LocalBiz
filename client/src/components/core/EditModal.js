@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import EditItemForm from "./EditItemForm";
 
-const EditModal = ({ showEdit, setShowEdit, id }) => {
+const EditModal = ({
+  showEdit,
+  setShowEdit,
+  itemsUpdated,
+  setItemsUpdated,
+  id,
+}) => {
   const [success, setSuccess] = useState(false);
   const handleClose = () => {
     setShowEdit(false);
@@ -11,6 +17,7 @@ const EditModal = ({ showEdit, setShowEdit, id }) => {
   useEffect(() => {
     if (success) {
       setShowEdit(false);
+      setItemsUpdated(!itemsUpdated);
     }
   }, [success]);
 

@@ -9,7 +9,7 @@ const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
   const [showEdit, setShowEdit] = useState(false);
 
   const translateBool = (bool) => {
-    return bool ? "Yes" : "False";
+    return bool ? "Yes" : "No";
   };
   const { name, description, photo, price, inStock, canDeliver, _id } = item;
 
@@ -54,7 +54,13 @@ const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
         setItemsUpdated={setItemsUpdated}
         setShowDelete={setShowDelete}
       />
-      <EditModal id={_id} showEdit={showEdit} setShowEdit={setShowEdit} />
+      <EditModal
+        id={_id}
+        showEdit={showEdit}
+        setShowEdit={setShowEdit}
+        itemsUpdated={itemsUpdated}
+        setItemsUpdated={setItemsUpdated}
+      />
     </Row>
   );
 };

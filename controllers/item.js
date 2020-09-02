@@ -1,6 +1,7 @@
 const Item = require("../models/Item");
 const formidable = require("formidable");
 const config = require("config");
+const _ = require("lodash");
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage });
@@ -89,6 +90,11 @@ exports.update = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.parse(req, (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Image could not be uploaded",
+      });
+    }
     const { name, description, price, business } = fields;
 
     if (!name || !description || !price || !business) {
@@ -101,7 +107,8 @@ exports.update = (req, res) => {
       upload.single("file");
       cloudinary.uploader.upload(files.photo.path).then((cloudinaryFile) => {
         fields.photo = cloudinaryFile.url;
-        let item = new Item(fields);
+        let item = req.item;
+        item = _.extend(item, fields);
         item.save((err, result) => {
           if (err) {
             console.log("Item Create Error ", err);
@@ -113,7 +120,8 @@ exports.update = (req, res) => {
         });
       });
     } else {
-      let item = new Item(fields);
+      let item = req.item;
+      item = _.extend(item, fields);
       item.save((err, result) => {
         if (err) {
           console.log("Item Create Error ", err);
