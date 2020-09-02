@@ -83,6 +83,26 @@ export const createItem = (item) => {
     });
 };
 
+export const updateItem = (itemId) => {
+  console.log("UPDATE ITEM", itemId);
+  // return fetch(
+  //   `${process.env.REACT_APP_API}/item/update/${itemId}`,
+  //   {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //     },
+  //     body: item,
+  //   }
+  // )
+  //   .then((response) => {
+  //     return response.json();
+  //   })
+  //   .catch((err) => {
+  //     return console.log(err);
+  //   });
+};
+
 export const updateHours = (
   hours,
   bizId,

@@ -30,7 +30,7 @@ const AddItemModal = ({
       <Modal.Body>
         <AddItemForm bizId={bizId} setSuccess={setSuccess} />
 
-        <Button variant="danger" onClick={handleClose} className="my-2">
+        <Button variant="secondary" onClick={handleClose} className="my-2">
           Cancel
         </Button>
       </Modal.Body>

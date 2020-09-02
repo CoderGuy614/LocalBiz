@@ -29,8 +29,8 @@ const DeleteModal = ({
         <Button variant="danger" onClick={handleDelete}>
           Delete
         </Button>
-        <Button variant="success" onClick={handleClose}>
-          Cancel
+        <Button variant="secondary" onClick={handleClose}>
+          Close
         </Button>
       </Modal.Footer>
     </Modal>
