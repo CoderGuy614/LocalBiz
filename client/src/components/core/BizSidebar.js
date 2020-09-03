@@ -25,7 +25,8 @@ const BizSidebar = ({ business, hoursUpdated, setHoursUpdated }) => {
         <Pin lat={lat} lng={lng} rating={rating} />
       </GoogleMap>
       <Hours hours={hours} id={_id} />
-      <Button block variant="primary" onClick={() => setShowModal(true)}>
+      <Button block variant="secondary" onClick={() => setShowModal(true)}>
+        <i className="fas fa-edit mr-2"></i>
         Edit Business Hours
       </Button>
       <HoursModal
@@ -36,6 +37,10 @@ const BizSidebar = ({ business, hoursUpdated, setHoursUpdated }) => {
         setHoursUpdated={setHoursUpdated}
       />
       <ContactInfo email={bizEmail} phone={bizPhone} />
+      <Button block variant="info" className="mb-3">
+        <i className="fas fa-cog mr-2"></i>
+        Edit Settings
+      </Button>
     </div>
   );
 };

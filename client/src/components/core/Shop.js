@@ -43,7 +43,8 @@ const Shop = () => {
     >
       <Container fluid>
         <Filters categories={categories} />
-        <Button block onClick={() => setShowAddModal(true)}>
+        <Button variant="secondary" block onClick={() => setShowAddModal(true)}>
+          <i className="fas fa-plus-square mr-2"></i>
           Create New Business
         </Button>
         <Container fluid className="d-flex flex-wrap">

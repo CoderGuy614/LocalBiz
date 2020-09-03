@@ -57,8 +57,12 @@ const Biz = ({ match }) => {
             />
           </Col>
           <Col sm={9}>
-            <Button onClick={() => setShowAddModal(true)} block>
-              {" "}
+            <Button
+              variant="secondary"
+              onClick={() => setShowAddModal(true)}
+              block
+            >
+              <i className="fas fa-plus-square mr-2"></i>
               Add An Item
             </Button>
             {items.length > 0 ? (

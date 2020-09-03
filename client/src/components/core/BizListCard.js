@@ -14,10 +14,12 @@ const BizListCard = ({ name, description, rating, photo, id }) => {
             <Button
               style={{ height: "100%", paddingTop: "15%" }}
               block
-              variant="primary"
+              variant="secondary"
               href={`/biz/${id}`}
             >
-              See Items
+              <i className="fas fa-store-alt fa-2x"></i>
+              <br />
+              Shop
             </Button>
           </Col>
           <Col>
