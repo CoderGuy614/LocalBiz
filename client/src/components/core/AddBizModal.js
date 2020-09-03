@@ -11,7 +11,7 @@ const AddBizModal = ({ showAddModal, setShowAddModal }) => {
   return (
     <Modal show={showAddModal} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Add a New Item</Modal.Title>
+        <Modal.Title>Add a New Business</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <AddBizForm setSuccess={setSuccess} />
