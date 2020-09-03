@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container, ListGroup } from "react-bootstrap";
+import EditableField from "./EditableField";
+import DisplayField from "./DisplayField";
 import ReactTooltip from "react-tooltip";
 import { getBusiness, getCategories } from "../apiCore";
 
@@ -26,54 +28,79 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
       <Form>
         <ListGroup>
           {isEditable.name && (
-            <Container>
-              <Form.Control type="text" placeholder="Enter Name" />
-              <Button
-                className="my-2"
-                variant="success"
-                onClick={() => setIsEditable({ ...isEditable, name: false })}
-              >
-                Ok
-              </Button>
-            </Container>
+            <EditableField
+              field="name"
+              setIsEditable={setIsEditable}
+              isEditable={isEditable}
+              inputType="text"
+              placeholder="Enter Name"
+              buttonVariant="success"
+            />
           )}
           {!isEditable.name && (
-            <ListGroup.Item
-              className="settings-list-item"
-              data-tip
-              data-for="edit-tooltip"
-              onClick={() => setIsEditable({ ...isEditable, name: true })}
-            >
-              <span className="text-primary font-weight-bold">Name: </span>
-              {name}
-              <span></span>
-            </ListGroup.Item>
+            <DisplayField
+              isEditable={isEditable}
+              setIsEditable={setIsEditable}
+              field="name"
+              displayValue={name}
+            />
           )}
 
-          <ListGroup.Item
-            className="settings-list-item"
-            data-tip
-            data-for="edit-tooltip"
-          >
-            <span className="text-primary font-weight-bold">Description: </span>
-            {description}
-          </ListGroup.Item>
-          <ListGroup.Item
-            className="settings-list-item"
-            data-tip
-            data-for="edit-tooltip"
-          >
-            <span className="text-primary font-weight-bold">Email: </span>
-            {bizEmail}
-          </ListGroup.Item>
-          <ListGroup.Item
-            className="settings-list-item"
-            data-tip
-            data-for="edit-tooltip"
-          >
-            <span className="text-primary font-weight-bold">Phone: </span>
-            {bizPhone}
-          </ListGroup.Item>
+          {isEditable.description && (
+            <EditableField
+              field="description"
+              setIsEditable={setIsEditable}
+              isEditable={isEditable}
+              inputType="text"
+              placeholder="Enter description"
+              buttonVariant="success"
+            />
+          )}
+          {!isEditable.description && (
+            <DisplayField
+              isEditable={isEditable}
+              setIsEditable={setIsEditable}
+              field="description"
+              displayValue={description}
+            />
+          )}
+
+          {isEditable.email && (
+            <EditableField
+              field="email"
+              setIsEditable={setIsEditable}
+              isEditable={isEditable}
+              inputType="text"
+              placeholder="Enter email"
+              buttonVariant="success"
+            />
+          )}
+          {!isEditable.email && (
+            <DisplayField
+              isEditable={isEditable}
+              setIsEditable={setIsEditable}
+              field="email"
+              displayValue={bizEmail}
+            />
+          )}
+          {isEditable.phone && (
+            <EditableField
+              field="phone"
+              setIsEditable={setIsEditable}
+              isEditable={isEditable}
+              inputType="text"
+              placeholder="Enter phone"
+              buttonVariant="success"
+            />
+          )}
+          {!isEditable.phone && (
+            <DisplayField
+              isEditable={isEditable}
+              setIsEditable={setIsEditable}
+              field="phone"
+              displayValue={bizPhone}
+            />
+          )}
         </ListGroup>
         <div className="d-flex">
           <Button variant="success" className="my-2">
