@@ -133,3 +133,16 @@ export const deleteItem = (itemId, userId = "5f4493e81ab0002d9945e5b8") => {
     })
     .catch((err) => console.log(err));
 };
+
+export const updateBiz = (values, bizId) => {
+  return axios({
+    method: "put",
+    headers: { "Content-Type": "application/json" },
+    url: `${process.env.REACT_APP_API}/biz/update/${bizId}`,
+    data: values,
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => console.log(err));
+};

@@ -19,6 +19,7 @@ const SettingsModal = ({
           bizId={id}
           settingsUpdated={settingsUpdated}
           setSettingsUpdated={setSettingsUpdated}
+          setShowSettingsModal={setShowSettingsModal}
         />
         <Button
           variant="secondary"

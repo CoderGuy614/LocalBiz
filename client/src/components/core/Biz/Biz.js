@@ -56,6 +56,8 @@ const Biz = ({ match }) => {
                 user={user}
                 hoursUpdated={hoursUpdated}
                 setHoursUpdated={setHoursUpdated}
+                settingsUpdated={settingsUpdated}
+                setSettingsUpdated={setSettingsUpdated}
               />
             </Row>
           </Col>

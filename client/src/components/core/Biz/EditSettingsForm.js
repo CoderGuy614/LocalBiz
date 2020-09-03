@@ -3,9 +3,14 @@ import { Form, Button, Container, ListGroup } from "react-bootstrap";
 import EditableField from "./EditableField";
 import DisplayField from "./DisplayField";
 import ReactTooltip from "react-tooltip";
-import { getBusiness } from "../apiCore";
+import { getBusiness, updateBiz } from "../apiCore";
 
-const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
+const EditSettingsForm = ({
+  bizId,
+  settingsUpdated,
+  setSettingsUpdated,
+  setShowSettingsModal,
+}) => {
   const [isEditable, setIsEditable] = useState({
     name: false,
     description: false,
@@ -25,6 +30,17 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
       .then((biz) => setValues(biz))
       .catch((err) => console.log(err));
   }, []);
+
+  const handleSubmit = () => {
+    updateBiz(values, bizId).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setShowSettingsModal(false);
+        setSettingsUpdated(!settingsUpdated);
+      }
+    });
+  };
 
   const { name, description, bizEmail, bizPhone } = values;
 
@@ -120,7 +136,7 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
           !isEditable.email &&
           !isEditable.phone && (
             <div className="d-flex">
-              <Button variant="success" className="my-2">
+              <Button variant="success" className="my-2" onClick={handleSubmit}>
                 Save Changes
               </Button>
               <Button variant="danger" className="my-2 ml-auto">

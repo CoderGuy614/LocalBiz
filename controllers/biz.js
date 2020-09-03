@@ -113,3 +113,27 @@ exports.getHours = (req, res) => {
       return res.json(hours);
     });
 };
+
+exports.updateBiz = async (req, res) => {
+  const id = req.biz._id;
+  const { name, description, bizPhone, bizEmail } = req.body;
+  const profileFields = {};
+  if (name) profileFields.name = name;
+  if (description) profileFields.description = description;
+  if (bizEmail) profileFields.bizEmail = bizEmail;
+  if (bizPhone) profileFields.bizPhone = bizPhone;
+
+  try {
+    let updatedBiz = await Biz.findByIdAndUpdate(
+      id,
+      { $set: profileFields },
+      { new: true }
+    );
+    return res.json(updatedBiz);
+  } catch (error) {
+    console.log(err);
+    return res.status(400).json({
+      error: err,
+    });
+  }
+};
