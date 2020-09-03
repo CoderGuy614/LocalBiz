@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { Container, Button } from "react-bootstrap";
 import { getBusinesses, getCategories } from "./apiCore";
+import AddBizModal from "./AddBizModal";
 import Filters from "./Filters";
 import BizListCard from "./BizListCard";
 
@@ -9,6 +10,7 @@ const Shop = () => {
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const loadBusinesses = () => {
     getBusinesses().then((data) => {
@@ -41,7 +43,7 @@ const Shop = () => {
     >
       <Container fluid>
         <Filters categories={categories} />
-        <Button block href="/post/biz">
+        <Button block onClick={() => setShowAddModal(true)}>
           Create New Business
         </Button>
         <Container fluid className="d-flex flex-wrap">
@@ -59,6 +61,10 @@ const Shop = () => {
             ))}
         </Container>
       </Container>
+      <AddBizModal
+        showAddModal={showAddModal}
+        setShowAddModal={setShowAddModal}
+      />
     </Layout>
   );
 };
