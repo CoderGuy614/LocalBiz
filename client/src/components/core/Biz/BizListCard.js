@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
-import StarRating from "./StarRating";
+import StarRating from "../Layout/StarRating";
 
 const BizListCard = ({ name, description, rating, photo, id }) => {
   return (

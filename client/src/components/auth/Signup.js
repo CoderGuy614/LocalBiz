@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
-import Layout from "../core/Layout";
+import Layout from "../core/Layout/Layout";
 import FBLogin from "./FBLogin";
 import { signup } from "../../auth/Index";
 const Signup = () => {

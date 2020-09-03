@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Alert, Image } from "react-bootstrap";
-import { updateItem, getItem } from "./apiCore";
+import { updateItem, getItem } from "../apiCore";
 
 const EditItemForm = ({ itemId, setSuccess }) => {
   const [values, setValues] = useState({

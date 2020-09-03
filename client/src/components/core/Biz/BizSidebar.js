@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import GoogleMap from "google-map-react";
-import Pin from "./Pin";
+import Pin from "../Layout/Pin";
 import Hours from "./Hours";
 import HoursModal from "./HoursModal";
 import ContactInfo from "./ContactInfo";

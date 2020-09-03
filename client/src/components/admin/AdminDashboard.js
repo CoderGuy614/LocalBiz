@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Button, Row, Col } from "react-bootstrap";
-import Layout from "../core/Layout";
+import Layout from "../core/Layout/Layout";
 
 const AdminDashboard = () => {
   return (

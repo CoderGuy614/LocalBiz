@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Form, Button, Container, Alert } from "react-bootstrap";
-import { createBiz, getCategories } from "./apiCore";
+import { createBiz, getCategories } from "../apiCore";
 
 const AddBizForm = () => {
   const [values, setValues] = useState({

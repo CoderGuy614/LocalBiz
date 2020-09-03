@@ -1,15 +1,15 @@
 import React from "react";
 import "./App.scss";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Navigation from "./components/core/Navigation";
+import Navigation from "./components/core/Layout/Navigation";
 import AdminRoute from "./auth/AdminRoute";
 import PrivateRoute from "./auth/PrivateRoute";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Shop from "./components/core/Shop";
-import Biz from "./components/core/Biz";
-import HoursForm from "./components/core/HoursForm";
-import AddBizForm from "./components/core/AddBizForm";
+import Biz from "./components/core/Biz/Biz";
+import HoursForm from "./components/core//Biz/HoursForm";
+import AddBizForm from "./components/core/Biz/AddBizForm";
 
 import AdminDashboard from "./components/admin/AdminDashboard";
 import UserDashboard from "./components/user/UserDashboard";

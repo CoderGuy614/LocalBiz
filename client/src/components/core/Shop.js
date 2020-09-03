@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Layout from "./Layout";
+import Layout from "./Layout/Layout";
 import { Container, Button } from "react-bootstrap";
 import { getBusinesses, getCategories } from "./apiCore";
-import AddBizModal from "./AddBizModal";
-import Filters from "./Filters";
-import BizListCard from "./BizListCard";
+import AddBizModal from "./Biz/AddBizModal";
+import Filters from "./Layout/Filters";
+import BizListCard from "./Biz/BizListCard";
 
 const Shop = () => {
   const [businesses, setBusinesses] = useState([]);

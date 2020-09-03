@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getBusiness, getItems } from "./apiCore";
+import { getBusiness, getItems } from "../apiCore";
 import { Row, Col, Container, Button } from "react-bootstrap";
-import AddItemModal from "./AddItemModal";
+import AddItemModal from "../Item/AddItemModal";
 import BizSidebar from "./BizSidebar";
-import ItemCard from "./ItemCard";
-import Layout from "./Layout";
+import ItemCard from "../Item/ItemCard";
+import Layout from "../Layout/Layout";
 
 const Biz = ({ match }) => {
   const { id } = match.params;

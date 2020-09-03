@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Button, Table } from "react-bootstrap";
-import { getHours, updateHours } from "./apiCore";
+import { getHours, updateHours } from "../apiCore";
 import HourInputRow from "./HourInputRow";
 
 const HoursForm = ({ id, hoursUpdated, setHoursUpdated, setShowModal }) => {

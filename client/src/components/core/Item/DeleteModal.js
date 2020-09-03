@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteItem } from "./apiCore";
+import { deleteItem } from "../apiCore";
 import { Modal, Button } from "react-bootstrap";
 
 const DeleteModal = ({

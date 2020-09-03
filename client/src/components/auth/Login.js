@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Alert, Button, Row, Col, Container } from "react-bootstrap";
-import Layout from "../core/Layout";
+import Layout from "../core/Layout/Layout";
 import { Redirect } from "react-router-dom";
 import FBLogin from "./FBLogin";
 
