@@ -5,13 +5,13 @@ const ContactInfo = ({ email, phone }) => {
   return (
     <div className="my-3">
       <ListGroup>
-        <ListGroup.Item>
+        <ListGroup.Item className="settings-list-item">
           <span>
             <i className="fas fa-envelope-square mr-2"></i>
           </span>{" "}
           {email}
         </ListGroup.Item>
-        <ListGroup.Item>
+        <ListGroup.Item className="settings-list-item">
           <span>
             <i className="fas fa-phone mr-2"></i>
           </span>{" "}

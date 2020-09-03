@@ -60,12 +60,14 @@ $jumbotron-bg: #9ad1d4;
 
 .settings-list-item {
   transition: background-color 1s ease, color 0.5s ease;
-
   &:hover {
     background: theme-color("secondary");
     color: white;
   }
 }
 
+.edit-settings-icon {
+  cursor: pointer;
+}
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";

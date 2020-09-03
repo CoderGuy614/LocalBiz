@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container, ListGroup } from "react-bootstrap";
+import ReactTooltip from "react-tooltip";
 import { getBusiness, getCategories } from "../apiCore";
 
 const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
   const [business, setBusiness] = useState({});
   const [categories, setCategories] = useState([]);
+  const [isEditable, setIsEditable] = useState({
+    name: false,
+    description: false,
+    email: false,
+    phone: false,
+  });
 
   useEffect(() => {
     getBusiness(bizId)
@@ -18,33 +25,54 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
     <Container>
       <Form>
         <ListGroup>
-          <ListGroup.Item className="settings-list-item d-flex justify-content-between">
-            <span className="text-primary font-weight-bold">Name: </span>
-            {name}
-            <span>
-              <i className="fas fa-edit text-white"></i>
-            </span>
-          </ListGroup.Item>
-          <ListGroup.Item className="settings-list-item d-flex justify-content-between">
+          {isEditable.name && (
+            <Container>
+              <Form.Control type="text" placeholder="Enter Name" />
+              <Button
+                className="my-2"
+                variant="success"
+                onClick={() => setIsEditable({ ...isEditable, name: false })}
+              >
+                Ok
+              </Button>
+            </Container>
+          )}
+          {!isEditable.name && (
+            <ListGroup.Item
+              className="settings-list-item"
+              data-tip
+              data-for="edit-tooltip"
+              onClick={() => setIsEditable({ ...isEditable, name: true })}
+            >
+              <span className="text-primary font-weight-bold">Name: </span>
+              {name}
+              <span></span>
+            </ListGroup.Item>
+          )}
+
+          <ListGroup.Item
+            className="settings-list-item"
+            data-tip
+            data-for="edit-tooltip"
+          >
             <span className="text-primary font-weight-bold">Description: </span>
             {description}
-            <span>
-              <i className="fas fa-edit text-white"></i>
-            </span>
           </ListGroup.Item>
-          <ListGroup.Item className="settings-list-item d-flex justify-content-between">
+          <ListGroup.Item
+            className="settings-list-item"
+            data-tip
+            data-for="edit-tooltip"
+          >
             <span className="text-primary font-weight-bold">Email: </span>
             {bizEmail}
-            <span>
-              <i className="fas fa-edit text-white"></i>
-            </span>
           </ListGroup.Item>
-          <ListGroup.Item className="settings-list-item d-flex justify-content-between">
+          <ListGroup.Item
+            className="settings-list-item"
+            data-tip
+            data-for="edit-tooltip"
+          >
             <span className="text-primary font-weight-bold">Phone: </span>
             {bizPhone}
-            <span>
-              <i className="fas fa-edit text-white"></i>
-            </span>
           </ListGroup.Item>
         </ListGroup>
         <div className="d-flex">
@@ -56,6 +84,9 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
           </Button>
         </div>
       </Form>
+      <ReactTooltip id="edit-tooltip" place="right" effect="solid">
+        Click To Edit
+      </ReactTooltip>
     </Container>
   );
 };
