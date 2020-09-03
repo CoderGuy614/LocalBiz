@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import { Form, Button, Container, ListGroup } from "react-bootstrap";
 import EditableField from "./EditableField";
 import DisplayField from "./DisplayField";
 import ReactTooltip from "react-tooltip";
-import { getBusiness, updateBiz } from "../apiCore";
+import { getBusiness, updateBiz, deleteBiz } from "../apiCore";
 
 const EditSettingsForm = ({
   bizId,
@@ -25,6 +26,11 @@ const EditSettingsForm = ({
     bizPhone: "",
   });
 
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [confirmDeleteText, setConfirmDeleteText] = useState("");
+  const [error, setError] = useState("");
+  const [homeRedirect, setHomeRedirect] = useState(false);
+
   useEffect(() => {
     getBusiness(bizId)
       .then((biz) => setValues(biz))
@@ -40,6 +46,31 @@ const EditSettingsForm = ({
         setSettingsUpdated(!settingsUpdated);
       }
     });
+  };
+
+  const deleteHandleChange = (e) => {
+    setConfirmDeleteText(e.target.value);
+  };
+
+  const handleDelete = () => {
+    if (confirmDeleteText.toLowerCase() === "yes") {
+      deleteBiz(bizId).then((data) => {
+        if (data.error) {
+          setError(data.error);
+        } else {
+          //Close the Settings Modal
+          // Redirect to HomePage
+          setHomeRedirect(true);
+          console.log(data.msg);
+        }
+      });
+    }
+  };
+
+  const redirectUser = () => {
+    if (homeRedirect) {
+      return <Redirect to="/" />;
+    }
   };
 
   const { name, description, bizEmail, bizPhone } = values;
@@ -134,20 +165,55 @@ const EditSettingsForm = ({
         {!isEditable.name &&
           !isEditable.description &&
           !isEditable.email &&
-          !isEditable.phone && (
+          !isEditable.phone &&
+          !confirmDelete && (
             <div className="d-flex">
               <Button variant="success" className="my-2" onClick={handleSubmit}>
                 Save Changes
               </Button>
-              <Button variant="danger" className="my-2 ml-auto">
+              <Button
+                variant="danger"
+                className="my-2 ml-auto"
+                onClick={() => setConfirmDelete(true)}
+              >
                 Delete Business
               </Button>
             </div>
           )}
+
+        {confirmDelete && (
+          <Container>
+            <Form.Group>
+              <Form.Label className="mt-2">
+                Are you sure you want to delete this Biz and its' items This
+                action can't be undone?
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Type 'YES' to confirm"
+                onChange={deleteHandleChange}
+              />
+            </Form.Group>
+            <div className="d-flex justify-content-between">
+              <Button className="my-2" variant="danger" onClick={handleDelete}>
+                {" "}
+                OK
+              </Button>
+              <Button
+                className="my-2"
+                variant="secondary"
+                onClick={() => setConfirmDelete(false)}
+              >
+                Cancel
+              </Button>
+            </div>
+          </Container>
+        )}
       </Form>
       <ReactTooltip id="edit-tooltip" place="right" effect="solid">
         Click A Field To Edit It
       </ReactTooltip>
+      {redirectUser()}
     </Container>
   );
 };

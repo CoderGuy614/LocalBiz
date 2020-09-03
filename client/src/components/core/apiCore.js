@@ -146,3 +146,14 @@ export const updateBiz = (values, bizId) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const deleteBiz = (bizId) => {
+  return axios({
+    method: "delete",
+    url: `${process.env.REACT_APP_API}/biz/${bizId}`,
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => console.log(err));
+};
