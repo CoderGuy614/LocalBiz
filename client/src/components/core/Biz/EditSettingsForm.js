@@ -35,6 +35,7 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
           {isEditable.name && (
             <EditableField
               field="name"
+              stateField="name"
               values={values}
               setValues={setValues}
               setIsEditable={setIsEditable}
@@ -55,6 +56,7 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
           {isEditable.description && (
             <EditableField
               field="description"
+              stateField="description"
               values={values}
               setValues={setValues}
               setIsEditable={setIsEditable}
@@ -75,6 +77,7 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
           {isEditable.email && (
             <EditableField
               field="email"
+              stateField="bizEmail"
               values={values}
               setValues={setValues}
               setIsEditable={setIsEditable}
@@ -94,6 +97,7 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
           {isEditable.phone && (
             <EditableField
               field="phone"
+              stateField="bizPhone"
               values={values}
               setValues={setValues}
               setIsEditable={setIsEditable}

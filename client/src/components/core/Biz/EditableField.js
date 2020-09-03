@@ -3,6 +3,7 @@ import { Container, Form, Button } from "react-bootstrap";
 
 const EditableField = ({
   field,
+  stateField,
   isEditable,
   setIsEditable,
   values,
@@ -10,18 +11,18 @@ const EditableField = ({
   inputType,
   placeholder,
 }) => {
-  const handleChange = (name) => (e) => {
-    setValues({ ...values, [name]: e.target.value });
+  const handleChange = (stateField) => (e) => {
+    setValues({ ...values, [stateField]: e.target.value });
   };
 
   return (
     <Container className="mt-2">
       <Form.Control
         name={field}
-        value={values[field]}
+        value={values[stateField]}
         type={inputType}
         placeholder={placeholder}
-        onChange={handleChange(field)}
+        onChange={handleChange(stateField)}
       />
       <div className="d-flex justify-content-between">
         <Button
