@@ -40,10 +40,6 @@ const BizSidebar = ({
       </Container>
       <Container>
         <Hours hours={hours} id={_id} />
-        <Button block variant="secondary" onClick={() => setShowModal(true)}>
-          <i className="fas fa-edit mr-2"></i>
-          Edit Business Hours
-        </Button>
         <HoursModal
           id={_id}
           showModal={showModal}
@@ -59,6 +55,10 @@ const BizSidebar = ({
           setSettingsUpdated={setSettingsUpdated}
         />
         <ContactInfo email={bizEmail} phone={bizPhone} />
+        <Button block variant="secondary" onClick={() => setShowModal(true)}>
+          <i className="fas fa-edit mr-2"></i>
+          Edit Business Hours
+        </Button>
         <Button
           block
           variant="info"

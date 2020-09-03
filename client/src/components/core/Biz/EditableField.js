@@ -5,20 +5,40 @@ const EditableField = ({
   field,
   isEditable,
   setIsEditable,
+  values,
+  setValues,
   inputType,
   placeholder,
-  buttonVariant,
 }) => {
+  const handleChange = (name) => (e) => {
+    setValues({ ...values, [name]: e.target.value });
+  };
+
   return (
     <Container className="mt-2">
-      <Form.Control type={inputType} placeholder={placeholder} />
-      <Button
-        className="my-2"
-        variant={buttonVariant}
-        onClick={() => setIsEditable({ ...isEditable, [field]: false })}
-      >
-        Ok
-      </Button>
+      <Form.Control
+        name={field}
+        value={values[field]}
+        type={inputType}
+        placeholder={placeholder}
+        onChange={handleChange(field)}
+      />
+      <div className="d-flex justify-content-between">
+        <Button
+          className="my-2"
+          variant="success"
+          onClick={() => setIsEditable({ ...isEditable, [field]: false })}
+        >
+          Ok
+        </Button>
+        <Button
+          className="my-2"
+          variant="secondary"
+          onClick={() => setIsEditable({ ...isEditable, [field]: false })}
+        >
+          Cancel
+        </Button>
+      </div>
     </Container>
   );
 };

@@ -25,7 +25,7 @@ const SettingsModal = ({
           onClick={() => setShowSettingsModal(false)}
           className="mt-2"
         >
-          Cancel
+          Close
         </Button>{" "}
       </Modal.Body>
     </Modal>

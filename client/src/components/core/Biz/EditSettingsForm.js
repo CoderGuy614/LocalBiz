@@ -3,11 +3,9 @@ import { Form, Button, Container, ListGroup } from "react-bootstrap";
 import EditableField from "./EditableField";
 import DisplayField from "./DisplayField";
 import ReactTooltip from "react-tooltip";
-import { getBusiness, getCategories } from "../apiCore";
+import { getBusiness } from "../apiCore";
 
 const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
-  const [business, setBusiness] = useState({});
-  const [categories, setCategories] = useState([]);
   const [isEditable, setIsEditable] = useState({
     name: false,
     description: false,
@@ -15,26 +13,34 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
     phone: false,
   });
 
+  const [values, setValues] = useState({
+    name: "",
+    description: "",
+    bizEmail: "",
+    bizPhone: "",
+  });
+
   useEffect(() => {
     getBusiness(bizId)
-      .then((biz) => setBusiness(biz))
+      .then((biz) => setValues(biz))
       .catch((err) => console.log(err));
   }, []);
 
-  const { name, description, bizEmail, bizPhone } = business;
+  const { name, description, bizEmail, bizPhone } = values;
 
   return (
     <Container>
-      <Form>
+      <Form data-tip data-for="edit-tooltip">
         <ListGroup>
           {isEditable.name && (
             <EditableField
               field="name"
+              values={values}
+              setValues={setValues}
               setIsEditable={setIsEditable}
               isEditable={isEditable}
               inputType="text"
               placeholder="Enter Name"
-              buttonVariant="success"
             />
           )}
           {!isEditable.name && (
@@ -49,11 +55,12 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
           {isEditable.description && (
             <EditableField
               field="description"
+              values={values}
+              setValues={setValues}
               setIsEditable={setIsEditable}
               isEditable={isEditable}
               inputType="text"
               placeholder="Enter description"
-              buttonVariant="success"
             />
           )}
           {!isEditable.description && (
@@ -68,11 +75,12 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
           {isEditable.email && (
             <EditableField
               field="email"
+              values={values}
+              setValues={setValues}
               setIsEditable={setIsEditable}
               isEditable={isEditable}
-              inputType="text"
+              inputType="email"
               placeholder="Enter email"
-              buttonVariant="success"
             />
           )}
           {!isEditable.email && (
@@ -86,11 +94,12 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
           {isEditable.phone && (
             <EditableField
               field="phone"
+              values={values}
+              setValues={setValues}
               setIsEditable={setIsEditable}
               isEditable={isEditable}
               inputType="text"
               placeholder="Enter phone"
-              buttonVariant="success"
             />
           )}
           {!isEditable.phone && (
@@ -102,17 +111,22 @@ const EditSettingsForm = ({ bizId, settingsUpdated, setSettingsUpdated }) => {
             />
           )}
         </ListGroup>
-        <div className="d-flex">
-          <Button variant="success" className="my-2">
-            Save Changes
-          </Button>
-          <Button variant="danger" className="my-2 ml-auto">
-            Delete Business
-          </Button>
-        </div>
+        {!isEditable.name &&
+          !isEditable.description &&
+          !isEditable.email &&
+          !isEditable.phone && (
+            <div className="d-flex">
+              <Button variant="success" className="my-2">
+                Save Changes
+              </Button>
+              <Button variant="danger" className="my-2 ml-auto">
+                Delete Business
+              </Button>
+            </div>
+          )}
       </Form>
       <ReactTooltip id="edit-tooltip" place="right" effect="solid">
-        Click To Edit
+        Click A Field To Edit It
       </ReactTooltip>
     </Container>
   );
