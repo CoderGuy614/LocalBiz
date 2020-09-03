@@ -14,6 +14,7 @@ const Biz = ({ match }) => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [hoursUpdated, setHoursUpdated] = useState(false);
   const [itemsUpdated, setItemsUpdated] = useState(false);
+  const [settingsUpdated, setSettingsUpdated] = useState(false);
   const loadBusiness = () => {
     getBusiness(id).then((data) => {
       if (data.error) {
@@ -40,7 +41,7 @@ const Biz = ({ match }) => {
 
   useEffect(() => {
     loadBusiness();
-  }, [hoursUpdated]);
+  }, [hoursUpdated, settingsUpdated]);
 
   const { name, description, photo, user, _id } = business;
 
@@ -67,7 +68,7 @@ const Biz = ({ match }) => {
               <i className="fas fa-plus-square mr-2"></i>
               Add An Item
             </Button>
-            <Row>
+            <Row className="d-flex justify-content-center">
               {items.length > 0 ? (
                 items.map((item) => (
                   <ItemCard

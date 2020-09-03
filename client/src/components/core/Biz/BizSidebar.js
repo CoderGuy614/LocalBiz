@@ -3,13 +3,21 @@ import GoogleMap from "google-map-react";
 import Pin from "../Layout/Pin";
 import Hours from "./Hours";
 import HoursModal from "./HoursModal";
+import SettingsModal from "./SettingsModal";
 import ContactInfo from "./ContactInfo";
 import { Button, Container } from "react-bootstrap";
 
-const BizSidebar = ({ business, hoursUpdated, setHoursUpdated }) => {
+const BizSidebar = ({
+  business,
+  hoursUpdated,
+  setHoursUpdated,
+  settingsUpdated,
+  setSettingsUpdated,
+}) => {
   const { rating, hours, lat, lng, bizEmail, bizPhone, _id } = business;
 
   const [showModal, setShowModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   const map = {
     key: {
@@ -43,10 +51,22 @@ const BizSidebar = ({ business, hoursUpdated, setHoursUpdated }) => {
           hoursUpdated={hoursUpdated}
           setHoursUpdated={setHoursUpdated}
         />
+        <SettingsModal
+          id={_id}
+          showSettingsModal={showSettingsModal}
+          setShowSettingsModal={setShowSettingsModal}
+          settingsUpdated={settingsUpdated}
+          setSettingsUpdated={setSettingsUpdated}
+        />
         <ContactInfo email={bizEmail} phone={bizPhone} />
-        <Button block variant="info" className="mb-3">
+        <Button
+          block
+          variant="info"
+          className="mb-3"
+          onClick={() => setShowSettingsModal(true)}
+        >
           <i className="fas fa-cog mr-2"></i>
-          Edit Settings
+          Edit Business Profile
         </Button>
       </Container>
     </>
