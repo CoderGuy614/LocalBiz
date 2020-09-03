@@ -6,16 +6,10 @@ import HoursModal from "./HoursModal";
 import ContactInfo from "./ContactInfo";
 import { Button } from "react-bootstrap";
 
-const BizSidebar = ({ business, sawHoursUpdate }) => {
+const BizSidebar = ({ business, hoursUpdated, setHoursUpdated }) => {
   const { rating, hours, lat, lng, bizEmail, bizPhone, _id } = business;
 
-  const [show, setShow] = useState(false);
-  const handleShow = () => {
-    setShow(true);
-  };
-  const handleClose = () => {
-    setShow(false);
-  };
+  const [showModal, setShowModal] = useState(false);
 
   const map = {
     key: {
@@ -31,15 +25,15 @@ const BizSidebar = ({ business, sawHoursUpdate }) => {
         <Pin lat={lat} lng={lng} rating={rating} />
       </GoogleMap>
       <Hours hours={hours} id={_id} />
-      <Button block variant="primary" onClick={handleShow}>
+      <Button block variant="primary" onClick={() => setShowModal(true)}>
         Edit Business Hours
       </Button>
       <HoursModal
         id={_id}
-        show={show}
-        handleShow={handleShow}
-        handleClose={handleClose}
-        sawHoursUpdate={sawHoursUpdate}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        hoursUpdated={hoursUpdated}
+        setHoursUpdated={setHoursUpdated}
       />
       <ContactInfo email={bizEmail} phone={bizPhone} />
     </div>

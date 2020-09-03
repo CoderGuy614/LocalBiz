@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 
-const Hours = ({ hours, id }) => {
+const Hours = ({ hours }) => {
   const showClosed = () => {
     return (
       <td className="text-center" colSpan="2">
@@ -47,9 +47,6 @@ const Hours = ({ hours, id }) => {
           ))}
         </tbody>
       </Table>
-      {/* <Button href={`/post/hours/${id}`} block>
-        Update Hours
-      </Button> */}
     </>
   );
 };

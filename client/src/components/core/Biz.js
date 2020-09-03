@@ -42,10 +42,6 @@ const Biz = ({ match }) => {
     loadBusiness();
   }, [hoursUpdated]);
 
-  const sawHoursUpdate = () => {
-    setHoursUpdated(!hoursUpdated);
-  };
-
   const { name, description, photo, user, _id } = business;
 
   return (
@@ -56,7 +52,8 @@ const Biz = ({ match }) => {
             <BizSidebar
               business={business}
               user={user}
-              sawHoursUpdate={sawHoursUpdate}
+              hoursUpdated={hoursUpdated}
+              setHoursUpdated={setHoursUpdated}
             />
           </Col>
           <Col sm={9}>
