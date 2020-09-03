@@ -16,8 +16,8 @@ const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
   return (
     <Row className="m-2 border rounded">
       <Col xs={4}>
-        <Row className="d-flex align-items-center">
-          <Image src={photo} thumbnail fluid />
+        <Row className="d-flex">
+          <Image className="m-2" src={photo} thumbnail fluid />
         </Row>
         <Row className="m-1 d-flex flex-nowrap">
           <Button

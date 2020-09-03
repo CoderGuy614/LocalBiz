@@ -48,15 +48,17 @@ const Biz = ({ match }) => {
     <Layout title={name} description={description} photo={photo} user={user}>
       <Container fluid>
         <Row>
-          <Col sm={3}>
-            <BizSidebar
-              business={business}
-              user={user}
-              hoursUpdated={hoursUpdated}
-              setHoursUpdated={setHoursUpdated}
-            />
+          <Col md={3}>
+            <Row>
+              <BizSidebar
+                business={business}
+                user={user}
+                hoursUpdated={hoursUpdated}
+                setHoursUpdated={setHoursUpdated}
+              />
+            </Row>
           </Col>
-          <Col sm={9}>
+          <Col md={9}>
             <Button
               variant="secondary"
               onClick={() => setShowAddModal(true)}
@@ -65,20 +67,22 @@ const Biz = ({ match }) => {
               <i className="fas fa-plus-square mr-2"></i>
               Add An Item
             </Button>
-            {items.length > 0 ? (
-              items.map((item) => (
-                <ItemCard
-                  key={item._id}
-                  item={item}
-                  itemsUpdated={itemsUpdated}
-                  setItemsUpdated={setItemsUpdated}
-                />
-              ))
-            ) : (
-              <div className="text-center mt-4">
-                <h3>No Items to Show</h3>
-              </div>
-            )}
+            <Row>
+              {items.length > 0 ? (
+                items.map((item) => (
+                  <ItemCard
+                    key={item._id}
+                    item={item}
+                    itemsUpdated={itemsUpdated}
+                    setItemsUpdated={setItemsUpdated}
+                  />
+                ))
+              ) : (
+                <div className="text-center mt-4">
+                  <h3>No Items to Show</h3>
+                </div>
+              )}
+            </Row>
           </Col>
         </Row>
       </Container>

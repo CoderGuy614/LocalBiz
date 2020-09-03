@@ -4,7 +4,7 @@ import Pin from "../Layout/Pin";
 import Hours from "./Hours";
 import HoursModal from "./HoursModal";
 import ContactInfo from "./ContactInfo";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 const BizSidebar = ({ business, hoursUpdated, setHoursUpdated }) => {
   const { rating, hours, lat, lng, bizEmail, bizPhone, _id } = business;
@@ -20,28 +20,36 @@ const BizSidebar = ({ business, hoursUpdated, setHoursUpdated }) => {
   };
 
   return (
-    <div className="sidebar-map">
-      <GoogleMap bootstrapURLKeys={map.key} center={map.center} zoom={map.zoom}>
-        <Pin lat={lat} lng={lng} rating={rating} />
-      </GoogleMap>
-      <Hours hours={hours} id={_id} />
-      <Button block variant="secondary" onClick={() => setShowModal(true)}>
-        <i className="fas fa-edit mr-2"></i>
-        Edit Business Hours
-      </Button>
-      <HoursModal
-        id={_id}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        hoursUpdated={hoursUpdated}
-        setHoursUpdated={setHoursUpdated}
-      />
-      <ContactInfo email={bizEmail} phone={bizPhone} />
-      <Button block variant="info" className="mb-3">
-        <i className="fas fa-cog mr-2"></i>
-        Edit Settings
-      </Button>
-    </div>
+    <>
+      <Container className="sidebar-map mb-2">
+        <GoogleMap
+          bootstrapURLKeys={map.key}
+          center={map.center}
+          zoom={map.zoom}
+        >
+          <Pin lat={lat} lng={lng} rating={rating} />
+        </GoogleMap>
+      </Container>
+      <Container>
+        <Hours hours={hours} id={_id} />
+        <Button block variant="secondary" onClick={() => setShowModal(true)}>
+          <i className="fas fa-edit mr-2"></i>
+          Edit Business Hours
+        </Button>
+        <HoursModal
+          id={_id}
+          showModal={showModal}
+          setShowModal={setShowModal}
+          hoursUpdated={hoursUpdated}
+          setHoursUpdated={setHoursUpdated}
+        />
+        <ContactInfo email={bizEmail} phone={bizPhone} />
+        <Button block variant="info" className="mb-3">
+          <i className="fas fa-cog mr-2"></i>
+          Edit Settings
+        </Button>
+      </Container>
+    </>
   );
 };
 
