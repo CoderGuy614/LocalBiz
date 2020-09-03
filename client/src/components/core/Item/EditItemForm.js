@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Alert, Image } from "react-bootstrap";
 import { updateItem, getItem } from "../apiCore";
 
-const EditItemForm = ({ itemId, setSuccess }) => {
+const EditItemForm = ({
+  itemId,
+  setShowEditModal,
+  itemsUpdated,
+  setItemsUpdated,
+}) => {
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -80,7 +85,8 @@ const EditItemForm = ({ itemId, setSuccess }) => {
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
-        setSuccess(true);
+        setItemsUpdated(!itemsUpdated);
+        setShowEditModal(false);
       }
     });
   };

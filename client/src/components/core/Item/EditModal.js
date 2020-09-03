@@ -3,32 +3,29 @@ import { Modal, Button } from "react-bootstrap";
 import EditItemForm from "./EditItemForm";
 
 const EditModal = ({
-  showEdit,
-  setShowEdit,
+  showEditModal,
+  setShowEditModal,
   itemsUpdated,
   setItemsUpdated,
   id,
 }) => {
-  const [success, setSuccess] = useState(false);
-  const handleClose = () => {
-    setShowEdit(false);
-  };
-
-  useEffect(() => {
-    if (success) {
-      setShowEdit(false);
-      setItemsUpdated(!itemsUpdated);
-    }
-  }, [success]);
-
   return (
-    <Modal show={showEdit} onHide={handleClose}>
+    <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
       <Modal.Header closeButton>
         <Modal.Title>Edit Item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <EditItemForm itemId={id} setSuccess={setSuccess} />
-        <Button variant="secondary" onClick={handleClose} className="mt-2">
+        <EditItemForm
+          itemId={id}
+          setShowEditModal={setShowEditModal}
+          itemsUpdated={itemsUpdated}
+          setItemsUpdated={setItemsUpdated}
+        />
+        <Button
+          variant="secondary"
+          onClick={() => setShowEditModal(false)}
+          className="mt-2"
+        >
           Cancel
         </Button>{" "}
       </Modal.Body>

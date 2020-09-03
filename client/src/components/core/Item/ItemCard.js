@@ -6,7 +6,7 @@ import { Row, Col, Image, ListGroup, Button } from "react-bootstrap";
 
 const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
   const [showDelete, setShowDelete] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const translateBool = (bool) => {
     return bool ? "Yes" : "No";
@@ -19,20 +19,22 @@ const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
         <Row className="d-flex align-items-center">
           <Image src={photo} thumbnail fluid />
         </Row>
-        <Row className="m-2 d-flex justify-content-center">
+        <Row className="m-1 d-flex flex-nowrap">
           <Button
-            onClick={() => setShowEdit(true)}
-            className="item-card-button w-auto mx-1"
+            onClick={() => setShowEditModal(true)}
+            className="mr-1 w-auto d-flex text-center"
             variant="dark"
           >
-            Edit
+            <i className="fas fa-edit mx-2"></i>
+            <span className="d-none d-lg-block">Edit</span>
           </Button>
           <Button
             onClick={() => setShowDelete(true)}
-            className="item-card-button w-auto mx-1"
+            className="ml-1 w-auto d-flex text-center"
             variant="danger"
           >
-            Delete
+            <i className="fas fa-trash-alt mx-2 w-auto"></i>
+            <span className="d-none d-lg-block">Delete</span>
           </Button>
         </Row>
       </Col>
@@ -56,8 +58,8 @@ const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
       />
       <EditModal
         id={_id}
-        showEdit={showEdit}
-        setShowEdit={setShowEdit}
+        showEditModal={showEditModal}
+        setShowEditModal={setShowEditModal}
         itemsUpdated={itemsUpdated}
         setItemsUpdated={setItemsUpdated}
       />

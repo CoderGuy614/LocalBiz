@@ -42,9 +42,9 @@ $jumbotron-bg: #9ad1d4;
   height: 20px;
 }
 
-.item-card-button {
-  // width: 40%;
-}
+// .item-card-button {
+//   width: calc(50% - 10px);
+// }
 
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
