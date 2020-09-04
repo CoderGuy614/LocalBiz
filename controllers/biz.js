@@ -56,7 +56,7 @@ exports.create = (req, res) => {
 
     if (!name || !description || !category || !bizEmail || !bizPhone) {
       return res.status(400).json({
-        error: "Name, Description, Category, Email and Phone are Required",
+        error: "Please Complete All the Required Fields",
       });
     }
     fields.user = req.profile._id;
