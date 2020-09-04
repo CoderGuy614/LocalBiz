@@ -51,27 +51,28 @@ const AddBizForm = () => {
     if (form.checkValidity() === false) {
       e.preventDefault();
       e.stopPropagation();
+      setValidated(true);
+    } else {
+      e.preventDefault();
+      createBiz(formData).then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error });
+        } else {
+          setValues({
+            ...values,
+            name: "",
+            description: "",
+            bizEmail: "",
+            bizPhone: "",
+            category: "",
+            loading: false,
+            error: "",
+            redirect: true,
+            newBizId: data._id,
+          });
+        }
+      });
     }
-    setValidated(true);
-    e.preventDefault();
-    createBiz(formData).then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({
-          ...values,
-          name: "",
-          description: "",
-          bizEmail: "",
-          bizPhone: "",
-          category: "",
-          loading: false,
-          error: "",
-          redirect: true,
-          newBizId: data._id,
-        });
-      }
-    });
   };
 
   const init = () => {
@@ -145,6 +146,9 @@ const AddBizForm = () => {
               </option>
             ))}
           </Form.Control>
+          <Form.Control.Feedback type="invalid">
+            Please Select a Category
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
           <Form.Label>Description</Form.Label>
@@ -155,6 +159,9 @@ const AddBizForm = () => {
             value={description}
             onChange={handleChange("description")}
           />
+          <Form.Control.Feedback type="invalid">
+            Please Enter A Description
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
           <Form.Label>Business Email</Form.Label>
@@ -165,6 +172,9 @@ const AddBizForm = () => {
             value={bizEmail}
             onChange={handleChange("bizEmail")}
           />
+          <Form.Control.Feedback type="invalid">
+            Please Enter Business Email
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
           <Form.Label>Contact Phone</Form.Label>
@@ -175,6 +185,9 @@ const AddBizForm = () => {
             value={bizPhone}
             onChange={handleChange("bizPhone")}
           />
+          <Form.Control.Feedback type="invalid">
+            Please Enter Business Phone Number
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
           <Form.Label>Profile Photo</Form.Label>
