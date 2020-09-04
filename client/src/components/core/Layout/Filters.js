@@ -10,7 +10,7 @@ const Filters = ({ categories, setBizCat }) => {
     <Container className="d-flex mb-3 text-secondary">
       <i className="fas fa-sort mr-3 fa-2x"></i>
       <Form.Control as="select" size="lg" onChange={handleChange}>
-        <option value={"All"}>Choose a Category</option>
+        <option value={"All"}>Show All Categories</option>
         {categories.map((cat, i) => (
           <option value={cat._id} key={i}>
             {cat.name}

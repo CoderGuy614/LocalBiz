@@ -20,6 +20,7 @@ const AddBizForm = () => {
   });
 
   const [photoName, setPhotoName] = useState("");
+  const [validated, setValidated] = useState(false);
 
   const {
     name,
@@ -46,9 +47,14 @@ const AddBizForm = () => {
   };
 
   const handleSubmit = (e) => {
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    setValidated(true);
     e.preventDefault();
     createBiz(formData).then((data) => {
-      console.log(data);
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
@@ -83,7 +89,11 @@ const AddBizForm = () => {
   }, []);
 
   const showError = () => (
-    <Alert variant="danger" style={{ display: error ? "" : "none" }}>
+    <Alert
+      variant="danger"
+      className="mt-3"
+      style={{ display: error ? "" : "none" }}
+    >
       {error}
     </Alert>
   );
@@ -104,9 +114,8 @@ const AddBizForm = () => {
   };
 
   return (
-    <Container className="mb-3">
-      <h3>Step 1: Create your Business Profile.</h3>
-      <Form>
+    <>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Business Name</Form.Label>
           <Form.Control
@@ -114,7 +123,11 @@ const AddBizForm = () => {
             placeholder="Business Name"
             value={name}
             onChange={handleChange("name")}
+            required
           />
+          <Form.Control.Feedback type="invalid">
+            Please Enter Business Name
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
           <Form.Label>Category</Form.Label>
@@ -122,9 +135,10 @@ const AddBizForm = () => {
             as="select"
             type="large"
             value={category}
+            required={true}
             onChange={handleChange("category")}
           >
-            <option>Choose a Category</option>
+            <option value={""}>Choose a Category</option>
             {categories.map((cat, i) => (
               <option key={i} value={cat._id}>
                 {cat.name}
@@ -135,6 +149,7 @@ const AddBizForm = () => {
         <Form.Group>
           <Form.Label>Description</Form.Label>
           <Form.Control
+            required
             type="text"
             placeholder="Description"
             value={description}
@@ -144,6 +159,7 @@ const AddBizForm = () => {
         <Form.Group>
           <Form.Label>Business Email</Form.Label>
           <Form.Control
+            required
             type="email"
             placeholder="Email"
             value={bizEmail}
@@ -153,6 +169,7 @@ const AddBizForm = () => {
         <Form.Group>
           <Form.Label>Contact Phone</Form.Label>
           <Form.Control
+            required
             type="text"
             placeholder="Phone"
             value={bizPhone}
@@ -162,6 +179,7 @@ const AddBizForm = () => {
         <Form.Group>
           <Form.Label>Profile Photo</Form.Label>
           <Form.File
+            required={false}
             id="custom-file"
             label="Choose a Photo"
             name={photo}
@@ -170,15 +188,15 @@ const AddBizForm = () => {
           />
         </Form.Group>
         {showFileName()}
-        {showError()}
-        {showLoading()}
-        {redirectUser()}
-        <Button type="submit" onClick={handleSubmit} block>
+        <Button type="submit" block>
           {" "}
           Continue to Add Items
         </Button>
       </Form>
-    </Container>
+      {showError()}
+      {showLoading()}
+      {redirectUser()}
+    </>
   );
 };
 
