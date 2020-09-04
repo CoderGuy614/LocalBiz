@@ -28,7 +28,6 @@ exports.itemById = (req, res, next, id) => {
 };
 
 exports.read = (req, res) => {
-  // req.item.photo = undefined;
   return res.json(req.item);
 };
 
@@ -51,7 +50,7 @@ exports.create = (req, res) => {
 
     if (!name || !description || !price || !business) {
       return res.status(400).json({
-        error: "Name, Description and Price are Required",
+        error: "Please Enter All Required Fields",
       });
     }
 
@@ -99,7 +98,7 @@ exports.update = (req, res) => {
 
     if (!name || !description || !price || !business) {
       return res.status(400).json({
-        error: "Name, Description and Price are Required",
+        error: "Please Enter All Required Fields",
       });
     }
 
