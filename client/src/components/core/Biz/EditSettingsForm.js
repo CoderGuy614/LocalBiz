@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { Form, Button, Container, ListGroup } from "react-bootstrap";
+import { Form, Button, Container, ListGroup, Alert } from "react-bootstrap";
 import EditableField from "./EditableField";
 import DisplayField from "./DisplayField";
 import ReactTooltip from "react-tooltip";
@@ -40,7 +40,7 @@ const EditSettingsForm = ({
   const handleSubmit = () => {
     updateBiz(values, bizId).then((data) => {
       if (data.error) {
-        console.log(data.error);
+        setError(data.error);
       } else {
         setShowSettingsModal(false);
         setSettingsUpdated(!settingsUpdated);
@@ -58,14 +58,19 @@ const EditSettingsForm = ({
         if (data.error) {
           setError(data.error);
         } else {
-          //Close the Settings Modal
-          // Redirect to HomePage
           setHomeRedirect(true);
-          console.log(data.msg);
         }
       });
+    } else {
+      setError("Please Type 'Yes' to confirm delete");
     }
   };
+
+  const showError = () => (
+    <Alert variant="danger" style={{ display: error ? "" : "none" }}>
+      {error}
+    </Alert>
+  );
 
   const redirectUser = () => {
     if (homeRedirect) {
@@ -194,6 +199,7 @@ const EditSettingsForm = ({
                 onChange={deleteHandleChange}
               />
             </Form.Group>
+            {showError()}
             <div className="d-flex justify-content-between">
               <Button className="my-2" variant="danger" onClick={handleDelete}>
                 {" "}
