@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Form, Button, Alert } from "react-bootstrap";
 
 const EditableField = ({
   field,
@@ -11,8 +11,29 @@ const EditableField = ({
   inputType,
   placeholder,
 }) => {
+  const [error, setError] = useState("");
+
   const handleChange = (stateField) => (e) => {
+    setError("");
     setValues({ ...values, [stateField]: e.target.value });
+  };
+
+  const showError = () => (
+    <Alert
+      variant="danger"
+      className="mt-2"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </Alert>
+  );
+
+  const handleToggle = (field) => {
+    if (!values[stateField]) {
+      setError(`${field} is Required`);
+    } else {
+      setIsEditable({ ...isEditable, [field]: false });
+    }
   };
 
   return (
@@ -24,18 +45,19 @@ const EditableField = ({
         placeholder={placeholder}
         onChange={handleChange(stateField)}
       />
+      {showError()}
       <div className="d-flex justify-content-between">
         <Button
           className="my-2"
           variant="success"
-          onClick={() => setIsEditable({ ...isEditable, [field]: false })}
+          onClick={() => handleToggle(field)}
         >
           Ok
         </Button>
         <Button
           className="my-2"
           variant="secondary"
-          onClick={() => setIsEditable({ ...isEditable, [field]: false })}
+          onClick={() => handleToggle(field)}
         >
           Cancel
         </Button>
