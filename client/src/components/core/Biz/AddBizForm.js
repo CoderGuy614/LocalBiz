@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import { createBiz, getCategories } from "../apiCore";
 
 const AddBizForm = () => {
@@ -54,6 +54,7 @@ const AddBizForm = () => {
       setValidated(true);
     } else {
       e.preventDefault();
+      setValues({ ...values, loading: true });
       createBiz(formData).then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error });
@@ -76,11 +77,17 @@ const AddBizForm = () => {
   };
 
   const init = () => {
+    setValues({ ...values, loading: true });
     getCategories().then((data) => {
       if (data.error) {
-        console.log(data.error);
+        setValues({ ...values, error: data.error, loading: false });
       } else {
-        setValues({ ...values, categories: data, formData: new FormData() });
+        setValues({
+          ...values,
+          loading: false,
+          categories: data,
+          formData: new FormData(),
+        });
       }
     });
   };
@@ -99,7 +106,17 @@ const AddBizForm = () => {
     </Alert>
   );
 
-  const showLoading = () => loading && <Alert variant="info">Loading...</Alert>;
+  const showLoading = () => (
+    <div className="d-flex justify-content-center my-4">
+      <Spinner
+        style={{ display: loading ? "" : "none" }}
+        animation="border"
+        role="status"
+      >
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    </div>
+  );
 
   const showFileName = (fileName) =>
     photoName && (

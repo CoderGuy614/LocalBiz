@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout/Layout";
-import { Container, Button, Alert } from "react-bootstrap";
+import { Container, Button, Alert, Spinner } from "react-bootstrap";
 import { getBusinesses, getCategories } from "./apiCore";
 import AddBizModal from "./Biz/AddBizModal";
 import Filters from "./Layout/Filters";
@@ -12,15 +12,19 @@ const Shop = () => {
   const [bizCat, setBizCat] = useState("All");
   const [alert, setAlert] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
 
   const loadBusinesses = () => {
+    setLoading(true);
     getBusinesses(bizCat).then((data) => {
       if (data.error) {
         setError(data.error);
+        setLoading(false);
       } else if (data.length === 0) {
         setAlert("No Businesses Found for this Category");
         setBusinesses(data);
+        setLoading(false);
       } else {
         bizCat !== "All"
           ? setAlert(
@@ -29,6 +33,7 @@ const Shop = () => {
           : setAlert(`Showing ${data.length} Businesses from All Categories`);
 
         setBusinesses(data);
+        setLoading(false);
       }
     });
   };
@@ -60,6 +65,18 @@ const Shop = () => {
     </Alert>
   );
 
+  const showLoading = () => (
+    <div className="d-flex justify-content-center my-4">
+      <Spinner
+        style={{ display: loading ? "" : "none" }}
+        animation="border"
+        role="status"
+      >
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    </div>
+  );
+
   return (
     <Layout
       title="LocalBiz"
@@ -69,6 +86,7 @@ const Shop = () => {
         <Filters categories={categories} setBizCat={setBizCat} />
         {showError()}
         {showAlert()}
+        {showLoading()}
         <Button variant="secondary" block onClick={() => setShowAddModal(true)}>
           <i className="fas fa-plus-square mr-2"></i>
           Create New Business

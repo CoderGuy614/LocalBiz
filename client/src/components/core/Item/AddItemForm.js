@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
-import { createItem, getItem } from "../apiCore";
+import { Form, Button, Alert, Spinner } from "react-bootstrap";
+import { createItem } from "../apiCore";
 
 const AddItemForm = ({ bizId, setSuccess }) => {
   const [values, setValues] = useState({
@@ -50,10 +50,11 @@ const AddItemForm = ({ bizId, setSuccess }) => {
     } else {
       e.preventDefault();
       formData.set("business", business);
+      setValues({ ...values, loading: true });
       createItem(formData).then((data) => {
         console.log(data);
         if (data.error) {
-          setValues({ ...values, error: data.error });
+          setValues({ ...values, error: data.error, loading: false });
         } else {
           setValues({
             ...values,
@@ -84,7 +85,17 @@ const AddItemForm = ({ bizId, setSuccess }) => {
       </Alert>
     );
 
-  const showLoading = () => loading && <Alert variant="info">Loading...</Alert>;
+  const showLoading = () => (
+    <div className="d-flex justify-content-center my-4">
+      <Spinner
+        style={{ display: loading ? "" : "none" }}
+        animation="border"
+        role="status"
+      >
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    </div>
+  );
 
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>

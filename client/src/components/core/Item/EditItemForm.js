@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Alert, Image } from "react-bootstrap";
+import { Form, Button, Alert, Image, Spinner } from "react-bootstrap";
 import { updateItem, getItem } from "../apiCore";
 
 const EditItemForm = ({
@@ -86,11 +86,13 @@ const EditItemForm = ({
       setValidated(true);
     } else {
       e.preventDefault();
+      setValues({ ...values, loading: true });
       updateItem(itemId, formData).then((data) => {
         if (data.error) {
-          setValues({ ...values, error: data.error });
+          setValues({ ...values, error: data.error, loading: false });
         } else {
           setItemsUpdated(!itemsUpdated);
+          setValues({ ...values, loading: false });
           setShowEditModal(false);
         }
       });
@@ -110,7 +112,17 @@ const EditItemForm = ({
       </Alert>
     );
 
-  const showLoading = () => loading && <Alert variant="info">Loading...</Alert>;
+  const showLoading = () => (
+    <div className="d-flex justify-content-center my-4">
+      <Spinner
+        style={{ display: loading ? "" : "none" }}
+        animation="border"
+        role="status"
+      >
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    </div>
+  );
 
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>

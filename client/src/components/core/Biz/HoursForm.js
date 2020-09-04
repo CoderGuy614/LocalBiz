@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, Table } from "react-bootstrap";
+import { Container, Button, Table, Spinner, Alert } from "react-bootstrap";
 import { getHours, updateHours } from "../apiCore";
 import HourInputRow from "./HourInputRow";
 
@@ -43,11 +43,16 @@ const HoursForm = ({ id, hoursUpdated, setHoursUpdated, setShowModal }) => {
   });
 
   useEffect(() => {
+    setLoading(true);
     getHours(id)
-      .then(({ hours }) => setValues(hours))
-      .catch((err) => console.log(err));
+      .then(({ hours }) => {
+        setValues(hours);
+        setLoading(false);
+      })
+      .catch((err) => setError(err));
   }, []);
 
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleTimeChange = (day, openOrClose) => (e) => {
@@ -69,15 +74,36 @@ const HoursForm = ({ id, hoursUpdated, setHoursUpdated, setShowModal }) => {
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     updateHours(values, id).then((data) => {
       if (data.error) {
         setError(data.error);
+        setLoading(false);
       } else {
+        setLoading(false);
         setShowModal(false);
         setHoursUpdated(!hoursUpdated);
       }
     });
   };
+
+  const showLoading = () => (
+    <div className="d-flex justify-content-center my-4">
+      <Spinner
+        style={{ display: loading ? "" : "none" }}
+        animation="border"
+        role="status"
+      >
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    </div>
+  );
+
+  const showError = () => (
+    <Alert variant="danger" style={{ display: error ? "" : "none" }}>
+      {error}
+    </Alert>
+  );
 
   const daysArray = [
     "Monday",
@@ -113,6 +139,8 @@ const HoursForm = ({ id, hoursUpdated, setHoursUpdated, setShowModal }) => {
           ))}
         </tbody>
       </Table>
+      {showLoading()}
+      {showError()}
       <Button block onClick={handleSubmit} className="mb-3">
         Save Changes
       </Button>

@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { Form, Button, Container, ListGroup, Alert } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Container,
+  ListGroup,
+  Alert,
+  Spinner,
+} from "react-bootstrap";
 import EditableField from "./EditableField";
 import DisplayField from "./DisplayField";
 import ReactTooltip from "react-tooltip";
@@ -29,19 +36,26 @@ const EditSettingsForm = ({
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [confirmDeleteText, setConfirmDeleteText] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [homeRedirect, setHomeRedirect] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     getBusiness(bizId)
-      .then((biz) => setValues(biz))
-      .catch((err) => console.log(err));
+      .then((biz) => {
+        setLoading(false);
+        setValues(biz);
+      })
+      .catch((err) => setError(err));
   }, []);
 
   const handleSubmit = () => {
+    setLoading(true);
     updateBiz(values, bizId).then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
+        setLoading(false);
         setShowSettingsModal(false);
         setSettingsUpdated(!settingsUpdated);
       }
@@ -54,9 +68,11 @@ const EditSettingsForm = ({
 
   const handleDelete = () => {
     if (confirmDeleteText.toLowerCase() === "yes") {
+      setLoading(true);
       deleteBiz(bizId).then((data) => {
         if (data.error) {
           setError(data.error);
+          setLoading(false);
         } else {
           setHomeRedirect(true);
         }
@@ -77,6 +93,18 @@ const EditSettingsForm = ({
       return <Redirect to="/" />;
     }
   };
+
+  const showLoading = () => (
+    <div className="d-flex justify-content-center my-4">
+      <Spinner
+        style={{ display: loading ? "" : "none" }}
+        animation="border"
+        role="status"
+      >
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    </div>
+  );
 
   const { name, description, bizEmail, bizPhone } = values;
 
@@ -216,6 +244,7 @@ const EditSettingsForm = ({
           </Container>
         )}
       </Form>
+      {showLoading()}
       <ReactTooltip id="edit-tooltip" place="right" effect="solid">
         Click A Field To Edit It
       </ReactTooltip>
