@@ -9,11 +9,12 @@ import BizListCard from "./Biz/BizListCard";
 const Shop = () => {
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [bizCat, setBizCat] = useState("All");
   const [error, setError] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
 
   const loadBusinesses = () => {
-    getBusinesses().then((data) => {
+    getBusinesses(bizCat).then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
@@ -21,6 +22,7 @@ const Shop = () => {
       }
     });
   };
+
   const loadCategories = () => {
     getCategories().then((data) => {
       if (data.error) {
@@ -34,7 +36,7 @@ const Shop = () => {
   useEffect(() => {
     loadCategories();
     loadBusinesses();
-  }, []);
+  }, [bizCat]);
 
   return (
     <Layout
@@ -42,7 +44,7 @@ const Shop = () => {
       description="Browse Local Businesses in your city."
     >
       <Container fluid>
-        <Filters categories={categories} />
+        <Filters categories={categories} setBizCat={setBizCat} />
         <Button variant="secondary" block onClick={() => setShowAddModal(true)}>
           <i className="fas fa-plus-square mr-2"></i>
           Create New Business
@@ -51,14 +53,7 @@ const Shop = () => {
           {businesses &&
             businesses.map((biz, i) => (
               <div key={i} className="m-3">
-                <BizListCard
-                  biz={biz}
-                  // name={biz.name}
-                  // description={biz.description}
-                  // photo={biz.photo}
-                  // rating={biz.rating}
-                  // id={biz._id}
-                />
+                <BizListCard biz={biz} />
               </div>
             ))}
         </Container>

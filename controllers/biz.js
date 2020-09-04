@@ -14,7 +14,11 @@ cloudinary.config({
 });
 
 exports.bizList = (req, res) => {
-  Biz.find()
+  let findCat = {};
+  if (req.query.category !== "All") {
+    findCat = { category: req.query.category };
+  }
+  Biz.find(findCat)
     .populate("user category")
     .exec((err, biz) => {
       if (err || !biz) {

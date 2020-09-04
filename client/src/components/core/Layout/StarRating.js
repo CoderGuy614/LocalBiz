@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Container, Row } from "react-bootstrap";
+import React from "react";
+
 import { MDBBadge } from "mdbreact";
 
 const StarRating = ({ rating }) => {

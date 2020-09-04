@@ -1,8 +1,10 @@
 import { json } from "body-parser";
 import axios from "axios";
 
-export const getBusinesses = () => {
-  return fetch(`${process.env.REACT_APP_API}/biz/list`, { method: "GET" })
+export const getBusinesses = (bizCat) => {
+  return fetch(`${process.env.REACT_APP_API}/biz/list?category=${bizCat}`, {
+    method: "GET",
+  })
     .then((response) => {
       return response.json();
     })
