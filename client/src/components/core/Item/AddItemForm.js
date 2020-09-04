@@ -17,6 +17,7 @@ const AddItemForm = ({ bizId, setSuccess }) => {
   });
 
   const [photoName, setPhotoName] = useState("");
+  const [validated, setValidated] = useState(false);
 
   const {
     name,
@@ -41,26 +42,33 @@ const AddItemForm = ({ bizId, setSuccess }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    formData.set("business", business);
-    createItem(formData).then((data) => {
-      console.log(data);
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({
-          ...values,
-          name: "",
-          description: "",
-          price: "",
-          canDeliver: true,
-          inStock: true,
-          loading: false,
-          error: "",
-        });
-        setSuccess(true);
-      }
-    });
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      setValidated(true);
+    } else {
+      e.preventDefault();
+      formData.set("business", business);
+      createItem(formData).then((data) => {
+        console.log(data);
+        if (data.error) {
+          setValues({ ...values, error: data.error });
+        } else {
+          setValues({
+            ...values,
+            name: "",
+            description: "",
+            price: "",
+            canDeliver: true,
+            inStock: true,
+            loading: false,
+            error: "",
+          });
+          setSuccess(true);
+        }
+      });
+    }
   };
 
   const showError = () => (
@@ -79,37 +87,50 @@ const AddItemForm = ({ bizId, setSuccess }) => {
   const showLoading = () => loading && <Alert variant="info">Loading...</Alert>;
 
   return (
-    <Form>
+    <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Group>
         <Form.Label>Item Name</Form.Label>
         <Form.Control
+          required
           type="text"
           placeholder="Item Name / Title"
           value={name}
           onChange={handleChange("name")}
         />
+        <Form.Control.Feedback type="invalid">
+          Please Enter Item Name
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Description</Form.Label>
         <Form.Control
+          required
           type="text"
           placeholder="Description"
           value={description}
           onChange={handleChange("description")}
         />
+        <Form.Control.Feedback type="invalid">
+          Please Select a Description
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Price</Form.Label>
         <Form.Control
-          type="text"
+          required
+          type="number"
           placeholder="Price in $ USD"
           value={price}
           onChange={handleChange("price")}
         />
+        <Form.Control.Feedback type="invalid">
+          Please Select a Price in $USD
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>In Stock / Available Now</Form.Label>
         <Form.Control
+          required
           as="select"
           type="large"
           value={inStock}
@@ -146,7 +167,7 @@ const AddItemForm = ({ bizId, setSuccess }) => {
       {showFileName()}
       {showError()}
       {showLoading()}
-      <Button type="submit" onClick={handleSubmit} block>
+      <Button type="submit" block>
         {" "}
         Create Item
       </Button>

@@ -14,7 +14,7 @@ const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
   const { name, description, photo, price, inStock, canDeliver, _id } = item;
 
   return (
-    <Row className="m-2 border rounded">
+    <Row className="m-2 border rounded w-100">
       <Col xs={4}>
         <Row className="d-flex">
           <Image className="m-2" src={photo} thumbnail fluid />

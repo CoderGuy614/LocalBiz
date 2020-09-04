@@ -22,6 +22,7 @@ const EditItemForm = ({
   });
 
   const [photoName, setPhotoName] = useState("");
+  const [validated, setValidated] = useState(false);
 
   useEffect(() => {
     getItem(itemId)
@@ -78,17 +79,22 @@ const EditItemForm = ({
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
-    updateItem(itemId, formData).then((data) => {
-      console.log(data);
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setItemsUpdated(!itemsUpdated);
-        setShowEditModal(false);
-      }
-    });
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      setValidated(true);
+    } else {
+      e.preventDefault();
+      updateItem(itemId, formData).then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error });
+        } else {
+          setItemsUpdated(!itemsUpdated);
+          setShowEditModal(false);
+        }
+      });
+    }
   };
 
   const showError = () => (
@@ -107,33 +113,45 @@ const EditItemForm = ({
   const showLoading = () => loading && <Alert variant="info">Loading...</Alert>;
 
   return (
-    <Form>
+    <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Group>
         <Form.Label>Item Name</Form.Label>
         <Form.Control
+          required
           type="text"
           placeholder="Item Name / Title"
           value={name}
           onChange={handleChange("name")}
         />
+        <Form.Control.Feedback type="invalid">
+          Please Enter Item Name
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Description</Form.Label>
         <Form.Control
+          required
           type="text"
           placeholder="Description"
           value={description}
           onChange={handleChange("description")}
         />
+        <Form.Control.Feedback type="invalid">
+          Please Enter Item Description
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Price</Form.Label>
         <Form.Control
-          type="text"
+          required
+          type="number"
           placeholder="Price in $ USD"
           value={price}
           onChange={handleChange("price")}
         />
+        <Form.Control.Feedback type="invalid">
+          Please Enter A Price in $USD
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>In Stock / Available Now</Form.Label>
@@ -176,7 +194,7 @@ const EditItemForm = ({
       {showFileName()}
       {showError()}
       {showLoading()}
-      <Button type="submit" onClick={handleSubmit} block>
+      <Button type="submit" block>
         {" "}
         Save Changes
       </Button>
