@@ -1,29 +1,36 @@
 import React from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import StarRating from "../Layout/StarRating";
+import { MDBBadge } from "mdbreact";
 
-const BizListCard = ({ name, description, rating, photo, id }) => {
+const BizListCard = ({ biz }) => {
+  const { name, description, rating, photo, category, _id } = biz;
+
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={photo} style={{ maxHeight: "200px" }} />
       <Card.Body>
         <Card.Title>{name}</Card.Title>
+        <div className="d-flex justify-content-between mb-2">
+          <MDBBadge pill color={category.color}>
+            {category.name}
+          </MDBBadge>
+          <StarRating rating={rating} />
+        </div>
+
         <Card.Text>{description}</Card.Text>
         <Row>
           <Col>
             <Button
-              style={{ height: "100%", paddingTop: "15%" }}
+              style={{ height: "100%", paddingTop: "10px" }}
               block
               variant="secondary"
-              href={`/biz/${id}`}
+              href={`/biz/${_id}`}
             >
               <i className="fas fa-store-alt fa-2x"></i>
               <br />
               Shop
             </Button>
-          </Col>
-          <Col>
-            <StarRating rating={rating} />
           </Col>
         </Row>
       </Card.Body>

@@ -52,11 +52,12 @@ const Shop = () => {
             businesses.map((biz, i) => (
               <div key={i} className="m-3">
                 <BizListCard
-                  name={biz.name}
-                  description={biz.description}
-                  photo={biz.photo}
-                  rating={biz.rating}
-                  id={biz._id}
+                  biz={biz}
+                  // name={biz.name}
+                  // description={biz.description}
+                  // photo={biz.photo}
+                  // rating={biz.rating}
+                  // id={biz._id}
                 />
               </div>
             ))}
