@@ -1,4 +1,5 @@
 const Biz = require("../models/Biz");
+const Item = require("../models/Item");
 const formidable = require("formidable");
 const config = require("config");
 const cloudinary = require("cloudinary").v2;
@@ -14,7 +15,7 @@ cloudinary.config({
 
 exports.bizList = (req, res) => {
   Biz.find()
-    .populate("user")
+    .populate("user category")
     .exec((err, biz) => {
       if (err || !biz) {
         return res.status(400).json({ error: "No Businesses Found" });
@@ -134,6 +135,21 @@ exports.updateBiz = async (req, res) => {
     console.log(err);
     return res.status(400).json({
       error: err,
+    });
+  }
+};
+
+exports.removeBiz = async (req, res) => {
+  // Delete Items Which Belong to the THat Biz
+  const bizId = req.biz._id;
+  try {
+    await Item.deleteMany({ business: bizId });
+    await Biz.findByIdAndDelete(bizId);
+    return res.json({ msg: "Biz Successfully Deleted" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).json({
+      error: err.message,
     });
   }
 };

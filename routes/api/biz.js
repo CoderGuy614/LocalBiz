@@ -9,6 +9,7 @@ const {
   getHours,
   postHours,
   updateBiz,
+  removeBiz,
   read,
 } = require("../../controllers/biz");
 const { userById } = require("../../controllers/user");
@@ -19,6 +20,7 @@ router.post("/biz/create/:userId", create);
 router.get("/biz/hours/:bizId", getHours);
 router.put("/biz/hours/:bizId/:userId", postHours);
 router.put("/biz/update/:bizId", updateBiz);
+router.delete("/biz/:bizId", removeBiz);
 
 router.param("userId", userById);
 router.param("bizId", bizById);
