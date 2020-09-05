@@ -33,11 +33,7 @@ const App = () => {
             path="/admin/dashboard"
             component={AdminDashboard}
           ></AdminRoute>
-          <PrivateRoute
-            exact
-            path="/user/dashboard"
-            component={UserDashboard}
-          ></PrivateRoute>
+          <Route exact path="/user/dashboard" component={UserDashboard}></Route>
           <Route
             path="/authenticate/facebook/"
             component={LoginSuccess}

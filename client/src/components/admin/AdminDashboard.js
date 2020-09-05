@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { Container, Row } from "react-bootstrap";
 import Layout from "../core/Layout/Layout";
+import AuthContext from "../../context/auth/authContext";
 
 const AdminDashboard = () => {
+  // const authContext = useContext(AuthContext);
+  // const { loadUser } = authContext;
+
+  // useEffect(() => {
+  //   loadUser();
+  // });
+
   return (
     <Layout
       title="User Dashboard"

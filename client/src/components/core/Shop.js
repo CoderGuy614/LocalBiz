@@ -13,7 +13,6 @@ const Shop = () => {
   const authUser = authContext.user;
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
-  // const [authUser, setAuthUser] = useState(null);
   const [bizCat, setBizCat] = useState("All");
   const [alert, setAlert] = useState("");
   const [error, setError] = useState("");

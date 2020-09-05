@@ -20,10 +20,9 @@ const Login = () => {
     password: "",
     error: "",
     loading: false,
-    redirectToReferrer: false,
   });
-  const { login, user, isAuthenticated } = authContext;
-  const { email, password, loading, error, redirectToReferrer } = values;
+  const { login, isAuthenticated } = authContext;
+  const { email, password, loading, error } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -33,11 +32,9 @@ const Login = () => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
     try {
-      login({ email, password }).then((data) => {
-        console.log(data);
-        setValues({ ...values, redirectToReferrer: true });
-      });
+      login({ email, password });
     } catch (err) {
+      console.log(err);
       setValues({ ...values, error: err, loading: false });
     }
   };
@@ -61,13 +58,6 @@ const Login = () => {
   );
 
   const redirectUser = () => {
-    if (redirectToReferrer) {
-      if (user && user.role === 1) {
-        return <Redirect to="/admin/dashboard" />;
-      } else {
-        return <Redirect to="/user/dashboard" />;
-      }
-    }
     if (isAuthenticated) {
       return <Redirect to="/" />;
     }

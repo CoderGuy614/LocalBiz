@@ -13,7 +13,7 @@ const isActive = (history, path) => {
 
 const Navigation = ({ history }) => {
   const authContext = useContext(AuthContext);
-  const { user, error, loadUser, signOut, isAuthenticated } = authContext;
+  const { user, error, signOut, isAuthenticated } = authContext;
   return (
     <Navbar collapseOnSelect expand="md" bg="secondary">
       <Navbar.Brand className="text-white" href="/">

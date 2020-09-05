@@ -27,6 +27,7 @@ const AuthState = (props) => {
   const loadUser = () => {
     if (typeof window !== "undefined" && localStorage.getItem("jwt")) {
       try {
+        console.log("LOAD USER JWT", localStorage.getItem("jwt"));
         dispatch({
           type: USER_LOADED,
           payload: localStorage.getItem("jwt"),
@@ -45,6 +46,7 @@ const AuthState = (props) => {
         type: REGISTER_SUCCESS,
         payload: token,
       });
+      loadUser();
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
@@ -57,10 +59,12 @@ const AuthState = (props) => {
   const login = async (user) => {
     try {
       const token = await signin(user);
+      console.log("LOGIN TOKEN", token);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: token,
       });
+      loadUser();
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
