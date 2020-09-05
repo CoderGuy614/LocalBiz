@@ -10,7 +10,7 @@ import BizListCard from "./Biz/BizListCard";
 const Shop = () => {
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [authUser, setAuthUser] = useState({});
+  const [authUser, setAuthUser] = useState(null);
   const [bizCat, setBizCat] = useState("All");
   const [alert, setAlert] = useState("");
   const [error, setError] = useState("");
@@ -55,7 +55,7 @@ const Shop = () => {
       setAuthUser(isAuthenticated().user);
     }
     loadCategories();
-  }, []);
+  }, [showAddModal]);
 
   useEffect(() => {
     loadBusinesses();
@@ -85,6 +85,22 @@ const Shop = () => {
     </div>
   );
 
+  const showAddButton = () => {
+    if (authUser) {
+      return (
+        <Button
+          variant="secondary"
+          block
+          // style={{ display: authUser ? "" : "none" }}
+          onClick={() => setShowAddModal(true)}
+        >
+          <i className="fas fa-plus-square mr-2"></i>
+          Create New Business
+        </Button>
+      );
+    }
+  };
+
   return (
     <Layout
       title="LocalBiz"
@@ -95,10 +111,7 @@ const Shop = () => {
         {showError()}
         {showAlert()}
         {showLoading()}
-        <Button variant="secondary" block onClick={() => setShowAddModal(true)}>
-          <i className="fas fa-plus-square mr-2"></i>
-          Create New Business
-        </Button>
+        {showAddButton()}
         <Container fluid className="d-flex flex-wrap">
           {businesses &&
             businesses.map((biz, i) => (

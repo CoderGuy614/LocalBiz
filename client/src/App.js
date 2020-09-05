@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.scss";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import AuthState from "./context/auth/AuthState";
 import Navigation from "./components/core/Layout/Navigation";
 import AdminRoute from "./auth/AdminRoute";
 import PrivateRoute from "./auth/PrivateRoute";
@@ -17,28 +18,33 @@ import LoginSuccess from "./components/auth/LoginSuccess";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Navigation />
-      <Switch>
-        <Route exact path="/" component={Shop}></Route>
-        <Route exact path="/biz/:id" component={Biz}></Route>
-        <Route exact path="/post/biz" component={AddBizForm}></Route>
-        <Route exact path="/post/hours/:bizId" component={HoursForm}></Route>
-        <Route exact path="/signup" component={Signup}></Route>
-        <Route exact path="/login" component={Login}></Route>
-        <AdminRoute
-          exact
-          path="/admin/dashboard"
-          component={AdminDashboard}
-        ></AdminRoute>
-        <PrivateRoute
-          exact
-          path="/user/dashboard"
-          component={UserDashboard}
-        ></PrivateRoute>
-        <Route path="/authenticate/facebook/" component={LoginSuccess}></Route>
-      </Switch>
-    </BrowserRouter>
+    <AuthState>
+      <BrowserRouter>
+        <Navigation />
+        <Switch>
+          <Route exact path="/" component={Shop}></Route>
+          <Route exact path="/biz/:id" component={Biz}></Route>
+          <Route exact path="/post/biz" component={AddBizForm}></Route>
+          <Route exact path="/post/hours/:bizId" component={HoursForm}></Route>
+          <Route exact path="/signup" component={Signup}></Route>
+          <Route exact path="/login" component={Login}></Route>
+          <AdminRoute
+            exact
+            path="/admin/dashboard"
+            component={AdminDashboard}
+          ></AdminRoute>
+          <PrivateRoute
+            exact
+            path="/user/dashboard"
+            component={UserDashboard}
+          ></PrivateRoute>
+          <Route
+            path="/authenticate/facebook/"
+            component={LoginSuccess}
+          ></Route>
+        </Switch>
+      </BrowserRouter>
+    </AuthState>
   );
 };
 

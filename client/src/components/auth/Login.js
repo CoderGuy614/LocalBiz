@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Form,
   Alert,
@@ -11,10 +11,11 @@ import {
 import Layout from "../core/Layout/Layout";
 import { Redirect } from "react-router-dom";
 import FBLogin from "./FBLogin";
-
 import { signin, authenticate, isAuthenticated } from "../../auth/apiAuth";
+import AuthContext from "../../context/auth/authContext";
 
 const Login = () => {
+  const authContext = useContext(AuthContext);
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -22,7 +23,7 @@ const Login = () => {
     loading: false,
     redirectToReferrer: false,
   });
-
+  const { loadUser } = authContext;
   const { email, password, loading, error, redirectToReferrer } = values;
   const { user } = isAuthenticated();
 
@@ -41,6 +42,7 @@ const Login = () => {
             redirectToReferrer: true,
           });
         });
+        loadUser();
       });
     } catch (err) {
       setValues({ ...values, error: err, loading: false });

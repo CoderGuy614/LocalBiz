@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { isAuthenticated, signout } from "../../../auth/apiAuth";
+import AuthContext from "../../../context/auth/authContext";
 import { Navbar, Nav } from "react-bootstrap";
 
 const isActive = (history, path) => {
@@ -12,6 +13,8 @@ const isActive = (history, path) => {
 };
 
 const Navigation = ({ history }) => {
+  const authContext = useContext(AuthContext);
+  const { token, user, error, loadUser } = authContext;
   return (
     <Navbar collapseOnSelect expand="md" bg="secondary">
       <Navbar.Brand className="text-white" href="/">
