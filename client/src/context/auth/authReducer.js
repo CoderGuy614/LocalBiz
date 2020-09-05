@@ -16,14 +16,15 @@ export default (state, action) => {
         ...state,
         token: JSON.parse(action.payload).token,
         user: JSON.parse(action.payload).user,
+        isAuthenticated: true,
+        loading: false,
       };
     case AUTH_ERROR:
     case REGISTER_FAIL:
     case LOGIN_FAIL:
       return {
         ...state,
-        token: null,
-        user: null,
+        loading: false,
         error: action.payload,
       };
     case REGISTER_SUCCESS:
@@ -32,6 +33,7 @@ export default (state, action) => {
       return {
         ...state,
         ...action.payload,
+        loading: false,
         isAuthenticated: true,
       };
     case LOGOUT:
@@ -40,6 +42,7 @@ export default (state, action) => {
         isAuthenticated: false,
         token: null,
         user: null,
+        loading: false,
         error: action.payload,
       };
     default:

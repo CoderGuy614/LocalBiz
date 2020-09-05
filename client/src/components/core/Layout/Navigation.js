@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router-dom";
-import { isAuthenticated, signout } from "../../../auth/apiAuth";
 import AuthContext from "../../../context/auth/authContext";
 import { Navbar, Nav } from "react-bootstrap";
 
@@ -14,7 +13,7 @@ const isActive = (history, path) => {
 
 const Navigation = ({ history }) => {
   const authContext = useContext(AuthContext);
-  const { token, user, error, loadUser, signOut } = authContext;
+  const { user, error, loadUser, signOut, isAuthenticated } = authContext;
   return (
     <Navbar collapseOnSelect expand="md" bg="secondary">
       <Navbar.Brand className="text-white" href="/">
@@ -26,7 +25,7 @@ const Navigation = ({ history }) => {
           <Nav.Link style={isActive(history, "/")} href="/">
             Home
           </Nav.Link>
-          {isAuthenticated() && isAuthenticated().user.role === 0 && (
+          {isAuthenticated && user.role === 0 && (
             <Nav.Link
               href="/user/dashboard"
               style={isActive(history, "/user/dashboard")}
@@ -34,7 +33,7 @@ const Navigation = ({ history }) => {
               Dashboard
             </Nav.Link>
           )}
-          {isAuthenticated() && isAuthenticated().user.role === 1 && (
+          {isAuthenticated && user.role === 1 && (
             <Nav.Link
               href="/admin/dashboard"
               style={isActive(history, "/admin/dashboard")}
@@ -43,10 +42,10 @@ const Navigation = ({ history }) => {
             </Nav.Link>
           )}
         </Nav>
-        {isAuthenticated() && isAuthenticated().user && (
+        {isAuthenticated && (
           <Nav className="ml-auto">
             <Navbar.Brand className="text-white">
-              Welcome Back, {isAuthenticated().user.name}
+              Welcome Back, {user.name}
             </Navbar.Brand>
             <Nav.Link
               onClick={() =>
@@ -59,7 +58,7 @@ const Navigation = ({ history }) => {
             </Nav.Link>
           </Nav>
         )}
-        {!isAuthenticated() && (
+        {!isAuthenticated && (
           <Nav className="ml-auto">
             <Nav.Link style={isActive(history, "/login")} href="/login">
               Login

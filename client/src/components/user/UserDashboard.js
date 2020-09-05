@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import Layout from "../core/Layout/Layout";
 
 const UserDashboard = () => {

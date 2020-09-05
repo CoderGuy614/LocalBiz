@@ -57,7 +57,7 @@ const BizSidebar = ({
           setSettingsUpdated={setSettingsUpdated}
         />
         <ContactInfo email={bizEmail} phone={bizPhone} />
-        {authUser && user && authUser === user._id && (
+        {authUser && user && authUser._id === user._id && (
           <>
             <Button
               block

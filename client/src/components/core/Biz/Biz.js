@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getBusiness, getItems } from "../apiCore";
 import { Row, Col, Container, Button } from "react-bootstrap";
-import { isAuthenticated } from "../../../auth/apiAuth";
+import AuthContext from "../../../context/auth/authContext";
 import AddItemModal from "../Item/AddItemModal";
 import BizSidebar from "./BizSidebar";
 import ItemCard from "../Item/ItemCard";
 import Layout from "../Layout/Layout";
 
 const Biz = ({ match }) => {
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated, loadUser } = authContext;
+  const authUser = authContext.user;
   const { id } = match.params;
   const [business, setBusiness] = useState({});
   const [items, setItems] = useState([]);
-  const [authUser, setAuthUser] = useState({});
   const [error, setError] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [hoursUpdated, setHoursUpdated] = useState(false);
@@ -38,9 +40,7 @@ const Biz = ({ match }) => {
   };
 
   useEffect(() => {
-    if (isAuthenticated().user) {
-      setAuthUser(isAuthenticated().user._id);
-    }
+    loadUser();
   }, []);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const Biz = ({ match }) => {
             </Row>
           </Col>
           <Col md={9}>
-            {authUser && user && authUser === user._id && (
+            {authUser && user && authUser._id === user._id && (
               <Button
                 variant="secondary"
                 onClick={() => setShowAddModal(true)}
