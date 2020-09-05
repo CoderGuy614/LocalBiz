@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import { Form, Alert, Button, Row, Col, Container } from "react-bootstrap";
+import {
+  Form,
+  Alert,
+  Button,
+  Row,
+  Col,
+  Container,
+  Spinner,
+} from "react-bootstrap";
 import Layout from "../core/Layout/Layout";
 import { Redirect } from "react-router-dom";
 import FBLogin from "./FBLogin";
 
-import { signin, authenticate, isAuthenticated } from "../../auth/Index";
+import { signin, authenticate, isAuthenticated } from "../../auth/apiAuth";
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -25,18 +33,18 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
-    signin({ email, password }).then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error, loading: false });
-      } else {
+    try {
+      signin({ email, password }).then((data) => {
         authenticate(data, () => {
           setValues({
             ...values,
             redirectToReferrer: true,
           });
         });
-      }
-    });
+      });
+    } catch (err) {
+      setValues({ ...values, error: err, loading: false });
+    }
   };
 
   const showError = () => (
@@ -45,7 +53,17 @@ const Login = () => {
     </Alert>
   );
 
-  const showLoading = () => loading && <Alert variant="info">Loading...</Alert>;
+  const showLoading = () => (
+    <div className="d-flex justify-content-center my-4">
+      <Spinner
+        style={{ display: loading ? "" : "none" }}
+        animation="border"
+        role="status"
+      >
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    </div>
+  );
 
   const redirectUser = () => {
     if (redirectToReferrer) {

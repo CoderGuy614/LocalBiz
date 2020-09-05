@@ -1,7 +1,6 @@
 import React from "react";
-import { Jumbotron, Image } from "react-bootstrap";
+import { Jumbotron } from "react-bootstrap";
 import MiniUserProfile from "./MiniUserProfile";
-import Moment from "react-moment";
 
 const Layout = ({
   title = "Title",

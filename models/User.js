@@ -17,13 +17,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  phone: {
-    type: String,
-  },
   hashed_password: {
     type: String,
     required: true,
-    select: false,
+  },
+  fbSignup: {
+    type: Boolean,
+    default: false,
   },
   avatar: {
     type: String,

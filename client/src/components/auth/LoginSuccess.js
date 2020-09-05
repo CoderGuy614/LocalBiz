@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import * as queryString from "query-string";
-import { signup } from "../../auth/Index";
+import { signup, signin } from "../../auth/apiAuth";
 import axios from "axios";
 
 const LoginSuccess = () => {
   const [user, setUser] = useState(null);
 
   const urlParams = queryString.parse(window.location.search);
-  console.log(`The code is: ${urlParams.code}`);
 
   useEffect(() => {
     getAccessTokenFromCode(urlParams.code).then((token) => {
@@ -57,6 +56,7 @@ const LoginSuccess = () => {
     if (!isExisting.data) {
       signupNewFacebookUser();
     } else {
+      console.log(isExisting.data.user);
       return isExisting;
     }
   };
@@ -65,9 +65,8 @@ const LoginSuccess = () => {
     const name = user.first_name + " " + user.last_name;
     const password = user.id;
     const email = user.email;
-    console.log("SIGNUP NEW USER RAN");
-
-    signup({ name, email, password }).then((response) => {
+    const fbSignup = true;
+    signup({ name, email, password, fbSignup }).then((response) => {
       console.log(response);
     });
   };

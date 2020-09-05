@@ -1,6 +1,6 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
-import { isAuthenticated, signout } from "../../../auth/Index";
+import { withRouter } from "react-router-dom";
+import { isAuthenticated, signout } from "../../../auth/apiAuth";
 import { Navbar, Nav } from "react-bootstrap";
 
 const isActive = (history, path) => {

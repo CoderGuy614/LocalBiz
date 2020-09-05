@@ -2,18 +2,11 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const auth = require("../middleware/auth");
-const { check, validationResult } = require("express-validator");
 const gravatar = require("gravatar");
 
 //Signup A New User
 exports.signup = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const { name, email, phone, password } = req.body;
-
+  const { name, email, password, fbSignup } = req.body;
   try {
     let user = await User.findOne({ email });
 
@@ -23,42 +16,34 @@ exports.signup = async (req, res) => {
         .status(400)
         .json({ error: "User Already Exists, Please Sign In" });
     }
-
     const avatar = gravatar.url(email, {
       s: "200",
       r: "pg",
       d: "mm",
     });
-
     user = new User({
       name,
       email,
       avatar,
-      phone,
+      fbSignup,
       password,
     });
-    await user.save();
+    const newUser = await user.save();
     const payload = {
       user: {
         id: user.id,
       },
     };
 
-    jwt.sign(
-      payload,
-      config.get("jwtSecret"),
-      { expiresIn: 3600000 },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
+    jwt.sign(payload, config.get("jwtSecret"), (err, token) => {
+      if (err) throw err;
+      res.json({ token, user: newUser });
+    });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
 };
-
 //SignIn a current User
 exports.signin = (req, res) => {
   // find the user based on email
