@@ -14,7 +14,7 @@ const isActive = (history, path) => {
 
 const Navigation = ({ history }) => {
   const authContext = useContext(AuthContext);
-  const { token, user, error, loadUser } = authContext;
+  const { token, user, error, loadUser, signOut } = authContext;
   return (
     <Navbar collapseOnSelect expand="md" bg="secondary">
       <Navbar.Brand className="text-white" href="/">
@@ -50,7 +50,7 @@ const Navigation = ({ history }) => {
             </Navbar.Brand>
             <Nav.Link
               onClick={() =>
-                signout(() => {
+                signOut(() => {
                   history.push("/");
                 })
               }

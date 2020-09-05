@@ -5,6 +5,7 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT,
 } from "../types";
 import { setJwt } from "../../auth/apiAuth";
 
@@ -23,7 +24,7 @@ export default (state, action) => {
         ...state,
         token: null,
         user: null,
-        error: true,
+        error: action.payload,
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
@@ -32,6 +33,14 @@ export default (state, action) => {
         ...state,
         ...action.payload,
         isAuthenticated: true,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        isAuthenticated: false,
+        token: null,
+        user: null,
+        error: action.payload,
       };
     default:
       return state;

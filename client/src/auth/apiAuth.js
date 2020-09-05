@@ -70,3 +70,16 @@ export const signout = (next) => {
       .catch((err) => console.log(err));
   }
 };
+
+export const logout = () => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("jwt");
+    return fetch(`${process.env.REACT_APP_API}/signout`, {
+      method: "POST",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((err) => console.log(err));
+  }
+};

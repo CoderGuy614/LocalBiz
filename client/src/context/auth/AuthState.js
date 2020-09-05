@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { signup, signin } from "../../auth/apiAuth";
+import { signup, signin, logout } from "../../auth/apiAuth";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
 import {
@@ -9,12 +9,13 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT,
 } from "../types";
 
 const AuthState = (props) => {
   const initialState = {
     token: null,
-    isAuthenticated: true,
+    isAuthenticated: false,
     user: null,
     error: null,
   };
@@ -30,7 +31,7 @@ const AuthState = (props) => {
           payload: localStorage.getItem("jwt"),
         });
       } catch (err) {
-        dispatch({ type: AUTH_ERROR });
+        dispatch({ type: AUTH_ERROR, payload: err });
       }
     }
   };
@@ -67,6 +68,22 @@ const AuthState = (props) => {
     }
   };
 
+  //Logout a user
+  const signOut = async () => {
+    const response = await logout();
+    console.log("LOGOUT RESPONSE", response);
+    try {
+      dispatch({
+        type: LOGOUT,
+      });
+    } catch (err) {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: err,
+      });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -77,6 +94,7 @@ const AuthState = (props) => {
         loadUser,
         register,
         login,
+        signOut,
       }}
     >
       {props.children}
