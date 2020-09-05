@@ -26,7 +26,9 @@ const Signup = () => {
   };
 
   const redirectUser = () => {
-    return <Redirect to="/" />;
+    if (success) {
+      return <Redirect to="/" />;
+    }
   };
 
   const handleSubmit = (e) => {
@@ -37,7 +39,17 @@ const Signup = () => {
         //The New User is Created and Token is Sent Back to Client
         //Set this into Local Storage and then Redirect the User to the Shop Page
         console.log(data);
-        authenticate(data, redirectUser);
+        authenticate(data, () =>
+          setValues({
+            ...values,
+            name: "",
+            email: "",
+            password: "",
+            password2: "",
+            error: "",
+            success: true,
+          })
+        );
         setValues({
           ...values,
           name: "",
@@ -53,12 +65,12 @@ const Signup = () => {
     }
   };
 
-  const showSuccess = () => (
-    <Alert variant="success" style={{ display: success ? "" : "none" }}>
-      {" "}
-      You Have Succesfully Signed Up! Please <Link to="/login">Sign in</Link>
-    </Alert>
-  );
+  // const showSuccess = () => (
+  //   <Alert variant="success" style={{ display: success ? "" : "none" }}>
+  //     {" "}
+  //     You Have Succesfully Signed Up! Please <Link to="/login">Sign in</Link>
+  //   </Alert>
+  // );
 
   const showError = () => (
     <Alert variant="danger" style={{ display: error ? "" : "none" }}>
@@ -72,8 +84,8 @@ const Signup = () => {
       description="Registered users can post a store and items to sell, leave ratings and comments, and more."
     >
       <Container>
-        {showSuccess()}
         {showError()}
+        {redirectUser()}
         <Row className="mt-4">
           <Col md={{ span: 6, offset: 3 }}>
             <Form>

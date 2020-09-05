@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "./Layout/Layout";
 import { Container, Button, Alert, Spinner } from "react-bootstrap";
 import { getBusinesses, getCategories } from "./apiCore";
+import { isAuthenticated } from "../../auth/apiAuth";
 import AddBizModal from "./Biz/AddBizModal";
 import Filters from "./Layout/Filters";
 import BizListCard from "./Biz/BizListCard";
@@ -9,6 +10,7 @@ import BizListCard from "./Biz/BizListCard";
 const Shop = () => {
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [user, setUser] = useState({});
   const [bizCat, setBizCat] = useState("All");
   const [alert, setAlert] = useState("");
   const [error, setError] = useState("");
@@ -49,7 +51,13 @@ const Shop = () => {
   };
 
   useEffect(() => {
+    if (isAuthenticated().user) {
+      setUser(isAuthenticated().user);
+    }
     loadCategories();
+  }, []);
+
+  useEffect(() => {
     loadBusinesses();
   }, [bizCat]);
 

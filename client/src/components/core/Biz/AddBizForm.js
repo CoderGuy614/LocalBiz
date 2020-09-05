@@ -21,6 +21,7 @@ const AddBizForm = () => {
 
   const [photoName, setPhotoName] = useState("");
   const [validated, setValidated] = useState(false);
+  const [user, setUser] = useState({});
 
   const {
     name,

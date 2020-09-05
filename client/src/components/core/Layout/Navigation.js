@@ -23,12 +23,6 @@ const Navigation = ({ history }) => {
           <Nav.Link style={isActive(history, "/")} href="/">
             Home
           </Nav.Link>
-          <Nav.Link style={isActive(history, "/login")} href="/login">
-            Login
-          </Nav.Link>
-          <Nav.Link style={isActive(history, "/signup")} href="/signup">
-            Sign up
-          </Nav.Link>
           {isAuthenticated() && isAuthenticated().user.role === 0 && (
             <Nav.Link
               href="/user/dashboard"
@@ -45,7 +39,12 @@ const Navigation = ({ history }) => {
               Dashboard
             </Nav.Link>
           )}
-          {isAuthenticated() && (
+        </Nav>
+        {isAuthenticated() && isAuthenticated().user && (
+          <Nav className="ml-auto">
+            <Navbar.Brand className="text-white">
+              Welcome Back, {isAuthenticated().user.name}
+            </Navbar.Brand>
             <Nav.Link
               onClick={() =>
                 signout(() => {
@@ -55,8 +54,18 @@ const Navigation = ({ history }) => {
             >
               Sign Out
             </Nav.Link>
-          )}
-        </Nav>
+          </Nav>
+        )}
+        {!isAuthenticated() && (
+          <Nav className="ml-auto">
+            <Nav.Link style={isActive(history, "/login")} href="/login">
+              Login
+            </Nav.Link>
+            <Nav.Link style={isActive(history, "/signup")} href="/signup">
+              Sign up
+            </Nav.Link>
+          </Nav>
+        )}
       </Navbar.Collapse>
     </Navbar>
   );
