@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import Layout from "../core/Layout/Layout";
 import FBLogin from "./FBLogin";
-import { signup, authenticate } from "../../auth/apiAuth";
+import AuthContext from "../../context/auth/authContext";
 const Signup = () => {
+  const authContext = useContext(AuthContext);
+  const { register } = authContext;
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -33,23 +35,9 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setValues({ ...values, error: false });
     try {
-      signup({ name, email, password }).then((data) => {
-        //The New User is Created and Token is Sent Back to Client
-        //Set this into Local Storage and then Redirect the User to the Shop Page
+      register({ name, email, password }).then((data) => {
         console.log(data);
-        authenticate(data, () =>
-          setValues({
-            ...values,
-            name: "",
-            email: "",
-            password: "",
-            password2: "",
-            error: "",
-            success: true,
-          })
-        );
         setValues({
           ...values,
           name: "",
@@ -64,13 +52,6 @@ const Signup = () => {
       setValues({ ...values, error: err, success: false });
     }
   };
-
-  // const showSuccess = () => (
-  //   <Alert variant="success" style={{ display: success ? "" : "none" }}>
-  //     {" "}
-  //     You Have Succesfully Signed Up! Please <Link to="/login">Sign in</Link>
-  //   </Alert>
-  // );
 
   const showError = () => (
     <Alert variant="danger" style={{ display: error ? "" : "none" }}>

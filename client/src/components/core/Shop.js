@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Layout from "./Layout/Layout";
 import { Container, Button, Alert, Spinner } from "react-bootstrap";
 import { getBusinesses, getCategories } from "./apiCore";
-import { isAuthenticated } from "../../auth/apiAuth";
 import AddBizModal from "./Biz/AddBizModal";
 import Filters from "./Layout/Filters";
 import BizListCard from "./Biz/BizListCard";
+import AuthContext from "../../context/auth/authContext";
 
 const Shop = () => {
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated, loadUser } = authContext;
+  const authUser = authContext.user;
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [authUser, setAuthUser] = useState(null);
+  // const [authUser, setAuthUser] = useState(null);
   const [bizCat, setBizCat] = useState("All");
   const [alert, setAlert] = useState("");
   const [error, setError] = useState("");
@@ -51,9 +54,10 @@ const Shop = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated().user) {
-      setAuthUser(isAuthenticated().user);
-    }
+    loadUser();
+  }, []);
+
+  useEffect(() => {
     loadCategories();
   }, [showAddModal]);
 

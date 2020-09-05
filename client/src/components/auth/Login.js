@@ -11,7 +11,6 @@ import {
 import Layout from "../core/Layout/Layout";
 import { Redirect } from "react-router-dom";
 import FBLogin from "./FBLogin";
-import { signin, authenticate, isAuthenticated } from "../../auth/apiAuth";
 import AuthContext from "../../context/auth/authContext";
 
 const Login = () => {
@@ -23,9 +22,8 @@ const Login = () => {
     loading: false,
     redirectToReferrer: false,
   });
-  const { loadUser } = authContext;
+  const { login, user, isAuthenticated } = authContext;
   const { email, password, loading, error, redirectToReferrer } = values;
-  const { user } = isAuthenticated();
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -35,14 +33,9 @@ const Login = () => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
     try {
-      signin({ email, password }).then((data) => {
-        authenticate(data, () => {
-          setValues({
-            ...values,
-            redirectToReferrer: true,
-          });
-        });
-        loadUser();
+      login({ email, password }).then((data) => {
+        console.log(data);
+        setValues({ ...values, redirectToReferrer: true });
       });
     } catch (err) {
       setValues({ ...values, error: err, loading: false });
@@ -75,7 +68,7 @@ const Login = () => {
         return <Redirect to="/user/dashboard" />;
       }
     }
-    if (isAuthenticated()) {
+    if (isAuthenticated) {
       return <Redirect to="/" />;
     }
   };
