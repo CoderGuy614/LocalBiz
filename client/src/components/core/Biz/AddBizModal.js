@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AddBizForm from "./AddBizForm";
 import { Modal, Button } from "react-bootstrap";
 
-const AddBizModal = ({ showAddModal, setShowAddModal }) => {
+const AddBizModal = ({ showAddModal, setShowAddModal, authUser }) => {
   const [success, setSuccess] = useState(false);
 
   const handleClose = () => {
@@ -14,7 +14,7 @@ const AddBizModal = ({ showAddModal, setShowAddModal }) => {
         <Modal.Title>Add a New Business</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AddBizForm setSuccess={setSuccess} />
+        <AddBizForm setSuccess={setSuccess} authUser={authUser} />
 
         <Button variant="secondary" onClick={handleClose} className="my-2">
           Cancel

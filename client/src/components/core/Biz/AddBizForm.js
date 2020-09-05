@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import { createBiz, getCategories } from "../apiCore";
 
-const AddBizForm = () => {
+const AddBizForm = ({ authUser }) => {
   const [values, setValues] = useState({
     name: "",
     category: "",
@@ -21,7 +21,6 @@ const AddBizForm = () => {
 
   const [photoName, setPhotoName] = useState("");
   const [validated, setValidated] = useState(false);
-  const [user, setUser] = useState({});
 
   const {
     name,
@@ -56,7 +55,7 @@ const AddBizForm = () => {
     } else {
       e.preventDefault();
       setValues({ ...values, loading: true });
-      createBiz(formData).then((data) => {
+      createBiz(formData, authUser._id).then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error });
         } else {

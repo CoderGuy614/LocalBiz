@@ -9,7 +9,9 @@ import { Button, Container } from "react-bootstrap";
 
 const BizSidebar = ({
   business,
+  user,
   hoursUpdated,
+  authUser,
   setHoursUpdated,
   settingsUpdated,
   setSettingsUpdated,
@@ -55,19 +57,27 @@ const BizSidebar = ({
           setSettingsUpdated={setSettingsUpdated}
         />
         <ContactInfo email={bizEmail} phone={bizPhone} />
-        <Button block variant="secondary" onClick={() => setShowModal(true)}>
-          <i className="fas fa-edit mr-2"></i>
-          Edit Business Hours
-        </Button>
-        <Button
-          block
-          variant="info"
-          className="mb-3"
-          onClick={() => setShowSettingsModal(true)}
-        >
-          <i className="fas fa-cog mr-2"></i>
-          Edit Business Profile
-        </Button>
+        {authUser && user && authUser === user._id && (
+          <>
+            <Button
+              block
+              variant="secondary"
+              onClick={() => setShowModal(true)}
+            >
+              <i className="fas fa-edit mr-2"></i>
+              Edit Business Hours
+            </Button>
+            <Button
+              block
+              variant="info"
+              className="mb-3"
+              onClick={() => setShowSettingsModal(true)}
+            >
+              <i className="fas fa-cog mr-2"></i>
+              Edit Business Profile
+            </Button>
+          </>
+        )}
       </Container>
     </>
   );

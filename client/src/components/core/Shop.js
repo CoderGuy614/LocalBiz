@@ -10,7 +10,7 @@ import BizListCard from "./Biz/BizListCard";
 const Shop = () => {
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [user, setUser] = useState({});
+  const [authUser, setAuthUser] = useState({});
   const [bizCat, setBizCat] = useState("All");
   const [alert, setAlert] = useState("");
   const [error, setError] = useState("");
@@ -52,7 +52,7 @@ const Shop = () => {
 
   useEffect(() => {
     if (isAuthenticated().user) {
-      setUser(isAuthenticated().user);
+      setAuthUser(isAuthenticated().user);
     }
     loadCategories();
   }, []);
@@ -111,6 +111,7 @@ const Shop = () => {
       <AddBizModal
         showAddModal={showAddModal}
         setShowAddModal={setShowAddModal}
+        authUser={authUser}
       />
     </Layout>
   );

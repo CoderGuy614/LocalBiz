@@ -63,7 +63,7 @@ export const createBiz = (biz, userId) => {
     });
 };
 
-export const createItem = (item, userId = "5f4493e81ab0002d9945e5b8") => {
+export const createItem = (item, userId) => {
   return fetch(`${process.env.REACT_APP_API}/item/create/${userId}`, {
     method: "POST",
     headers: {

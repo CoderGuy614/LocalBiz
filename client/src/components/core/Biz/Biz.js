@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getBusiness, getItems } from "../apiCore";
 import { Row, Col, Container, Button } from "react-bootstrap";
+import { isAuthenticated } from "../../../auth/apiAuth";
 import AddItemModal from "../Item/AddItemModal";
 import BizSidebar from "./BizSidebar";
 import ItemCard from "../Item/ItemCard";
@@ -10,6 +11,7 @@ const Biz = ({ match }) => {
   const { id } = match.params;
   const [business, setBusiness] = useState({});
   const [items, setItems] = useState([]);
+  const [authUser, setAuthUser] = useState({});
   const [error, setError] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [hoursUpdated, setHoursUpdated] = useState(false);
@@ -36,6 +38,12 @@ const Biz = ({ match }) => {
   };
 
   useEffect(() => {
+    if (isAuthenticated().user) {
+      setAuthUser(isAuthenticated().user._id);
+    }
+  }, []);
+
+  useEffect(() => {
     loadItems();
   }, [itemsUpdated]);
 
@@ -54,6 +62,7 @@ const Biz = ({ match }) => {
               <BizSidebar
                 business={business}
                 user={user}
+                authUser={authUser}
                 hoursUpdated={hoursUpdated}
                 setHoursUpdated={setHoursUpdated}
                 settingsUpdated={settingsUpdated}
@@ -62,14 +71,17 @@ const Biz = ({ match }) => {
             </Row>
           </Col>
           <Col md={9}>
-            <Button
-              variant="secondary"
-              onClick={() => setShowAddModal(true)}
-              block
-            >
-              <i className="fas fa-plus-square mr-2"></i>
-              Add An Item
-            </Button>
+            {authUser && user && authUser === user._id && (
+              <Button
+                variant="secondary"
+                onClick={() => setShowAddModal(true)}
+                block
+              >
+                <i className="fas fa-plus-square mr-2"></i>
+                Add An Item
+              </Button>
+            )}
+
             <Row className="d-flex justify-content-center">
               {items.length > 0 ? (
                 items.map((item) => (
