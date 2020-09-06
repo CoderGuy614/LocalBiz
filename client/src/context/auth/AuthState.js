@@ -5,6 +5,7 @@ import authReducer from "./authReducer";
 import {
   USER_LOADED,
   AUTH_ERROR,
+  CLEAR_ERRORS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGIN_SUCCESS,
@@ -22,20 +23,6 @@ const AuthState = (props) => {
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
-
-  // // Load User
-  // const loadUser = () => {
-  //   if (typeof window !== "undefined" && localStorage.getItem("jwt")) {
-  //     try {
-  //       dispatch({
-  //         type: USER_LOADED,
-  //         payload: localStorage.getItem("jwt"),
-  //       });
-  //     } catch (err) {
-  //       dispatch({ type: AUTH_ERROR, payload: err });
-  //     }
-  //   }
-  // };
 
   //Register User
   const register = async (user) => {
@@ -56,11 +43,18 @@ const AuthState = (props) => {
 
   //Login User
   const login = async (user) => {
+    const response = await signin(user);
+    if (response.error) {
+      console.log(response.error);
+      return dispatch({
+        type: LOGIN_FAIL,
+        payload: response.error,
+      });
+    }
     try {
-      const token = await signin(user);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: token,
+        payload: response,
       });
       loadUser();
     } catch (err) {
@@ -102,6 +96,11 @@ const AuthState = (props) => {
     }
   };
 
+  // Clear Errors
+  const clearErrors = () => {
+    dispatch({ type: CLEAR_ERRORS });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -110,11 +109,11 @@ const AuthState = (props) => {
         error: state.error,
         loading: state.loading,
         isAuthenticated: state.isAuthenticated,
-        // isAuthenticatedContext,
         loadUser,
         register,
         login,
         signOut,
+        clearErrors,
       }}
     >
       {props.children}

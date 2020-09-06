@@ -18,24 +18,26 @@ const Login = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
-    error: "",
     loading: false,
   });
-  const { login, isAuthenticated } = authContext;
-  const { email, password, loading, error } = values;
+  const [validated, setValidated] = useState(false);
+  const { login, isAuthenticated, error, clearErrors } = authContext;
+  const { email, password, loading } = values;
 
   const handleChange = (name) => (event) => {
-    setValues({ ...values, error: false, [name]: event.target.value });
+    clearErrors();
+    setValues({ ...values, [name]: event.target.value });
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    setValues({ ...values, error: false, loading: true });
-    try {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      setValidated(true);
+    } else {
+      event.preventDefault();
       login({ email, password });
-    } catch (err) {
-      console.log(err);
-      setValues({ ...values, error: err, loading: false });
     }
   };
 
@@ -58,7 +60,7 @@ const Login = () => {
   );
 
   const redirectUser = () => {
-    if (isAuthenticated) {
+    if (isAuthenticated && !error) {
       return <Redirect to="/" />;
     }
   };
@@ -71,33 +73,36 @@ const Login = () => {
         {redirectUser()}
         <Row className="mt-4">
           <Col md={{ span: 6, offset: 3 }}>
-            <Form>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
+                  required
                   type="email"
                   placeholder="Enter email"
                   onChange={handleChange("email")}
                   value={email}
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please Enter a Valid Email Address
+                </Form.Control.Feedback>
                 <Form.Text className="text-muted"></Form.Text>
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+                  required
                   type="password"
                   placeholder="Password"
                   onChange={handleChange("password")}
                   value={password}
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please Enter your Password
+                </Form.Control.Feedback>
               </Form.Group>
 
-              <Button
-                variant="primary"
-                block
-                type="submit"
-                onClick={handleSubmit}
-              >
+              <Button variant="primary" block type="submit">
                 Submit
               </Button>
             </Form>
