@@ -9,14 +9,13 @@ import { Button, Container } from "react-bootstrap";
 
 const BizSidebar = ({
   business,
-  user,
   hoursUpdated,
-  authUser,
+  authUserId,
   setHoursUpdated,
   settingsUpdated,
   setSettingsUpdated,
 }) => {
-  const { rating, hours, lat, lng, bizEmail, bizPhone, _id } = business;
+  const { rating, hours, lat, lng, bizEmail, bizPhone, user, _id } = business;
 
   const [showModal, setShowModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
@@ -57,7 +56,7 @@ const BizSidebar = ({
           setSettingsUpdated={setSettingsUpdated}
         />
         <ContactInfo email={bizEmail} phone={bizPhone} />
-        {authUser && user && authUser._id === user._id && (
+        {user && authUserId && authUserId === user._id && (
           <>
             <Button
               block

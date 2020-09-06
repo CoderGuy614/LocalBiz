@@ -93,11 +93,7 @@ export const updateItem = (itemId, item) => {
     .catch((err) => console.log(err));
 };
 
-export const updateHours = (
-  hours,
-  bizId,
-  userId = "5f4493e81ab0002d9945e5b8"
-) => {
+export const updateHours = (hours, bizId, userId) => {
   return axios({
     method: "put",
     headers: { "Content-Type": "application/json" },

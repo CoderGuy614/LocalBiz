@@ -4,7 +4,13 @@ import EditModal from "./EditModal";
 
 import { Row, Col, Image, ListGroup, Button } from "react-bootstrap";
 
-const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
+const ItemCard = ({
+  item,
+  itemsUpdated,
+  setItemsUpdated,
+  userId,
+  bizOwner,
+}) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
@@ -22,16 +28,26 @@ const ItemCard = ({ item, itemsUpdated, setItemsUpdated }) => {
         <Row className="m-1 d-flex flex-nowrap">
           <Button
             onClick={() => setShowEditModal(true)}
-            className="mr-1 w-auto d-flex text-center"
+            className={`ml-1 w-auto text-center ${
+              bizOwner && userId && bizOwner._id === userId
+                ? "d-flex"
+                : "d-none"
+            }`}
             variant="dark"
+            // style={{ display: bizOwner._id === userId ? "" : "none" }}
           >
             <i className="fas fa-edit mx-2"></i>
             <span className="d-none d-lg-block">Edit</span>
           </Button>
           <Button
             onClick={() => setShowDelete(true)}
-            className="ml-1 w-auto d-flex text-center"
+            className={`ml-1 w-auto text-center ${
+              bizOwner && userId && bizOwner._id === userId
+                ? "d-flex"
+                : "d-none"
+            }`}
             variant="danger"
+            // style={{ display: bizOwner._id === userId ? "" : "none" }}
           >
             <i className="fas fa-trash-alt mx-2 w-auto"></i>
             <span className="d-none d-lg-block">Delete</span>

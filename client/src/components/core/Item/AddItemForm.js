@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import { createItem } from "../apiCore";
 
-const AddItemForm = ({ bizId, setSuccess }) => {
+const AddItemForm = ({ bizId, userId, setSuccess }) => {
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -51,7 +51,7 @@ const AddItemForm = ({ bizId, setSuccess }) => {
       e.preventDefault();
       formData.set("business", business);
       setValues({ ...values, loading: true });
-      createItem(formData).then((data) => {
+      createItem(formData, userId).then((data) => {
         console.log(data);
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });

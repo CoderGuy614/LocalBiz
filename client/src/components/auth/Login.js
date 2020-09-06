@@ -21,7 +21,7 @@ const Login = () => {
     loading: false,
   });
   const [validated, setValidated] = useState(false);
-  const { login, isAuthenticated, error, clearErrors } = authContext;
+  const { login, clearErrors, error, isAuthenticated } = authContext;
   const { email, password, loading } = values;
 
   const handleChange = (name) => (event) => {

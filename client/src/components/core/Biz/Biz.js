@@ -12,6 +12,7 @@ const Biz = ({ match }) => {
   const { isAuthenticated, loadUser } = authContext;
   const authUser = authContext.user;
   const { id } = match.params;
+  const [authUserId, setAuthUserId] = useState("");
   const [business, setBusiness] = useState({});
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
@@ -41,7 +42,12 @@ const Biz = ({ match }) => {
 
   useEffect(() => {
     loadUser();
-  }, []);
+    if (authUser) {
+      setAuthUserId(authUser._id);
+    } else {
+      setAuthUserId("");
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     loadItems();
@@ -61,8 +67,7 @@ const Biz = ({ match }) => {
             <Row>
               <BizSidebar
                 business={business}
-                user={user}
-                authUser={authUser}
+                authUserId={authUserId}
                 hoursUpdated={hoursUpdated}
                 setHoursUpdated={setHoursUpdated}
                 settingsUpdated={settingsUpdated}
@@ -71,7 +76,7 @@ const Biz = ({ match }) => {
             </Row>
           </Col>
           <Col md={9}>
-            {authUser && user && authUser._id === user._id && (
+            {user && authUserId && authUserId === user._id && (
               <Button
                 variant="secondary"
                 onClick={() => setShowAddModal(true)}
@@ -90,6 +95,8 @@ const Biz = ({ match }) => {
                     item={item}
                     itemsUpdated={itemsUpdated}
                     setItemsUpdated={setItemsUpdated}
+                    userId={authUserId}
+                    bizOwner={user}
                   />
                 ))
               ) : (
@@ -107,6 +114,7 @@ const Biz = ({ match }) => {
         itemsUpdated={itemsUpdated}
         setItemsUpdated={setItemsUpdated}
         bizId={id}
+        userId={authUserId}
       />
     </Layout>
   );
