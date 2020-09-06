@@ -1,4 +1,3 @@
-import { json } from "body-parser";
 import axios from "axios";
 
 export const getBusinesses = (bizCat) => {
@@ -79,8 +78,8 @@ export const createItem = (item, userId) => {
     });
 };
 
-export const updateItem = (itemId, item) => {
-  return fetch(`${process.env.REACT_APP_API}/item/update/${itemId}`, {
+export const updateItem = (itemId, userId, item) => {
+  return fetch(`${process.env.REACT_APP_API}/item/update/${itemId}/${userId}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -117,11 +116,11 @@ export const getHours = (bizId) => {
     .catch((err) => console.log(err));
 };
 
-export const deleteItem = (itemId, userId = "5f4493e81ab0002d9945e5b8") => {
+export const deleteItem = (itemId, userId) => {
   return axios({
     method: "delete",
     // Put Authorization Token Here Later
-    url: `${process.env.REACT_APP_API}/item/delete/${userId}/${itemId}`,
+    url: `${process.env.REACT_APP_API}/item/delete/${itemId}/${userId}`,
   })
     .then((response) => {
       return response.data;
@@ -129,11 +128,11 @@ export const deleteItem = (itemId, userId = "5f4493e81ab0002d9945e5b8") => {
     .catch((err) => console.log(err));
 };
 
-export const updateBiz = (values, bizId) => {
+export const updateBiz = (values, bizId, userId) => {
   return axios({
     method: "put",
     headers: { "Content-Type": "application/json" },
-    url: `${process.env.REACT_APP_API}/biz/update/${bizId}`,
+    url: `${process.env.REACT_APP_API}/biz/update/${bizId}/${userId}`,
     data: values,
   })
     .then((response) => {
@@ -142,10 +141,10 @@ export const updateBiz = (values, bizId) => {
     .catch((err) => console.log(err));
 };
 
-export const deleteBiz = (bizId) => {
+export const deleteBiz = (bizId, userId) => {
   return axios({
     method: "delete",
-    url: `${process.env.REACT_APP_API}/biz/${bizId}`,
+    url: `${process.env.REACT_APP_API}/biz/${bizId}/${userId}`,
   })
     .then((response) => {
       return response.data;

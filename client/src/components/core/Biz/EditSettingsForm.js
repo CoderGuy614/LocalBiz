@@ -15,6 +15,7 @@ import { getBusiness, updateBiz, deleteBiz } from "../apiCore";
 
 const EditSettingsForm = ({
   bizId,
+  authUserId,
   settingsUpdated,
   setSettingsUpdated,
   setShowSettingsModal,
@@ -51,14 +52,11 @@ const EditSettingsForm = ({
 
   const handleSubmit = () => {
     setLoading(true);
-    updateBiz(values, bizId).then((data) => {
-      if (data.error) {
-        setError(data.error);
-      } else {
-        setLoading(false);
-        setShowSettingsModal(false);
-        setSettingsUpdated(!settingsUpdated);
-      }
+    updateBiz(values, bizId, authUserId).then((data) => {
+      console.log(data);
+      setLoading(false);
+      setShowSettingsModal(false);
+      setSettingsUpdated(!settingsUpdated);
     });
   };
 
@@ -69,14 +67,7 @@ const EditSettingsForm = ({
   const handleDelete = () => {
     if (confirmDeleteText.toLowerCase() === "yes") {
       setLoading(true);
-      deleteBiz(bizId).then((data) => {
-        if (data.error) {
-          setError(data.error);
-          setLoading(false);
-        } else {
-          setHomeRedirect(true);
-        }
-      });
+      deleteBiz(bizId, authUserId).then((data) => setHomeRedirect(true));
     } else {
       setError("Please Type 'Yes' to confirm delete");
     }

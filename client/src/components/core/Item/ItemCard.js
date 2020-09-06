@@ -8,7 +8,7 @@ const ItemCard = ({
   item,
   itemsUpdated,
   setItemsUpdated,
-  userId,
+  authUserId,
   bizOwner,
 }) => {
   const [showDelete, setShowDelete] = useState(false);
@@ -29,12 +29,11 @@ const ItemCard = ({
           <Button
             onClick={() => setShowEditModal(true)}
             className={`ml-1 w-auto text-center ${
-              bizOwner && userId && bizOwner._id === userId
+              bizOwner && authUserId && bizOwner._id === authUserId
                 ? "d-flex"
                 : "d-none"
             }`}
             variant="dark"
-            // style={{ display: bizOwner._id === userId ? "" : "none" }}
           >
             <i className="fas fa-edit mx-2"></i>
             <span className="d-none d-lg-block">Edit</span>
@@ -42,12 +41,11 @@ const ItemCard = ({
           <Button
             onClick={() => setShowDelete(true)}
             className={`ml-1 w-auto text-center ${
-              bizOwner && userId && bizOwner._id === userId
+              bizOwner && authUserId && bizOwner._id === authUserId
                 ? "d-flex"
                 : "d-none"
             }`}
             variant="danger"
-            // style={{ display: bizOwner._id === userId ? "" : "none" }}
           >
             <i className="fas fa-trash-alt mx-2 w-auto"></i>
             <span className="d-none d-lg-block">Delete</span>
@@ -66,14 +64,16 @@ const ItemCard = ({
         </ListGroup>
       </Col>
       <DeleteModal
-        id={_id}
+        itemId={_id}
+        authUserId={authUserId}
         showDelete={showDelete}
         itemsUpdated={itemsUpdated}
         setItemsUpdated={setItemsUpdated}
         setShowDelete={setShowDelete}
       />
       <EditModal
-        id={_id}
+        itemId={_id}
+        authUserId={authUserId}
         showEditModal={showEditModal}
         setShowEditModal={setShowEditModal}
         itemsUpdated={itemsUpdated}

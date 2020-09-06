@@ -4,6 +4,7 @@ import { updateItem, getItem } from "../apiCore";
 
 const EditItemForm = ({
   itemId,
+  authUserId,
   setShowEditModal,
   itemsUpdated,
   setItemsUpdated,
@@ -87,7 +88,7 @@ const EditItemForm = ({
     } else {
       e.preventDefault();
       setValues({ ...values, loading: true });
-      updateItem(itemId, formData).then((data) => {
+      updateItem(itemId, authUserId, formData).then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });
         } else {

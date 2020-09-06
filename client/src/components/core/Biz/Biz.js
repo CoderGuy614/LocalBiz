@@ -95,7 +95,7 @@ const Biz = ({ match }) => {
                     item={item}
                     itemsUpdated={itemsUpdated}
                     setItemsUpdated={setItemsUpdated}
-                    userId={authUserId}
+                    authUserId={authUserId}
                     bizOwner={user}
                   />
                 ))

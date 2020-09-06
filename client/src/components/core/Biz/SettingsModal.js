@@ -4,6 +4,7 @@ import EditSettingsForm from "./EditSettingsForm";
 
 const SettingsModal = ({
   bizId,
+  authUserId,
   showSettingsModal,
   setShowSettingsModal,
   settingsUpdated,
@@ -17,6 +18,7 @@ const SettingsModal = ({
       <Modal.Body>
         <EditSettingsForm
           bizId={bizId}
+          authUserId={authUserId}
           settingsUpdated={settingsUpdated}
           setSettingsUpdated={setSettingsUpdated}
           setShowSettingsModal={setShowSettingsModal}

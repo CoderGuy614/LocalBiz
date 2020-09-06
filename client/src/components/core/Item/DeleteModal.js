@@ -7,7 +7,8 @@ const DeleteModal = ({
   setShowDelete,
   itemsUpdated,
   setItemsUpdated,
-  id,
+  itemId,
+  authUserId,
 }) => {
   const handleClose = () => {
     setShowDelete(false);
@@ -17,7 +18,7 @@ const DeleteModal = ({
 
   const handleDelete = () => {
     setLoading(true);
-    deleteItem(id).then((response) => {
+    deleteItem(itemId, authUserId).then((response) => {
       setLoading(false);
       setItemsUpdated(!itemsUpdated);
     });

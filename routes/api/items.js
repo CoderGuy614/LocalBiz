@@ -16,9 +16,9 @@ const { bizById } = require("../../controllers/biz");
 router.get("/item/:itemId", read);
 router.get("/items/:bizId", listItems);
 router.post("/item/create/:userId", create);
-router.put("/item/update/:itemId", update);
+router.put("/item/update/:itemId/:userId", update);
 
-router.delete("/item/delete/:userId/:itemId", deleteItem);
+router.delete("/item/delete/:itemId/:userId", deleteItem);
 
 router.param("userId", userById);
 router.param("itemId", itemById);

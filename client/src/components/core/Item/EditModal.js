@@ -7,7 +7,8 @@ const EditModal = ({
   setShowEditModal,
   itemsUpdated,
   setItemsUpdated,
-  id,
+  authUserId,
+  itemId,
 }) => {
   return (
     <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
@@ -16,7 +17,8 @@ const EditModal = ({
       </Modal.Header>
       <Modal.Body>
         <EditItemForm
-          itemId={id}
+          itemId={itemId}
+          authUserId={authUserId}
           setShowEditModal={setShowEditModal}
           itemsUpdated={itemsUpdated}
           setItemsUpdated={setItemsUpdated}
