@@ -3,7 +3,13 @@ import { Container, Button, Table, Spinner, Alert } from "react-bootstrap";
 import { getHours, updateHours } from "../apiCore";
 import HourInputRow from "./HourInputRow";
 
-const HoursForm = ({ id, hoursUpdated, setHoursUpdated, setShowModal }) => {
+const HoursForm = ({
+  bizId,
+  authUserId,
+  hoursUpdated,
+  setHoursUpdated,
+  setShowModal,
+}) => {
   const [values, setValues] = useState({
     Monday: {
       open: "",
@@ -44,7 +50,7 @@ const HoursForm = ({ id, hoursUpdated, setHoursUpdated, setShowModal }) => {
 
   useEffect(() => {
     setLoading(true);
-    getHours(id)
+    getHours(bizId)
       .then(({ hours }) => {
         setValues(hours);
         setLoading(false);
@@ -75,15 +81,11 @@ const HoursForm = ({ id, hoursUpdated, setHoursUpdated, setShowModal }) => {
 
   const handleSubmit = () => {
     setLoading(true);
-    updateHours(values, id).then((data) => {
-      if (data.error) {
-        setError(data.error);
-        setLoading(false);
-      } else {
-        setLoading(false);
-        setShowModal(false);
-        setHoursUpdated(!hoursUpdated);
-      }
+    updateHours(values, bizId, authUserId).then((data) => {
+      console.log(data);
+      setLoading(false);
+      setShowModal(false);
+      setHoursUpdated(!hoursUpdated);
     });
   };
 

@@ -54,14 +54,17 @@ const Shop = () => {
 
   useEffect(() => {
     loadUser();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     loadCategories();
+    // eslint-disable-next-line
   }, [showAddModal]);
 
   useEffect(() => {
     loadBusinesses();
+    // eslint-disable-next-line
   }, [bizCat]);
 
   const showError = () => (

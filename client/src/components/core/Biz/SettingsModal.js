@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import EditSettingsForm from "./EditSettingsForm";
 
 const SettingsModal = ({
-  id,
+  bizId,
   showSettingsModal,
   setShowSettingsModal,
   settingsUpdated,
@@ -16,7 +16,7 @@ const SettingsModal = ({
       </Modal.Header>
       <Modal.Body>
         <EditSettingsForm
-          bizId={id}
+          bizId={bizId}
           settingsUpdated={settingsUpdated}
           setSettingsUpdated={setSettingsUpdated}
           setShowSettingsModal={setShowSettingsModal}

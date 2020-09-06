@@ -42,14 +42,16 @@ const BizSidebar = ({
       <Container>
         <Hours hours={hours} id={_id} />
         <HoursModal
-          id={_id}
+          bizId={_id}
+          authUserId={authUserId}
           showModal={showModal}
           setShowModal={setShowModal}
           hoursUpdated={hoursUpdated}
           setHoursUpdated={setHoursUpdated}
         />
         <SettingsModal
-          id={_id}
+          bizId={_id}
+          authUserId={authUserId}
           showSettingsModal={showSettingsModal}
           setShowSettingsModal={setShowSettingsModal}
           settingsUpdated={settingsUpdated}

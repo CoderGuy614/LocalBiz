@@ -5,7 +5,8 @@ import { Modal, Button, Container } from "react-bootstrap";
 const HoursModal = ({
   showModal,
   setShowModal,
-  id,
+  bizId,
+  authUserId,
   hoursUpdated,
   setHoursUpdated,
 }) => {
@@ -21,7 +22,8 @@ const HoursModal = ({
         </Modal.Header>
         <Modal.Body>
           <HoursForm
-            id={id}
+            bizId={bizId}
+            authUserId={authUserId}
             hoursUpdated={hoursUpdated}
             setShowModal={setShowModal}
             setHoursUpdated={setHoursUpdated}
