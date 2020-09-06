@@ -4,19 +4,22 @@ import AuthContext from "../context/auth/authContext";
 
 const AdminRoute = ({ component: Component, ...rest }) => {
   const authContext = useContext(AuthContext);
-  const { user, isAuthenticated, loadUser, loading } = authContext;
+  const { user, loadUser, loading } = authContext;
 
-  // useEffect(() => {
-  //   loadUser();
-  // }, [user]);
+  useEffect(() => {
+    loadUser();
+  }, []);
+
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated && !user && !loading ? (
-          <Redirect to="/" />
-        ) : (
+        (user && user.role == 1) || loading ? (
           <Component {...props} />
+        ) : (
+          <Redirect
+            to={{ pathname: "/login", state: { from: props.location } }}
+          />
         )
       }
     />

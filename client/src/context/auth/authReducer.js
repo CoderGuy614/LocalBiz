@@ -13,20 +13,21 @@ export default (state, action) => {
   switch (action.type) {
     case USER_LOADED:
       return {
-        ...state,
-        token: JSON.parse(action.payload).token,
-        user: JSON.parse(action.payload).user,
-        isAuthenticated: true,
+        // token: JSON.parse(action.payload).token,
+        // user: JSON.parse(action.payload).user,
+        ...action.payload,
+        isAuthenticated: action.payload ? true : false,
         loading: false,
+        error: null,
       };
     case AUTH_ERROR:
     case REGISTER_FAIL:
     case LOGIN_FAIL:
       return {
         ...state,
-        loading: false,
         error: action.payload,
         isAuthenticated: false,
+        loading: false,
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:

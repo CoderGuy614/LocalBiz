@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { signup, signin, logout } from "../../auth/apiAuth";
+import { signup, signin, isAuthenticated, logout } from "../../auth/apiAuth";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
 import {
@@ -18,25 +18,24 @@ const AuthState = (props) => {
     isAuthenticated: false,
     user: null,
     error: null,
-    loading: false,
+    loading: true,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Load User
-  const loadUser = () => {
-    if (typeof window !== "undefined" && localStorage.getItem("jwt")) {
-      try {
-        console.log("LOAD USER JWT", localStorage.getItem("jwt"));
-        dispatch({
-          type: USER_LOADED,
-          payload: localStorage.getItem("jwt"),
-        });
-      } catch (err) {
-        dispatch({ type: AUTH_ERROR, payload: err });
-      }
-    }
-  };
+  // // Load User
+  // const loadUser = () => {
+  //   if (typeof window !== "undefined" && localStorage.getItem("jwt")) {
+  //     try {
+  //       dispatch({
+  //         type: USER_LOADED,
+  //         payload: localStorage.getItem("jwt"),
+  //       });
+  //     } catch (err) {
+  //       dispatch({ type: AUTH_ERROR, payload: err });
+  //     }
+  //   }
+  // };
 
   //Register User
   const register = async (user) => {
@@ -59,7 +58,6 @@ const AuthState = (props) => {
   const login = async (user) => {
     try {
       const token = await signin(user);
-      console.log("LOGIN TOKEN", token);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: token,
@@ -73,10 +71,25 @@ const AuthState = (props) => {
     }
   };
 
+  //Check For Token - Authenticate a user
+  const loadUser = () => {
+    const isAuth = isAuthenticated();
+    try {
+      dispatch({
+        type: USER_LOADED,
+        payload: isAuth,
+      });
+    } catch (err) {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: err,
+      });
+    }
+  };
+
   //Logout a user
   const signOut = async () => {
     const response = await logout();
-    console.log("LOGOUT RESPONSE", response);
     try {
       dispatch({
         type: LOGOUT,
@@ -97,6 +110,7 @@ const AuthState = (props) => {
         error: state.error,
         loading: state.loading,
         isAuthenticated: state.isAuthenticated,
+        // isAuthenticatedContext,
         loadUser,
         register,
         login,
