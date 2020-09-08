@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, Table, Spinner, Alert } from "react-bootstrap";
+import { Container, Button, Table, Alert } from "react-bootstrap";
+import Loading from "../Layout/Loading";
 import { getHours, updateHours } from "../apiCore";
 import HourInputRow from "./HourInputRow";
 
@@ -89,18 +90,6 @@ const HoursForm = ({
     });
   };
 
-  const showLoading = () => (
-    <div className="d-flex justify-content-center my-4">
-      <Spinner
-        style={{ display: loading ? "" : "none" }}
-        animation="border"
-        role="status"
-      >
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    </div>
-  );
-
   const showError = () => (
     <Alert variant="danger" style={{ display: error ? "" : "none" }}>
       {error}
@@ -141,7 +130,7 @@ const HoursForm = ({
           ))}
         </tbody>
       </Table>
-      {showLoading()}
+      <Loading loading={loading} />
       {showError()}
       <Button block onClick={handleSubmit} className="mb-3">
         Save Changes

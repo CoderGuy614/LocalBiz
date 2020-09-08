@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { Form, Button, Alert, Spinner } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
+import Loading from "../Layout/Loading";
 import { createBiz, getCategories } from "../apiCore";
 
 const AddBizForm = ({ authUser }) => {
@@ -106,17 +107,17 @@ const AddBizForm = ({ authUser }) => {
     </Alert>
   );
 
-  const showLoading = () => (
-    <div className="d-flex justify-content-center my-4">
-      <Spinner
-        style={{ display: loading ? "" : "none" }}
-        animation="border"
-        role="status"
-      >
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    </div>
-  );
+  // const showLoading = () => (
+  //   <div className="d-flex justify-content-center my-4">
+  //     <Spinner
+  //       style={{ display: loading ? "" : "none" }}
+  //       animation="border"
+  //       role="status"
+  //     >
+  //       <span className="sr-only">Loading...</span>
+  //     </Spinner>
+  //   </div>
+  // );
 
   const showFileName = (fileName) =>
     photoName && (
@@ -223,8 +224,8 @@ const AddBizForm = ({ authUser }) => {
           Continue to Add Items
         </Button>
       </Form>
+      <Loading loading={loading} />
       {showError()}
-      {showLoading()}
       {redirectUser()}
     </>
   );

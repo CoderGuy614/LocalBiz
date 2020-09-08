@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import Loading from "../core/Layout/Loading";
 import Layout from "../core/Layout/Layout";
 import FBLogin from "./FBLogin";
 import AuthContext from "../../context/auth/authContext";
@@ -13,10 +14,13 @@ const Signup = () => {
     password: "",
     password2: "",
     error: "",
+    loading: false,
     success: false,
   });
 
-  const { name, email, password, password2, success, error } = values;
+  const { name, email, password, password2, success, loading, error } = values;
+  // Add Formik Form and Error handling fUnctions
+  // Add loading status
 
   const handleChange = (name) => (e) => {
     setValues({
@@ -65,6 +69,7 @@ const Signup = () => {
       description="Registered users can post a store and items to sell, leave ratings and comments, and more."
     >
       <Container>
+        <Loading loading={loading} />
         {showError()}
         {redirectUser()}
         <Row className="mt-4">

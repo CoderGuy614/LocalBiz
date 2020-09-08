@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button, Alert, Spinner } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
+import Loading from "../Layout/Loading";
 import { createItem } from "../apiCore";
 
 const AddItemForm = ({ bizId, userId, setSuccess }) => {
@@ -85,18 +86,6 @@ const AddItemForm = ({ bizId, userId, setSuccess }) => {
       </Alert>
     );
 
-  const showLoading = () => (
-    <div className="d-flex justify-content-center my-4">
-      <Spinner
-        style={{ display: loading ? "" : "none" }}
-        animation="border"
-        role="status"
-      >
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    </div>
-  );
-
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Group>
@@ -177,7 +166,7 @@ const AddItemForm = ({ bizId, userId, setSuccess }) => {
       </Form.Group>
       {showFileName()}
       {showError()}
-      {showLoading()}
+      <Loading loading={loading} />
       <Button type="submit" block>
         {" "}
         Create Item

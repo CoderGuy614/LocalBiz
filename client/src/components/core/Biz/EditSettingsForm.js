@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import {
-  Form,
-  Button,
-  Container,
-  ListGroup,
-  Alert,
-  Spinner,
-} from "react-bootstrap";
+import Loading from "../Layout/Loading";
+import { Form, Button, Container, ListGroup, Alert } from "react-bootstrap";
 import EditableField from "./EditableField";
 import DisplayField from "./DisplayField";
 import ReactTooltip from "react-tooltip";
@@ -84,18 +78,6 @@ const EditSettingsForm = ({
       return <Redirect to="/" />;
     }
   };
-
-  const showLoading = () => (
-    <div className="d-flex justify-content-center my-4">
-      <Spinner
-        style={{ display: loading ? "" : "none" }}
-        animation="border"
-        role="status"
-      >
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    </div>
-  );
 
   const { name, description, bizEmail, bizPhone } = values;
 
@@ -235,7 +217,7 @@ const EditSettingsForm = ({
           </Container>
         )}
       </Form>
-      {showLoading()}
+      <Loading loading={loading} />
       <ReactTooltip id="edit-tooltip" place="right" effect="solid">
         Click A Field To Edit It
       </ReactTooltip>

@@ -1,14 +1,7 @@
 import React, { useState, useContext } from "react";
-import {
-  Form,
-  Alert,
-  Button,
-  Row,
-  Col,
-  Container,
-  Spinner,
-} from "react-bootstrap";
+import { Form, Alert, Button, Row, Col, Container } from "react-bootstrap";
 import Layout from "../core/Layout/Layout";
+import Loading from "../../components/core/Layout/Loading";
 import { Redirect } from "react-router-dom";
 import FBLogin from "./FBLogin";
 import AuthContext from "../../context/auth/authContext";
@@ -47,18 +40,6 @@ const Login = () => {
     </Alert>
   );
 
-  const showLoading = () => (
-    <div className="d-flex justify-content-center my-4">
-      <Spinner
-        style={{ display: loading ? "" : "none" }}
-        animation="border"
-        role="status"
-      >
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    </div>
-  );
-
   const redirectUser = () => {
     if (isAuthenticated && !error) {
       return <Redirect to="/" />;
@@ -68,7 +49,7 @@ const Login = () => {
   return (
     <Layout title="Login" description="Sign In with Email or Facebook">
       <Container>
-        {showLoading()}
+        <Loading loading={loading} />
         {showError()}
         {redirectUser()}
         <Row className="mt-4">
