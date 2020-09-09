@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
-import ConfirmModal from "./ConfirmModal";
+import React, { useState, useEffect, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { Form, Container, Col, Row, Button, Alert } from "react-bootstrap";
 import Loading from "./Loading";
-import FormHeader from "./FormHeader";
-import FormFooter from "./FormFooter";
+import Layout from "../core/Layout/Layout";
+import AuthContext from "../../context/auth/authContext";
 
 import { Formik } from "formik";
 import * as yup from "yup";
 
 const schema = yup.object({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
+  name: yup.string().required(),
   email: yup.string().email().required(),
   password: yup.string().required(),
   confirmation: yup
@@ -19,12 +18,13 @@ const schema = yup.object({
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
-const Signup = () => {
+const Signup2 = () => {
+  const authContext = useContext(AuthContext);
+  const { register } = authContext;
   const [fields, setFields] = useState({});
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [response, setResponse] = useState({});
 
   useEffect(() => {
@@ -58,28 +58,22 @@ const Signup = () => {
   const proceed = (values) => {
     setSuccess("");
     setError("");
-    const { firstName, lastName, email, password } = values;
-    setFields({ firstName, lastName, email, password });
-    setShowModal(true);
+    const { name, email, password } = values;
+    setFields({ name, email, password });
   };
 
   return (
-    <>
+    <Layout
+      title="Sign Up with Email or Facebook"
+      description="Registered users can post a store and items to sell, leave ratings and comments, and more."
+    >
       <Container className="d-flex justify-content-center my-4">
-        <ConfirmModal
-          showModal={showModal}
-          setShowModal={setShowModal}
-          setResponse={setResponse}
-          setLoading={setLoading}
-          fields={fields}
-        />
         <Row className="border border-primary rounded my-auto px-4 pb-4 m-2">
           <Formik
             validationSchema={schema}
             onSubmit={(values) => proceed(values)}
             initialValues={{
-              firstName: "",
-              lastName: "",
+              name: "",
               email: "",
               password: "",
               confirmation: "",
@@ -94,41 +88,24 @@ const Signup = () => {
               isValid,
               errors,
             }) => (
-              <Form noValidate onSubmit={handleSubmit}>
-                <FormHeader />
+              <Form noValidate onSubmit={handleSubmit} className="mt-4">
                 {/* First Row */}
                 <Form.Row>
-                  <Form.Group as={Col} md="6" controlId="validationFormik01">
-                    <Form.Label>First name</Form.Label>
+                  <Form.Group as={Col} md="12" controlId="validationFormik01">
+                    <Form.Label>Name</Form.Label>
                     <Form.Control
                       type="text"
-                      name="firstName"
-                      placeholder="First Name..."
-                      value={values.firstName}
+                      name="name"
+                      placeholder="Name..."
+                      value={values.name}
                       onChange={handleChange}
-                      isValid={touched.firstName && !errors.firstName}
-                      isInvalid={!!errors.firstName && touched.firstName}
-                    />
-                    <Form.Control.Feedback />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.firstName}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                  <Form.Group as={Col} md="6" controlId="validationFormik02">
-                    <Form.Label>Last name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="lastName"
-                      placeholder="Last Name..."
-                      value={values.lastName}
-                      onChange={handleChange}
-                      isValid={touched.lastName && !errors.lastName}
-                      isInvalid={!!errors.lastName && touched.lastName}
+                      isValid={touched.name && !errors.name}
+                      isInvalid={!!errors.name && touched.name}
                     />
 
                     <Form.Control.Feedback />
                     <Form.Control.Feedback type="invalid">
-                      {errors.lastName}
+                      {errors.name}
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Form.Row>
@@ -202,9 +179,8 @@ const Signup = () => {
           </Formik>
         </Row>
       </Container>
-      <FormFooter />
-    </>
+    </Layout>
   );
 };
 
-export default Signup;
+export default Signup2;

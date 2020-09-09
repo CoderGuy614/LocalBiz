@@ -7,6 +7,7 @@ import AdminRoute from "./auth/AdminRoute";
 import PrivateRoute from "./auth/PrivateRoute";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
+import Signup2 from "./components/SignupV2/Signup2";
 import Shop from "./components/core/Shop";
 import Biz from "./components/core/Biz/Biz";
 import HoursForm from "./components/core//Biz/HoursForm";
@@ -26,7 +27,7 @@ const App = () => {
           <Route exact path="/biz/:id" component={Biz}></Route>
           <Route exact path="/post/biz" component={AddBizForm}></Route>
           <Route exact path="/post/hours/:bizId" component={HoursForm}></Route>
-          <Route exact path="/signup" component={Signup}></Route>
+          <Route exact path="/signup" component={Signup2}></Route>
           <Route exact path="/login" component={Login}></Route>
           <AdminRoute
             exact
