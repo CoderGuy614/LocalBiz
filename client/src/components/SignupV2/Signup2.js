@@ -20,20 +20,9 @@ const schema = yup.object({
 
 const Signup2 = () => {
   const authContext = useContext(AuthContext);
-  const { register } = authContext;
-  const [fields, setFields] = useState({});
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState({});
+  const { register, error, isAuthenticated } = authContext;
 
-  useEffect(() => {
-    if (response.message) {
-      setSuccess(response.message);
-    } else if (response.error) {
-      setError(response.error);
-    }
-  }, [response]);
+  // const [success, setSuccess] = useState("");
 
   const showError = () => (
     <Alert
@@ -45,22 +34,21 @@ const Signup2 = () => {
     </Alert>
   );
 
-  const showSuccess = () => (
-    <Alert
-      variant="success"
-      className="mt-3"
-      style={{ display: success ? "" : "none" }}
-    >
-      {success} Please <a href="#">Click Here</a> to Login
-    </Alert>
-  );
-
-  const proceed = (values) => {
-    setSuccess("");
-    setError("");
-    const { name, email, password } = values;
-    setFields({ name, email, password });
+  const redirectUser = () => {
+    if (isAuthenticated) {
+      return <Redirect to="/" />;
+    }
   };
+
+  // const showSuccess = () => (
+  //   <Alert
+  //     variant="success"
+  //     className="mt-3"
+  //     style={{ display: isAuthenticated ? "" : "none" }}
+  //   >
+  //     {success} Please <a href="#">Click Here</a> to Login
+  //   </Alert>
+  // );
 
   return (
     <Layout
@@ -71,7 +59,7 @@ const Signup2 = () => {
         <Row className="border border-primary rounded my-auto px-4 pb-4 m-2">
           <Formik
             validationSchema={schema}
-            onSubmit={(values) => proceed(values)}
+            onSubmit={(values) => register(values)}
             initialValues={{
               name: "",
               email: "",
@@ -161,15 +149,16 @@ const Signup2 = () => {
                   </Form.Group>
                 </Form.Row>
                 {/*  Button Row */}
-                <Loading loading={loading} />
+                {/* <Loading loading={loading} /> */}
                 {showError()}
-                {showSuccess()}
+                {redirectUser()}
+                {/* {showSuccess()} */}
                 <Form.Row>
                   <Button
                     className="my-3"
                     block
                     type="submit"
-                    disabled={success}
+                    disabled={isAuthenticated}
                   >
                     Continue
                   </Button>

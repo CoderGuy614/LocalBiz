@@ -27,12 +27,19 @@ const AuthState = (props) => {
   //Register User
   const register = async (user) => {
     try {
-      const token = await signup(user);
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: token,
-      });
-      loadUser();
+      const response = await signup(user);
+      if (response.error) {
+        dispatch({
+          type: REGISTER_FAIL,
+          payload: response.error,
+        });
+      } else {
+        dispatch({
+          type: REGISTER_SUCCESS,
+          payload: response,
+        });
+        loadUser();
+      }
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
