@@ -97,7 +97,9 @@ exports.create = async (req, res) => {
   biz.user = req.profile._id;
   biz.save((err, result) => {
     if (err) {
-      return res.status(400).json({ error: err });
+      return res
+        .status(400)
+        .json({ error: "Something Went Wrong, Please Try Again" });
     }
     res.json(result);
   });

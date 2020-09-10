@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
+import { Form, Col, Row, Button, Alert } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
-import { Form, Container, Col, Row, Button, Alert } from "react-bootstrap";
 import Loading from "../Layout/Loading";
-
 import { createBiz, getCategories } from "../apiCore";
 
 import { Formik } from "formik";
@@ -12,10 +11,13 @@ const schema = yup.object({
   name: yup.string().required(),
   description: yup.string().required(),
   category: yup.string().required(),
+  bizPhone: yup.string().required(),
+  bizEmail: yup.string().email().required(),
 });
 const AddBizForm2 = ({ authUser }) => {
   const [categories, setCategories] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
+  const [redirectId, setRedirectId] = useState("");
 
   const init = () => {
     getCategories().then((data) => {
@@ -41,14 +43,30 @@ const AddBizForm2 = ({ authUser }) => {
     </Alert>
   );
 
+  const redirectUser = () => {
+    if (redirectId && !error) {
+      return <Redirect to={`/biz/${redirectId}`} />;
+    }
+  };
+
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={(values) => createBiz(values, authUser._id)}
+      onSubmit={async (values) => {
+        const response = await createBiz(values, authUser._id);
+        if (response.error) {
+          setError(response.error);
+        } else {
+          console.log("RESOPOSNE", response);
+          setRedirectId(response._id);
+        }
+      }}
       initialValues={{
         name: "",
         description: "",
         category: "",
+        bizEmail: "",
+        bizPhone: "",
       }}
     >
       {({
@@ -77,7 +95,7 @@ const AddBizForm2 = ({ authUser }) => {
 
               <Form.Control.Feedback />
               <Form.Control.Feedback type="invalid">
-                {errors.name}
+                Please Enter the Name of Your Business
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
@@ -96,15 +114,17 @@ const AddBizForm2 = ({ authUser }) => {
               />
               <Form.Control.Feedback />
               <Form.Control.Feedback type="invalid">
-                {errors.description}
+                Please Enter a Description
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
+          {/* Third Row */}
           <Form.Row>
             <Form.Group as={Col} md="6" controlId="validationFormik04">
               <Form.Label>Category</Form.Label>
               <Form.Control
                 as="select"
+                type="large"
                 placeholder="Category..."
                 name="category"
                 value={values.category}
@@ -120,13 +140,54 @@ const AddBizForm2 = ({ authUser }) => {
                 ))}
               </Form.Control>
               <Form.Control.Feedback type="invalid">
-                {errors.category}
+                Please Choose a Category
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Fourth Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik01">
+              <Form.Label>Business Phone Number</Form.Label>
+              <Form.Control
+                type="text"
+                name="bizPhone"
+                placeholder="Phone..."
+                value={values.bizPhone}
+                onChange={handleChange}
+                isValid={touched.bizPhone && !errors.bizPhone}
+                isInvalid={!!errors.bizPhone && touched.bizPhone}
+              />
+
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Phone Number is Required
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Fifth Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik01">
+              <Form.Label>Business Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="bizEmail"
+                placeholder="Email..."
+                value={values.bizEmail}
+                onChange={handleChange}
+                isValid={touched.bizEmail && !errors.bizEmail}
+                isInvalid={!!errors.bizEmail && touched.bizEmail}
+              />
+
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Please enter a valid email address
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
           {/*  Button Row */}
           {/* <Loading loading={loading} /> */}
           {showError()}
+          {redirectUser()}
           <Form.Row>
             <Button className="my-3" block type="submit">
               Continue

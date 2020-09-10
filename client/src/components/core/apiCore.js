@@ -122,7 +122,9 @@ export const createBiz = (biz, userId) => {
     .then((response) => {
       return response.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err.response.data;
+    });
 };
 
 export const updateBiz = (values, bizId, userId) => {
