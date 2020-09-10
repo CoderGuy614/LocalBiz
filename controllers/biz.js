@@ -47,47 +47,59 @@ exports.read = (req, res) => {
   return res.json(req.biz);
 };
 
-exports.create = (req, res) => {
-  let form = new formidable.IncomingForm();
-  form.keepExtensions = true;
+// exports.create = (req, res) => {
+//   let form = new formidable.IncomingForm();
+//   form.keepExtensions = true;
 
-  form.parse(req, (err, fields, files) => {
-    const { name, description, category, bizEmail, bizPhone } = fields;
+//   form.parse(req, (err, fields, files) => {
+//     const { name, description, category, bizEmail, bizPhone } = fields;
 
-    if (!name || !description || !category || !bizEmail || !bizPhone) {
-      return res.status(400).json({
-        error: "Please Complete All the Required Fields",
-      });
+//     if (!name || !description || !category || !bizEmail || !bizPhone) {
+//       return res.status(400).json({
+//         error: "Please Complete All the Required Fields",
+//       });
+//     }
+//     fields.user = req.profile._id;
+//     if (files.photo) {
+//       upload.single("file");
+//       cloudinary.uploader.upload(files.photo.path).then((cloudinaryFile) => {
+//         fields.photo = cloudinaryFile.url;
+
+//         let biz = new Biz(fields);
+//         biz.save((err, result) => {
+//           if (err) {
+//             console.log("Biz Create Error ", err);
+//             return res.status(400).json({
+//               error: err,
+//             });
+//           }
+//           res.json(result);
+//         });
+//       });
+//     } else {
+//       let biz = new Biz(fields);
+//       biz.save((err, result) => {
+//         if (err) {
+//           console.log("Biz Create Error ", err);
+//           return res.status(400).json({
+//             error: err,
+//           });
+//         }
+//         res.json(result);
+//       });
+//     }
+//   });
+// };
+
+exports.create = async (req, res) => {
+  console.log(req.body);
+  const biz = await new Biz(req.body);
+  biz.user = req.profile._id;
+  biz.save((err, result) => {
+    if (err) {
+      return res.status(400).json({ error: err });
     }
-    fields.user = req.profile._id;
-    if (files.photo) {
-      upload.single("file");
-      cloudinary.uploader.upload(files.photo.path).then((cloudinaryFile) => {
-        fields.photo = cloudinaryFile.url;
-
-        let biz = new Biz(fields);
-        biz.save((err, result) => {
-          if (err) {
-            console.log("Biz Create Error ", err);
-            return res.status(400).json({
-              error: err,
-            });
-          }
-          res.json(result);
-        });
-      });
-    } else {
-      let biz = new Biz(fields);
-      biz.save((err, result) => {
-        if (err) {
-          console.log("Biz Create Error ", err);
-          return res.status(400).json({
-            error: err,
-          });
-        }
-        res.json(result);
-      });
-    }
+    res.json(result);
   });
 };
 

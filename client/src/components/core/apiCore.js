@@ -46,22 +46,6 @@ export const getCategories = () => {
     .catch((err) => console.log(err));
 };
 
-export const createBiz = (biz, userId) => {
-  return fetch(`${process.env.REACT_APP_API}/biz/create/${userId}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-    },
-    body: biz,
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      return console.log(err);
-    });
-};
-
 export const createItem = (item, userId) => {
   return fetch(`${process.env.REACT_APP_API}/item/create/${userId}`, {
     method: "POST",
@@ -121,6 +105,19 @@ export const deleteItem = (itemId, userId) => {
     method: "delete",
     // Put Authorization Token Here Later
     url: `${process.env.REACT_APP_API}/item/delete/${itemId}/${userId}`,
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => console.log(err));
+};
+
+export const createBiz = (biz, userId) => {
+  return axios({
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    url: `${process.env.REACT_APP_API}/biz/create/${userId}`,
+    data: biz,
   })
     .then((response) => {
       return response.data;

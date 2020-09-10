@@ -107,18 +107,6 @@ const AddBizForm = ({ authUser }) => {
     </Alert>
   );
 
-  // const showLoading = () => (
-  //   <div className="d-flex justify-content-center my-4">
-  //     <Spinner
-  //       style={{ display: loading ? "" : "none" }}
-  //       animation="border"
-  //       role="status"
-  //     >
-  //       <span className="sr-only">Loading...</span>
-  //     </Spinner>
-  //   </div>
-  // );
-
   const showFileName = (fileName) =>
     photoName && (
       <Alert variant="info">

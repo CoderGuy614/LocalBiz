@@ -44,10 +44,12 @@ const BizSchema = new Schema({
   user: {
     type: ObjectId,
     ref: "user",
+    required: [true, "user is required"],
   },
   category: {
     type: ObjectId,
     ref: "category",
+    required: [true, "category is required"],
   },
   name: {
     type: String,
@@ -60,17 +62,14 @@ const BizSchema = new Schema({
   },
   city: {
     type: String,
-    required: [true, "city is required"],
     default: "Siem Reap",
   },
   bizEmail: {
     type: String,
-    required: true,
     default: "myBusiness@localBiz.com",
   },
   bizPhone: {
     type: String,
-    required: true,
     default: "000-000-0000",
   },
   lat: {
