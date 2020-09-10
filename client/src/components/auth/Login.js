@@ -34,7 +34,7 @@ const Login = () => {
   return (
     <Layout title="Login" description="Sign In with Email or Facebook">
       <Container>
-        {/* <Loading loading={loading} /> */}
+        <Loading loading={loading} />
         {showError()}
         {redirectUser()}
         <Row className="mt-4">

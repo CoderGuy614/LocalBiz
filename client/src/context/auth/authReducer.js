@@ -7,6 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  SET_LOADING,
 } from "../types";
 import { setJwt } from "../../auth/apiAuth";
 
@@ -50,6 +51,11 @@ export default (state, action) => {
         user: null,
         loading: false,
         error: action.payload,
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

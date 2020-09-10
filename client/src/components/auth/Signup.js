@@ -20,7 +20,7 @@ const schema = yup.object({
 
 const Signup = () => {
   const authContext = useContext(AuthContext);
-  const { register, error, isAuthenticated } = authContext;
+  const { register, error, loading, isAuthenticated } = authContext;
 
   const showError = () => (
     <Alert
@@ -137,10 +137,9 @@ const Signup = () => {
                   </Form.Group>
                 </Form.Row>
                 {/*  Button Row */}
-                {/* <Loading loading={loading} /> */}
+                <Loading loading={loading} />
                 {showError()}
                 {redirectUser()}
-                {/* {showSuccess()} */}
                 <Form.Row>
                   <Button
                     className="my-3"

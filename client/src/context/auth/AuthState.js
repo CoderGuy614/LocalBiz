@@ -11,6 +11,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  SET_LOADING,
 } from "../types";
 
 const AuthState = (props) => {
@@ -19,13 +20,15 @@ const AuthState = (props) => {
     isAuthenticated: false,
     user: null,
     error: null,
-    loading: true,
+    loading: false,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   //Register User
+
   const register = async (user) => {
+    setLoading();
     try {
       const response = await signup(user);
       if (response.error) {
@@ -50,6 +53,7 @@ const AuthState = (props) => {
 
   //Login User
   const login = async (user) => {
+    setLoading();
     const response = await signin(user);
     if (response.error) {
       console.log(response.error);
@@ -74,6 +78,7 @@ const AuthState = (props) => {
 
   //Check For Token - Authenticate a user
   const loadUser = () => {
+    setLoading();
     const isAuth = isAuthenticated();
     try {
       dispatch({
@@ -90,6 +95,7 @@ const AuthState = (props) => {
 
   //Logout a user
   const signOut = async () => {
+    setLoading();
     const response = await logout();
     try {
       dispatch({
@@ -107,6 +113,9 @@ const AuthState = (props) => {
   const clearErrors = () => {
     dispatch({ type: CLEAR_ERRORS });
   };
+
+  // Set Loading
+  const setLoading = () => dispatch({ type: SET_LOADING });
 
   return (
     <AuthContext.Provider
