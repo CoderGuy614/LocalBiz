@@ -22,8 +22,6 @@ const Signup = () => {
   const authContext = useContext(AuthContext);
   const { register, error, isAuthenticated } = authContext;
 
-  // const [success, setSuccess] = useState("");
-
   const showError = () => (
     <Alert
       variant="danger"
@@ -35,20 +33,10 @@ const Signup = () => {
   );
 
   const redirectUser = () => {
-    if (isAuthenticated) {
+    if (isAuthenticated && !error) {
       return <Redirect to="/" />;
     }
   };
-
-  // const showSuccess = () => (
-  //   <Alert
-  //     variant="success"
-  //     className="mt-3"
-  //     style={{ display: isAuthenticated ? "" : "none" }}
-  //   >
-  //     {success} Please <a href="#">Click Here</a> to Login
-  //   </Alert>
-  // );
 
   return (
     <Layout
