@@ -53,7 +53,17 @@ const AddBizForm2 = ({ authUser }) => {
     <Formik
       validationSchema={schema}
       onSubmit={async (values) => {
-        const response = await createBiz(values, authUser._id);
+        console.log("VALUES", values);
+        let formData = new FormData();
+        formData.append("name", values.name);
+        formData.append("description", values.description);
+        formData.append("category", values.category);
+        formData.append("bizEmail", values.bizEmail);
+        formData.append("bizPhone", values.bizPhone);
+        if (values.photo) {
+          formData.append("photo", values.photo);
+        }
+        const response = await createBiz(formData, authUser._id);
         if (response.error) {
           setError(response.error);
         } else {
@@ -67,12 +77,14 @@ const AddBizForm2 = ({ authUser }) => {
         category: "",
         bizEmail: "",
         bizPhone: "",
+        photo: null,
       }}
     >
       {({
         handleSubmit,
         handleChange,
         handleBlur,
+        setFieldValue,
         values,
         touched,
         isValid,
@@ -176,6 +188,27 @@ const AddBizForm2 = ({ authUser }) => {
                 onChange={handleChange}
                 isValid={touched.bizEmail && !errors.bizEmail}
                 isInvalid={!!errors.bizEmail && touched.bizEmail}
+              />
+
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Please enter a valid email address
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Sixth Row  - File Upload */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik01">
+              <Form.Label>Business Email</Form.Label>
+              <Form.File
+                name="photo"
+                id="photo"
+                type="photo"
+                onChange={(event) => {
+                  setFieldValue("photo", event.currentTarget.files[0]);
+                }}
+                // isValid={touched.photo && !errors.photo}
+                // isInvalid={!!errors.photo && touched.photo}
               />
 
               <Form.Control.Feedback />
