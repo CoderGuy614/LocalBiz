@@ -49,6 +49,13 @@ const AddBizForm2 = ({ authUser }) => {
     }
   };
 
+  const showFileName = (photo) =>
+    photo && (
+      <Alert variant="info" className="mt-3">
+        <span className="text-success">{photo.name}</span> Selected
+      </Alert>
+    );
+
   return (
     <Formik
       validationSchema={schema}
@@ -199,22 +206,15 @@ const AddBizForm2 = ({ authUser }) => {
           {/* Sixth Row  - File Upload */}
           <Form.Row>
             <Form.Group as={Col} md="12" controlId="validationFormik01">
-              <Form.Label>Business Email</Form.Label>
+              <Form.Label>Profile Photo</Form.Label>
               <Form.File
+                id="custom-file"
                 name="photo"
-                id="photo"
-                type="photo"
                 onChange={(event) => {
                   setFieldValue("photo", event.currentTarget.files[0]);
                 }}
-                // isValid={touched.photo && !errors.photo}
-                // isInvalid={!!errors.photo && touched.photo}
               />
-
-              <Form.Control.Feedback />
-              <Form.Control.Feedback type="invalid">
-                Please enter a valid email address
-              </Form.Control.Feedback>
+              {showFileName(values.photo)}
             </Form.Group>
           </Form.Row>
           {/*  Button Row */}
