@@ -17,6 +17,7 @@ const schema = yup.object({
 const AddBizForm = ({ authUser }) => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [redirectId, setRedirectId] = useState("");
 
   const init = () => {
@@ -60,7 +61,7 @@ const AddBizForm = ({ authUser }) => {
     <Formik
       validationSchema={schema}
       onSubmit={async (values) => {
-        console.log("VALUES", values);
+        setLoading(true);
         let formData = new FormData();
         formData.append("name", values.name);
         formData.append("description", values.description);
@@ -73,7 +74,9 @@ const AddBizForm = ({ authUser }) => {
         const response = await createBiz(formData, authUser._id);
         if (response.error) {
           setError(response.error);
+          setLoading(false);
         } else {
+          setLoading(false);
           setRedirectId(response._id);
         }
       }}
@@ -89,7 +92,6 @@ const AddBizForm = ({ authUser }) => {
       {({
         handleSubmit,
         handleChange,
-        handleBlur,
         setFieldValue,
         values,
         touched,
@@ -217,7 +219,7 @@ const AddBizForm = ({ authUser }) => {
             </Form.Group>
           </Form.Row>
           {/*  Button Row */}
-          {/* <Loading loading={loading} /> */}
+          {loading && <Loading loading={loading} />}
           {showError()}
           {redirectUser()}
           <Form.Row>
