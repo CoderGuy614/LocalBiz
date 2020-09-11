@@ -1,6 +1,7 @@
 const Biz = require("../models/Biz");
 const Item = require("../models/Item");
 const formidable = require("formidable");
+const _ = require("lodash");
 const config = require("config");
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
@@ -97,28 +98,56 @@ exports.getHours = (req, res) => {
     });
 };
 
-exports.updateBiz = async (req, res) => {
-  const id = req.biz._id;
-  const { name, description, bizPhone, bizEmail } = req.body;
-  const profileFields = {};
-  if (name) profileFields.name = name;
-  if (description) profileFields.description = description;
-  if (bizEmail) profileFields.bizEmail = bizEmail;
-  if (bizPhone) profileFields.bizPhone = bizPhone;
+// exports.updateBiz = async (req, res) => {
+//   console.log("REQ.BODY", req);
+//   const id = req.biz._id;
+//   const { name, description, bizPhone, bizEmail } = req.body;
+//   const profileFields = {};
+//   if (name) profileFields.name = name;
+//   if (description) profileFields.description = description;
+//   if (bizEmail) profileFields.bizEmail = bizEmail;
+//   if (bizPhone) profileFields.bizPhone = bizPhone;
 
-  try {
-    let updatedBiz = await Biz.findByIdAndUpdate(
-      id,
-      { $set: profileFields },
-      { new: true }
-    );
-    return res.json(updatedBiz);
-  } catch (error) {
-    console.log(err);
-    return res.status(400).json({
-      error: err,
+//   try {
+//     let updatedBiz = await Biz.findByIdAndUpdate(
+//       id,
+//       { $set: profileFields },
+//       { new: true }
+//     );
+//     return res.json(updatedBiz);
+//   } catch (error) {
+//     console.log(err);
+//     return res.status(400).json({
+//       error: err,
+//     });
+//   }
+// };
+
+exports.updateBiz = async (req, res) => {
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Oops, something went wrong, please try again.",
+      });
+    }
+    if (files.photo) {
+      upload.single("file");
+      const cloudinaryFile = await cloudinary.uploader.upload(files.photo.path);
+      fields.photo = cloudinaryFile.url;
+    }
+    let biz = req.biz;
+    biz = _.extend(biz, fields);
+    biz.save((err, result) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+      res.json(result);
     });
-  }
+  });
 };
 
 exports.removeBiz = async (req, res) => {

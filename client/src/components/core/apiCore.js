@@ -144,17 +144,20 @@ export const createBiz = (biz, userId) => {
     });
 };
 
-export const updateBiz = (values, bizId, userId) => {
+export const updateBiz = (biz, bizId, userId) => {
+  console.log("API CORE BIZ", biz);
   return axios({
     method: "put",
     headers: { "Content-Type": "application/json" },
     url: `${process.env.REACT_APP_API}/biz/update/${bizId}/${userId}`,
-    data: values,
+    data: biz,
   })
     .then((response) => {
       return response.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err.response.data;
+    });
 };
 
 export const deleteBiz = (bizId, userId) => {
