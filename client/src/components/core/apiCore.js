@@ -1,79 +1,96 @@
 import axios from "axios";
 
 export const getBusinesses = (bizCat) => {
-  return fetch(`${process.env.REACT_APP_API}/biz/list?category=${bizCat}`, {
-    method: "GET",
+  return axios({
+    method: "get",
+    url: `${process.env.REACT_APP_API}/biz/list?category=${bizCat}`,
   })
     .then((response) => {
-      return response.json();
+      return response.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err.response.data;
+    });
 };
 
 export const getBusiness = (id) => {
-  return fetch(`${process.env.REACT_APP_API}/biz/${id}`, { method: "GET" })
+  return axios({
+    method: "get",
+    url: `${process.env.REACT_APP_API}/biz/${id}`,
+  })
     .then((response) => {
-      return response.json();
+      return response.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err.response.data;
+    });
 };
 
-//Get All The Items for a Business by ID
 export const getItems = (bizId) => {
-  return fetch(`${process.env.REACT_APP_API}/items/${bizId}`, { method: "GET" })
+  return axios({
+    method: "get",
+    url: `${process.env.REACT_APP_API}/items/${bizId}`,
+  })
     .then((response) => {
-      return response.json();
+      return response.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err.response.data;
+    });
 };
 
-//Get one Item By It's ID
 export const getItem = (itemId) => {
-  return fetch(`${process.env.REACT_APP_API}/item/${itemId}`, { method: "GET" })
+  return axios({
+    method: "get",
+    url: `${process.env.REACT_APP_API}/item/${itemId}`,
+  })
     .then((response) => {
-      return response.json();
+      return response.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err.response.data;
+    });
 };
 
 export const getCategories = () => {
-  return fetch(`${process.env.REACT_APP_API}/categories/list`, {
-    method: "GET",
+  return axios({
+    method: "get",
+    url: `${process.env.REACT_APP_API}/categories/list`,
   })
     .then((response) => {
-      return response.json();
+      return response.data;
     })
     .catch((err) => console.log(err));
 };
 
 export const createItem = (item, userId) => {
-  return fetch(`${process.env.REACT_APP_API}/item/create/${userId}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-    },
-    body: item,
+  return axios({
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    url: `${process.env.REACT_APP_API}/item/create/${userId}`,
+    data: item,
   })
     .then((response) => {
-      return response.json();
+      return response.data;
     })
     .catch((err) => {
-      return console.log(err);
+      return err.response.data;
     });
 };
 
 export const updateItem = (itemId, userId, item) => {
-  return fetch(`${process.env.REACT_APP_API}/item/update/${itemId}/${userId}`, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json",
-    },
-    body: item,
+  return axios({
+    method: "put",
+    headers: { "Content-Type": "application/json" },
+    url: `${process.env.REACT_APP_API}/item/update/${itemId}/${userId}`,
+    data: item,
   })
     .then((response) => {
-      return response.json();
+      return response.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err.response.data;
+    });
 };
 
 export const updateHours = (hours, bizId, userId) => {

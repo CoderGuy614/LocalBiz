@@ -56,20 +56,6 @@ export const isAuthenticated = () => {
   }
 };
 
-export const signout = (next) => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("jwt");
-    next();
-    return fetch(`${process.env.REACT_APP_API}/signout`, {
-      method: "POST",
-    })
-      .then((response) => {
-        console.log("signout", response);
-      })
-      .catch((err) => console.log(err));
-  }
-};
-
 export const logout = () => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");

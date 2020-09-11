@@ -57,6 +57,7 @@ const HoursForm = ({
         setLoading(false);
       })
       .catch((err) => setError(err));
+    //eslint-disable-next-line
   }, []);
 
   const [loading, setLoading] = useState(false);

@@ -1,94 +1,30 @@
 import React, { useState, useEffect } from "react";
+import { Form, Col, Button, Alert } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
-import { Form, Button, Alert } from "react-bootstrap";
 import Loading from "../Layout/Loading";
 import { createBiz, getCategories } from "../apiCore";
 
+import { Formik } from "formik";
+import * as yup from "yup";
+
+const schema = yup.object({
+  name: yup.string().required(),
+  description: yup.string().required(),
+  category: yup.string().required(),
+  bizPhone: yup.string().required(),
+  bizEmail: yup.string().email().required(),
+});
 const AddBizForm = ({ authUser }) => {
-  const [values, setValues] = useState({
-    name: "",
-    category: "",
-    description: "",
-    bizEmail: "",
-    bizPhone: "",
-    photo: "",
-    error: "",
-    categories: [],
-    loading: false,
-    redirect: false,
-    newBizId: "",
-    formData: "",
-  });
-
-  const [photoName, setPhotoName] = useState("");
-  const [validated, setValidated] = useState(false);
-
-  const {
-    name,
-    description,
-    bizEmail,
-    bizPhone,
-    photo,
-    category,
-    categories,
-    redirect,
-    newBizId,
-    loading,
-    error,
-    formData,
-  } = values;
-
-  const handleChange = (name) => (e) => {
-    const value = name === "photo" ? e.target.files[0] : e.target.value;
-    if (name === "photo") {
-      setPhotoName(e.target.files[0].name);
-    }
-    formData.set(name, value);
-    setValues({ ...values, error: "", [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-      setValidated(true);
-    } else {
-      e.preventDefault();
-      setValues({ ...values, loading: true });
-      createBiz(formData, authUser._id).then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error });
-        } else {
-          setValues({
-            ...values,
-            name: "",
-            description: "",
-            bizEmail: "",
-            bizPhone: "",
-            category: "",
-            loading: false,
-            error: "",
-            redirect: true,
-            newBizId: data._id,
-          });
-        }
-      });
-    }
-  };
+  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
+  const [redirectId, setRedirectId] = useState("");
 
   const init = () => {
-    setValues({ ...values, loading: true });
     getCategories().then((data) => {
       if (data.error) {
-        setValues({ ...values, error: data.error, loading: false });
+        setError(data.error);
       } else {
-        setValues({
-          ...values,
-          loading: false,
-          categories: data,
-          formData: new FormData(),
-        });
+        setCategories(data);
       }
     });
   };
@@ -107,115 +43,191 @@ const AddBizForm = ({ authUser }) => {
     </Alert>
   );
 
-  const showFileName = (fileName) =>
-    photoName && (
-      <Alert variant="info">
-        <span className="text-success">{photoName}</span> Selected
-      </Alert>
-    );
-
   const redirectUser = () => {
-    if (redirect && !error) {
-      return <Redirect to={`/biz/${newBizId}`} />;
+    if (redirectId && !error) {
+      return <Redirect to={`/biz/${redirectId}`} />;
     }
   };
 
+  const showFileName = (photo) =>
+    photo && (
+      <Alert variant="info" className="mt-3">
+        <span className="text-success">{photo.name}</span> Selected
+      </Alert>
+    );
+
   return (
-    <>
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>Business Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Business Name"
-            value={name}
-            onChange={handleChange("name")}
-            required
-          />
-          <Form.Control.Feedback type="invalid">
-            Please Enter Business Name
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Category</Form.Label>
-          <Form.Control
-            as="select"
-            type="large"
-            value={category}
-            required={true}
-            onChange={handleChange("category")}
-          >
-            <option value={""}>Choose a Category</option>
-            {categories.map((cat, i) => (
-              <option key={i} value={cat._id}>
-                {cat.name}
-              </option>
-            ))}
-          </Form.Control>
-          <Form.Control.Feedback type="invalid">
-            Please Select a Category
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Description"
-            value={description}
-            onChange={handleChange("description")}
-          />
-          <Form.Control.Feedback type="invalid">
-            Please Enter A Description
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Business Email</Form.Label>
-          <Form.Control
-            required
-            type="email"
-            placeholder="Email"
-            value={bizEmail}
-            onChange={handleChange("bizEmail")}
-          />
-          <Form.Control.Feedback type="invalid">
-            Please Enter Business Email
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Contact Phone</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Phone"
-            value={bizPhone}
-            onChange={handleChange("bizPhone")}
-          />
-          <Form.Control.Feedback type="invalid">
-            Please Enter Business Phone Number
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Profile Photo</Form.Label>
-          <Form.File
-            required={false}
-            id="custom-file"
-            label="Choose a Photo"
-            name={photo}
-            onChange={handleChange("photo")}
-            custom
-          />
-        </Form.Group>
-        {showFileName()}
-        <Button type="submit" block>
-          {" "}
-          Continue to Add Items
-        </Button>
-      </Form>
-      <Loading loading={loading} />
-      {showError()}
-      {redirectUser()}
-    </>
+    <Formik
+      validationSchema={schema}
+      onSubmit={async (values) => {
+        console.log("VALUES", values);
+        let formData = new FormData();
+        formData.append("name", values.name);
+        formData.append("description", values.description);
+        formData.append("category", values.category);
+        formData.append("bizEmail", values.bizEmail);
+        formData.append("bizPhone", values.bizPhone);
+        if (values.photo) {
+          formData.append("photo", values.photo);
+        }
+        const response = await createBiz(formData, authUser._id);
+        if (response.error) {
+          setError(response.error);
+        } else {
+          setRedirectId(response._id);
+        }
+      }}
+      initialValues={{
+        name: "",
+        description: "",
+        category: "",
+        bizEmail: "",
+        bizPhone: "",
+        photo: null,
+      }}
+    >
+      {({
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        setFieldValue,
+        values,
+        touched,
+        isValid,
+        errors,
+      }) => (
+        <Form noValidate onSubmit={handleSubmit} className="mt-4">
+          {/* First Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik01">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                placeholder="Name..."
+                value={values.name}
+                onChange={handleChange}
+                isValid={touched.name && !errors.name}
+                isInvalid={!!errors.name && touched.name}
+              />
+
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Please Enter the Name of Your Business
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Second Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                type="description"
+                placeholder="description..."
+                name="description"
+                value={values.description}
+                onChange={handleChange}
+                isValid={touched.description && !errors.description}
+                isInvalid={!!errors.description && touched.description}
+              />
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Please Enter a Description
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Third Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="6" controlId="validationFormik04">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                as="select"
+                type="large"
+                placeholder="Category..."
+                name="category"
+                value={values.category}
+                onChange={handleChange}
+                isValid={touched.category && !errors.category}
+                isInvalid={!!errors.category && touched.category}
+              >
+                <option value={""}>Choose a Category</option>
+                {categories.map((cat, i) => (
+                  <option key={i} value={cat._id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please Choose a Category
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Fourth Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik01">
+              <Form.Label>Business Phone Number</Form.Label>
+              <Form.Control
+                type="text"
+                name="bizPhone"
+                placeholder="Phone..."
+                value={values.bizPhone}
+                onChange={handleChange}
+                isValid={touched.bizPhone && !errors.bizPhone}
+                isInvalid={!!errors.bizPhone && touched.bizPhone}
+              />
+
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Phone Number is Required
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Fifth Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik01">
+              <Form.Label>Business Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="bizEmail"
+                placeholder="Email..."
+                value={values.bizEmail}
+                onChange={handleChange}
+                isValid={touched.bizEmail && !errors.bizEmail}
+                isInvalid={!!errors.bizEmail && touched.bizEmail}
+              />
+
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Please enter a valid email address
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Sixth Row  - File Upload */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik01">
+              <Form.Label>Profile Photo</Form.Label>
+              <Form.File
+                id="custom-file"
+                name="photo"
+                onChange={(event) => {
+                  setFieldValue("photo", event.currentTarget.files[0]);
+                }}
+              />
+              {showFileName(values.photo)}
+            </Form.Group>
+          </Form.Row>
+          {/*  Button Row */}
+          {/* <Loading loading={loading} /> */}
+          {showError()}
+          {redirectUser()}
+          <Form.Row>
+            <Button className="my-3" block type="submit">
+              Continue
+            </Button>
+          </Form.Row>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

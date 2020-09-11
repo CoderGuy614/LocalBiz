@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Container, Row, Col } from "react-bootstrap";
+import { Image, Row, Col } from "react-bootstrap";
 import Moment from "react-moment";
 
 const MiniUserProfile = ({ user }) => (

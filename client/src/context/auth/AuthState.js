@@ -96,7 +96,7 @@ const AuthState = (props) => {
   //Logout a user
   const signOut = async () => {
     setLoading();
-    const response = await logout();
+    logout();
     try {
       dispatch({
         type: LOGOUT,

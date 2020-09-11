@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React from "react";
 import { Container, Row } from "react-bootstrap";
 import Layout from "../core/Layout/Layout";
 

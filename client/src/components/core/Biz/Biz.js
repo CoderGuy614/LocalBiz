@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getBusiness, getItems } from "../apiCore";
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { Row, Col, Container, Button, Alert } from "react-bootstrap";
 import AuthContext from "../../../context/auth/authContext";
 import AddItemModal from "../Item/AddItemModal";
 import BizSidebar from "./BizSidebar";
@@ -47,17 +47,26 @@ const Biz = ({ match }) => {
     } else {
       setAuthUserId("");
     }
+    //eslint-disable-next-line
   }, [isAuthenticated]);
 
   useEffect(() => {
     loadItems();
+    //eslint-disable-next-line
   }, [itemsUpdated]);
 
   useEffect(() => {
     loadBusiness();
+    //eslint-disable-next-line
   }, [hoursUpdated, settingsUpdated]);
 
-  const { name, description, photo, user, _id } = business;
+  const showError = () => (
+    <Alert variant="danger" style={{ display: error ? "" : "none" }}>
+      {error}
+    </Alert>
+  );
+
+  const { name, description, photo, user } = business;
 
   return (
     <Layout title={name} description={description} photo={photo} user={user}>
@@ -107,6 +116,7 @@ const Biz = ({ match }) => {
             </Row>
           </Col>
         </Row>
+        {showError()}
       </Container>
       <AddItemModal
         showAddModal={showAddModal}

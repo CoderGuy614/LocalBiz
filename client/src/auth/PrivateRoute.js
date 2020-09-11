@@ -11,6 +11,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   useEffect(() => {
     loadUser();
     setLoading(false);
+    //eslint-disable-next-line
   }, [isAuthenticated]);
 
   return (

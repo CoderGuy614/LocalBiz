@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as queryString from "query-string";
-import { signup, signin } from "../../auth/apiAuth";
+import { signup } from "../../auth/apiAuth";
 import axios from "axios";
 
 const LoginSuccess = () => {
@@ -12,12 +12,14 @@ const LoginSuccess = () => {
     getAccessTokenFromCode(urlParams.code).then((token) => {
       getFacebookUserData(token).then((user) => setUser(user));
     });
+    //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (user && user.email) {
       checkExisting(user.email);
     }
+    //eslint-disable-next-line
   }, [user]);
 
   const getAccessTokenFromCode = async (code) => {

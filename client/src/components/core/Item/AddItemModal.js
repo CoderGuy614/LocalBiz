@@ -21,6 +21,7 @@ const AddItemModal = ({
       setShowAddModal(false);
       setItemsUpdated(!itemsUpdated);
     }
+    //eslint-disable-next-line
   }, [success]);
 
   return (

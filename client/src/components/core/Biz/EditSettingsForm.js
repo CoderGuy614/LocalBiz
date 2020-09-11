@@ -42,6 +42,7 @@ const EditSettingsForm = ({
         setValues(biz);
       })
       .catch((err) => setError(err));
+    //eslint-disable-next-line
   }, []);
 
   const handleSubmit = () => {

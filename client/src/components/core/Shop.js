@@ -9,7 +9,7 @@ import AuthContext from "../../context/auth/authContext";
 
 const Shop = () => {
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, loadUser } = authContext;
+  const { loadUser } = authContext;
   const authUser = authContext.user;
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);

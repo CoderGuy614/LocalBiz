@@ -10,14 +10,14 @@ import { Formik } from "formik";
 import * as yup from "yup";
 
 const schema = yup.object({
-  email: yup.string().required(),
+  email: yup.string().email().required(),
   password: yup.string().required(),
 });
 
 const Login = () => {
   const authContext = useContext(AuthContext);
 
-  const { login, clearErrors, error, loading, isAuthenticated } = authContext;
+  const { login, error, loading, isAuthenticated } = authContext;
 
   const showError = () => (
     <Alert variant="danger" style={{ display: error ? "" : "none" }}>
