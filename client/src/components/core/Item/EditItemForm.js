@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Alert, Image, Spinner } from "react-bootstrap";
+import { Form, Col, Button, Alert, Image } from "react-bootstrap";
+import Loading from "../Layout/Loading";
 import { updateItem, getItem } from "../apiCore";
 
+import { Formik } from "formik";
+import * as yup from "yup";
+
+const schema = yup.object({
+  name: yup.string().required(),
+  description: yup.string().required(),
+  price: yup.number().required(),
+  inStock: yup.bool(),
+  canDeliver: yup.bool(),
+});
 const EditItemForm = ({
   itemId,
   authUserId,
@@ -9,210 +20,201 @@ const EditItemForm = ({
   itemsUpdated,
   setItemsUpdated,
 }) => {
-  const [values, setValues] = useState({
-    name: "",
-    description: "",
-    price: "",
-    business: "",
-    inStock: true,
-    canDeliver: true,
-    photo: "",
-    error: "",
-    loading: false,
-    formData: new FormData(),
-  });
-
-  const [photoName, setPhotoName] = useState("");
-  const [validated, setValidated] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [item, setItem] = useState({});
+  const [newPhoto, setNewPhoto] = useState(false);
 
   useEffect(() => {
-    getItem(itemId)
-      .then((response) => {
-        const {
-          name,
-          description,
-          price,
-          inStock,
-          canDeliver,
-          photo,
-          business,
-        } = response;
-        setValues({
-          ...values,
-          name,
-          description,
-          price,
-          inStock,
-          canDeliver,
-          photo,
-          business,
-        });
-        formData.set("name", name);
-        formData.set("description", description);
-        formData.set("price", price);
-        formData.set("inStock", inStock);
-        formData.set("canDeliver", canDeliver);
-        formData.set("business", business);
-        formData.set("photo", photo);
-      })
-      .catch((err) => console.log(err));
+    getItem(itemId).then((i) => setItem(i));
     //eslint-disable-next-line
   }, []);
 
-  const {
-    name,
-    description,
-    price,
-    photo,
-    inStock,
-    canDeliver,
-    loading,
-    error,
-    formData,
-  } = values;
-
-  const handleChange = (name) => (e) => {
-    const value = name === "photo" ? e.target.files[0] : e.target.value;
-    if (name === "photo") {
-      setPhotoName(e.target.files[0].name);
-    }
-    formData.set(name, value);
-    setValues({ ...values, error: "", [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-      setValidated(true);
-    } else {
-      e.preventDefault();
-      setValues({ ...values, loading: true });
-      updateItem(itemId, authUserId, formData).then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          setItemsUpdated(!itemsUpdated);
-          setValues({ ...values, loading: false });
-          setShowEditModal(false);
-        }
-      });
-    }
-  };
-
   const showError = () => (
-    <Alert variant="danger" style={{ display: error ? "" : "none" }}>
+    <Alert
+      variant="danger"
+      className="mt-3"
+      style={{ display: error ? "" : "none" }}
+    >
       {error}
     </Alert>
   );
 
-  const showFileName = (fileName) =>
-    photoName && (
-      <Alert variant="info">
-        <span className="text-success">{photoName}</span> Selected
+  const showFileName = (photo) =>
+    photo && (
+      <Alert variant="info" className="mt-3">
+        <span className="text-success">{photo.name}</span> Selected
       </Alert>
     );
 
-  const showLoading = () => (
-    <div className="d-flex justify-content-center my-4">
-      <Spinner
-        style={{ display: loading ? "" : "none" }}
-        animation="border"
-        role="status"
-      >
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    </div>
-  );
-
   return (
-    <Form noValidate validated={validated} onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Label>Item Name</Form.Label>
-        <Form.Control
-          required
-          type="text"
-          placeholder="Item Name / Title"
-          value={name}
-          onChange={handleChange("name")}
-        />
-        <Form.Control.Feedback type="invalid">
-          Please Enter Item Name
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          required
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={handleChange("description")}
-        />
-        <Form.Control.Feedback type="invalid">
-          Please Enter Item Description
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Price</Form.Label>
-        <Form.Control
-          required
-          type="number"
-          placeholder="Price in $ USD"
-          value={price}
-          onChange={handleChange("price")}
-        />
-        <Form.Control.Feedback type="invalid">
-          Please Enter A Price in $USD
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>In Stock / Available Now</Form.Label>
-        <Form.Control
-          as="select"
-          type="large"
-          value={inStock}
-          onChange={handleChange("inStock")}
-        >
-          <option value={false}>No</option>
-          <option value={true}>Yes</option>
-        </Form.Control>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Delivery Available</Form.Label>
-        <Form.Control
-          as="select"
-          type="large"
-          value={canDeliver}
-          onChange={handleChange("canDeliver")}
-        >
-          {" "}
-          <option value={false}>No</option>
-          <option value={true}>Yes</option>
-        </Form.Control>
-      </Form.Group>
-      <h6>Current Photo</h6>
-      {!photoName && <Image src={photo} thumbnail fluid className="my-2" />}
+    <Formik
+      enableReinitialize={true}
+      validationSchema={schema}
+      onSubmit={async (values) => {
+        setLoading(true);
+        let formData = new FormData();
+        formData.append("name", values.name);
+        formData.append("description", values.description);
+        formData.append("price", values.price);
+        formData.append("inStock", values.inStock);
+        formData.append("canDeliver", values.canDeliver);
 
-      <Form.Group>
-        <Form.Label>Item Photo</Form.Label>
-        <Form.File
-          id="custom-file"
-          label="Choose a Photo"
-          name={photo}
-          onChange={handleChange("photo")}
-          custom
-        />
-      </Form.Group>
-      {showFileName()}
-      {showError()}
-      {showLoading()}
-      <Button type="submit" block>
-        {" "}
-        Save Changes
-      </Button>
-    </Form>
+        if (values.photo) {
+          formData.append("photo", values.photo);
+        }
+        const response = await updateItem(itemId, authUserId, formData);
+        if (response.error) {
+          setError(response.error);
+          setLoading(false);
+        } else {
+          setLoading(false);
+          setShowEditModal(false);
+          setItemsUpdated(!itemsUpdated);
+        }
+      }}
+      initialValues={{
+        name: item.name,
+        description: item.description,
+        price: item.price,
+        inStock: item.inStock,
+        canDeliver: item.canDeliver,
+        photo: item.photo,
+      }}
+    >
+      {({
+        handleSubmit,
+        handleChange,
+        setFieldValue,
+        values,
+        touched,
+        isValid,
+        errors,
+      }) => (
+        <Form noValidate onSubmit={handleSubmit} className="mt-4">
+          {/* First Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik01">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                placeholder="Name..."
+                value={values.name}
+                onChange={handleChange}
+                isValid={touched.name && !errors.name}
+                isInvalid={!!errors.name && touched.name}
+              />
+
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Please Enter an Item Name
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Second Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                type="description"
+                placeholder="description..."
+                name="description"
+                value={values.description}
+                onChange={handleChange}
+                isValid={touched.description && !errors.description}
+                isInvalid={!!errors.description && touched.description}
+              />
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Please Enter an Item Description
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Third Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Price ($USD)</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Price..."
+                name="price"
+                value={values.price}
+                onChange={handleChange}
+                isValid={touched.price && !errors.price}
+                isInvalid={!!errors.price && touched.price}
+              />
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Please Enter item Price in $USD
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Fourth Row */}
+          <Form.Row>
+            <Col>
+              <Form.Group as={Col} md="12" controlId="validationFormik04">
+                <Form.Label>In Stock / Available Now</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="inStock"
+                  value={values.inStock}
+                  onChange={handleChange}
+                >
+                  <option value={true}>Yes</option>
+                  <option value={false}>No</option>
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group as={Col} md="12" controlId="validationFormik04">
+                <Form.Label>Delivery Available</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="canDeliver"
+                  value={values.canDeliver}
+                  onChange={handleChange}
+                >
+                  <option value={true}>Yes</option>
+                  <option value={false}>No</option>
+                </Form.Control>
+              </Form.Group>
+            </Col>
+          </Form.Row>
+          {/* Fifth Row  - File Upload */}
+          <Form.Row>
+            {!newPhoto && (
+              <>
+                <h6>Current Photo</h6>
+                <Image src={values.photo} thumbnail fluid className="my-2" />
+              </>
+            )}
+
+            <Form.Group as={Col} md="12" controlId="validationFormik01">
+              <Form.Label>Profile Photo</Form.Label>
+              <Form.File
+                id="custom-file"
+                name="photo"
+                onChange={(event) => {
+                  setFieldValue("photo", event.currentTarget.files[0]);
+                  setNewPhoto(true);
+                }}
+              />
+
+              {newPhoto && showFileName(values.photo)}
+            </Form.Group>
+          </Form.Row>
+          {/*  Button Row */}
+          {loading && <Loading loading={loading} />}
+          {showError()}
+          <Form.Row>
+            <Button className="my-3" block type="submit">
+              Continue
+            </Button>
+          </Form.Row>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

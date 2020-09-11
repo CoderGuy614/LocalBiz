@@ -92,7 +92,7 @@ exports.update = async (req, res) => {
 
 exports.deleteItem = (req, res) => {
   let item = req.item;
-  item.remove((err, deletedProduct) => {
+  item.remove((err) => {
     if (err) {
       return res.status(400).json({
         error: err,
