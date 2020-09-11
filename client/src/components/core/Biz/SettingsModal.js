@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import EditSettingsForm from "./EditSettingsForm";
-import EditSettingsForm2 from "./EditSettingsForm2";
 
 const SettingsModal = ({
   bizId,
@@ -17,7 +16,7 @@ const SettingsModal = ({
         <Modal.Title>Edit Biz Settings</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <EditSettingsForm2
+        <EditSettingsForm
           bizId={bizId}
           authUserId={authUserId}
           settingsUpdated={settingsUpdated}

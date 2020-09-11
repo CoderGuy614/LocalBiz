@@ -16,7 +16,6 @@ const schema = yup.object({
 
 const Login = () => {
   const authContext = useContext(AuthContext);
-
   const { login, error, loading, isAuthenticated } = authContext;
 
   const showError = () => (

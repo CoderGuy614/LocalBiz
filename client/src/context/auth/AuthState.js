@@ -56,7 +56,6 @@ const AuthState = (props) => {
     setLoading();
     const response = await signin(user);
     if (response.error) {
-      console.log(response.error);
       return dispatch({
         type: LOGIN_FAIL,
         payload: response.error,
