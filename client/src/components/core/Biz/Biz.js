@@ -9,7 +9,7 @@ import Layout from "../Layout/Layout";
 
 const Biz = ({ match }) => {
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, loadUser } = authContext;
+  const { isAuthenticated, loadUser, token } = authContext;
   const authUser = authContext.user;
   const { id } = match.params;
   const [authUserId, setAuthUserId] = useState("");
@@ -77,6 +77,7 @@ const Biz = ({ match }) => {
               <BizSidebar
                 business={business}
                 authUserId={authUserId}
+                token={token}
                 hoursUpdated={hoursUpdated}
                 setHoursUpdated={setHoursUpdated}
                 settingsUpdated={settingsUpdated}
@@ -125,6 +126,7 @@ const Biz = ({ match }) => {
         setItemsUpdated={setItemsUpdated}
         bizId={id}
         userId={authUserId}
+        token={token}
       />
     </Layout>
   );

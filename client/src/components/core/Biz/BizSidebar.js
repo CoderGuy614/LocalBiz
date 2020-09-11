@@ -11,6 +11,7 @@ const BizSidebar = ({
   business,
   hoursUpdated,
   authUserId,
+  token,
   setHoursUpdated,
   settingsUpdated,
   setSettingsUpdated,
@@ -44,6 +45,7 @@ const BizSidebar = ({
         <HoursModal
           bizId={_id}
           authUserId={authUserId}
+          token={token}
           showModal={showModal}
           setShowModal={setShowModal}
           hoursUpdated={hoursUpdated}
@@ -52,6 +54,7 @@ const BizSidebar = ({
         <SettingsModal
           bizId={_id}
           authUserId={authUserId}
+          token={token}
           showSettingsModal={showSettingsModal}
           setShowSettingsModal={setShowSettingsModal}
           settingsUpdated={settingsUpdated}

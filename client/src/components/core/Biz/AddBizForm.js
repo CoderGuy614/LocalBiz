@@ -14,7 +14,7 @@ const schema = yup.object({
   bizPhone: yup.string().required(),
   bizEmail: yup.string().email().required(),
 });
-const AddBizForm = ({ authUser }) => {
+const AddBizForm = ({ authUser, token }) => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -71,7 +71,7 @@ const AddBizForm = ({ authUser }) => {
         if (values.photo) {
           formData.append("photo", values.photo);
         }
-        const response = await createBiz(formData, authUser._id);
+        const response = await createBiz(formData, authUser._id, token);
         if (response.error) {
           setError(response.error);
           setLoading(false);

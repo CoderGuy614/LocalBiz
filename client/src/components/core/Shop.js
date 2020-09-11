@@ -9,7 +9,7 @@ import AuthContext from "../../context/auth/authContext";
 
 const Shop = () => {
   const authContext = useContext(AuthContext);
-  const { loadUser } = authContext;
+  const { loadUser, token } = authContext;
   const authUser = authContext.user;
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -131,6 +131,7 @@ const Shop = () => {
         showAddModal={showAddModal}
         setShowAddModal={setShowAddModal}
         authUser={authUser}
+        token={token}
       />
     </Layout>
   );

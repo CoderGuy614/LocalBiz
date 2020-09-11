@@ -25,6 +25,7 @@ const schema = yup.object({
 const EditSettingsForm = ({
   bizId,
   authUserId,
+  token,
   settingsUpdated,
   setSettingsUpdated,
   setShowSettingsModal,
@@ -78,7 +79,7 @@ const EditSettingsForm = ({
   const handleDelete = async () => {
     if (confirmDeleteText.toLowerCase() === "yes") {
       setLoading(true);
-      deleteBiz(bizId, authUserId).then((res) => setHomeRedirect(true));
+      deleteBiz(bizId, authUserId, token).then((res) => setHomeRedirect(true));
     } else {
       setError("Please Type 'Yes' to confirm delete");
     }
@@ -108,7 +109,7 @@ const EditSettingsForm = ({
         for (var key of formData.entries()) {
           console.log(key[0] + ", " + key[1]);
         }
-        const response = await updateBiz(formData, bizId, authUserId);
+        const response = await updateBiz(formData, bizId, authUserId, token);
         if (response.error) {
           setError(response.error);
           setLoading(false);

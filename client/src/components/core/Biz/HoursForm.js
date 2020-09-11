@@ -7,6 +7,7 @@ import HourInputRow from "./HourInputRow";
 const HoursForm = ({
   bizId,
   authUserId,
+  token,
   hoursUpdated,
   setHoursUpdated,
   setShowModal,
@@ -83,7 +84,7 @@ const HoursForm = ({
 
   const handleSubmit = () => {
     setLoading(true);
-    updateHours(values, bizId, authUserId).then((data) => {
+    updateHours(values, bizId, authUserId, token).then((data) => {
       console.log(data);
       setLoading(false);
       setShowModal(false);

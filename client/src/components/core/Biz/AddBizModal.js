@@ -2,7 +2,7 @@ import React from "react";
 import AddBizForm from "./AddBizForm";
 import { Modal, Button } from "react-bootstrap";
 
-const AddBizModal = ({ showAddModal, setShowAddModal, authUser }) => {
+const AddBizModal = ({ showAddModal, setShowAddModal, authUser, token }) => {
   const handleClose = () => {
     setShowAddModal(false);
   };
@@ -12,7 +12,7 @@ const AddBizModal = ({ showAddModal, setShowAddModal, authUser }) => {
         <Modal.Title>Add a New Business</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AddBizForm authUser={authUser} />
+        <AddBizForm authUser={authUser} token={token} />
         <Button variant="secondary" onClick={handleClose} className="my-2">
           Cancel
         </Button>

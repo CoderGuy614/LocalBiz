@@ -93,10 +93,10 @@ export const updateItem = (itemId, userId, item) => {
     });
 };
 
-export const updateHours = (hours, bizId, userId) => {
+export const updateHours = (hours, bizId, userId, token) => {
   return axios({
     method: "put",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-Auth-Token": token },
     url: `${process.env.REACT_APP_API}/biz/hours/${bizId}/${userId}`,
     data: JSON.stringify(hours),
   })
@@ -117,10 +117,12 @@ export const getHours = (bizId) => {
     .catch((err) => console.log(err));
 };
 
-export const deleteItem = (itemId, userId) => {
+export const deleteItem = (itemId, userId, token) => {
   return axios({
     method: "delete",
-    // Put Authorization Token Here Later
+    headers: {
+      "X-Auth-Token": token,
+    },
     url: `${process.env.REACT_APP_API}/item/delete/${itemId}/${userId}`,
   })
     .then((response) => {
@@ -129,10 +131,13 @@ export const deleteItem = (itemId, userId) => {
     .catch((err) => console.log(err));
 };
 
-export const createBiz = (biz, userId) => {
+export const createBiz = (biz, userId, token) => {
   return axios({
     method: "post",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "X-Auth-Token": token,
+    },
     url: `${process.env.REACT_APP_API}/biz/create/${userId}`,
     data: biz,
   })
@@ -144,11 +149,14 @@ export const createBiz = (biz, userId) => {
     });
 };
 
-export const updateBiz = (biz, bizId, userId) => {
+export const updateBiz = (biz, bizId, userId, token) => {
   console.log("API CORE BIZ", biz);
   return axios({
     method: "put",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "X-Auth-Token": token,
+    },
     url: `${process.env.REACT_APP_API}/biz/update/${bizId}/${userId}`,
     data: biz,
   })
@@ -160,10 +168,13 @@ export const updateBiz = (biz, bizId, userId) => {
     });
 };
 
-export const deleteBiz = (bizId, userId) => {
+export const deleteBiz = (bizId, userId, token) => {
   return axios({
     method: "delete",
     url: `${process.env.REACT_APP_API}/biz/${bizId}/${userId}`,
+    headers: {
+      "X-Auth-Token": token,
+    },
   })
     .then((response) => {
       return response.data;

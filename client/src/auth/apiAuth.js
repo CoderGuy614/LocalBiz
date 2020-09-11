@@ -17,25 +17,7 @@ export const signup = (user) => {
     });
 };
 
-// export const signin = (user) => {
-//   return fetch(`${process.env.REACT_APP_API}/signin`, {
-//     method: "POST",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//     },
-//     body: user,
-//   })
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
-
 export const signin = (user) => {
-  console.log("USER", user);
   return axios({
     method: "post",
     headers: { "Content-Type": "application/json" },

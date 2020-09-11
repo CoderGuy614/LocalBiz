@@ -6,29 +6,32 @@ exports.requireSignIn = function (req, res, next) {
   const token = req.header("x-auth-token");
   //Check if no token
   if (!token) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
+    return res.status(401).json({ error: "No token, authorization denied" });
   }
   next();
 };
 
-exports.isAuth = function (req, res, next) {
+// Example from B.T.
+exports.isAuth = async function (req, res, next) {
   const token = req.header("x-auth-token");
   if (!token) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
+    return res.status(401).json({ error: "No token, authorization denied" });
   }
   try {
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
-    req.user = decoded.user;
-    next();
+    const decoded = await jwt.verify(token, config.get("jwtSecret"));
+    if (decoded._id == req.profile._id) {
+      return next();
+    }
+    return res.status(401).json({ error: "Token is not valid" });
   } catch (err) {
-    res.status(401).json({ msg: "Token is not valid" });
+    res.status(401).json({ error: "Token Error" });
   }
 };
 
 exports.isAdmin = (req, res, next) => {
   if (req.profile.role === 0) {
     return res.status(403).json({
-      error: "Admin resourse! Access denied",
+      error: "Admin resource! Access denied",
     });
   }
   next();

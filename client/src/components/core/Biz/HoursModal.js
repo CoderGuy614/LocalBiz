@@ -6,6 +6,7 @@ const HoursModal = ({
   showModal,
   setShowModal,
   bizId,
+  token,
   authUserId,
   hoursUpdated,
   setHoursUpdated,
@@ -24,6 +25,7 @@ const HoursModal = ({
           <HoursForm
             bizId={bizId}
             authUserId={authUserId}
+            token={token}
             hoursUpdated={hoursUpdated}
             setShowModal={setShowModal}
             setHoursUpdated={setHoursUpdated}
