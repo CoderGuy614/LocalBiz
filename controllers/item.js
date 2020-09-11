@@ -42,95 +42,51 @@ exports.listItems = (req, res) => {
   });
 };
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
-  form.parse(req, (err, fields, files) => {
-    const { name, description, price, business } = fields;
-
-    if (!name || !description || !price || !business) {
-      return res.status(400).json({
-        error: "Please Enter All Required Fields",
-      });
-    }
-
+  form.parse(req, async (err, fields, files) => {
     if (files.photo) {
       upload.single("file");
-      cloudinary.uploader.upload(files.photo.path).then((cloudinaryFile) => {
-        fields.photo = cloudinaryFile.url;
-        let item = new Item(fields);
-        item.save((err, result) => {
-          if (err) {
-            console.log("Item Create Error ", err);
-            return res.status(400).json({
-              error: err,
-            });
-          }
-          res.json(result);
-        });
-      });
-    } else {
-      let item = new Item(fields);
-      item.save((err, result) => {
-        if (err) {
-          console.log("Item Create Error ", err);
-          return res.status(400).json({
-            error: err,
-          });
-        }
-        res.json(result);
-      });
+      const cloudinaryFile = await cloudinary.uploader.upload(files.photo.path);
+      fields.photo = cloudinaryFile.url;
     }
+    let item = new Item(fields);
+    item.save((err, result) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+      res.json(result);
+    });
   });
 };
 
-exports.update = (req, res) => {
-  console.log(req.body);
+exports.update = async (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
-  form.parse(req, (err, fields, files) => {
+  form.parse(req, async (err, fields, files) => {
     if (err) {
       return res.status(400).json({
-        error: "Image could not be uploaded",
+        error: "Oops, something went wrong, please try again.",
       });
     }
-    const { name, description, price, business } = fields;
-
-    if (!name || !description || !price || !business) {
-      return res.status(400).json({
-        error: "Please Enter All Required Fields",
-      });
-    }
-
     if (files.photo) {
       upload.single("file");
-      cloudinary.uploader.upload(files.photo.path).then((cloudinaryFile) => {
-        fields.photo = cloudinaryFile.url;
-        let item = req.item;
-        item = _.extend(item, fields);
-        item.save((err, result) => {
-          if (err) {
-            console.log("Item Create Error ", err);
-            return res.status(400).json({
-              error: err,
-            });
-          }
-          res.json(result);
-        });
-      });
-    } else {
-      let item = req.item;
-      item = _.extend(item, fields);
-      item.save((err, result) => {
-        if (err) {
-          console.log("Item Create Error ", err);
-          return res.status(400).json({
-            error: err,
-          });
-        }
-        res.json(result);
-      });
+      const cloudinaryFile = await cloudinary.uploader.upload(files.photo.path);
+      fields.photo = cloudinaryFile.url;
     }
+    let item = req.item;
+    item = _.extend(item, fields);
+    item.save((err, result) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+      res.json(result);
+    });
   });
 };
 
