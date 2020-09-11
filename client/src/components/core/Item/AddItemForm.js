@@ -13,7 +13,7 @@ const schema = yup.object({
   inStock: yup.bool(),
   canDeliver: yup.bool(),
 });
-const AddItemForm2 = ({ bizId, userId, setSuccess }) => {
+const AddItemForm = ({ bizId, userId, setSuccess, token }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -50,7 +50,7 @@ const AddItemForm2 = ({ bizId, userId, setSuccess }) => {
         if (values.photo) {
           formData.append("photo", values.photo);
         }
-        const response = await createItem(formData, userId);
+        const response = await createItem(formData, userId, token);
         if (response.error) {
           setError(response.error);
           setLoading(false);
@@ -196,4 +196,4 @@ const AddItemForm2 = ({ bizId, userId, setSuccess }) => {
   );
 };
 
-export default AddItemForm2;
+export default AddItemForm;

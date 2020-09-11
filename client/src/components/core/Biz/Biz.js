@@ -103,6 +103,7 @@ const Biz = ({ match }) => {
                   <ItemCard
                     key={item._id}
                     item={item}
+                    token={token}
                     itemsUpdated={itemsUpdated}
                     setItemsUpdated={setItemsUpdated}
                     authUserId={authUserId}

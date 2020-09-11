@@ -7,6 +7,7 @@ const DeleteModal = ({
   setShowDelete,
   itemsUpdated,
   setItemsUpdated,
+  token,
   itemId,
   authUserId,
 }) => {
@@ -18,7 +19,7 @@ const DeleteModal = ({
 
   const handleDelete = () => {
     setLoading(true);
-    deleteItem(itemId, authUserId).then((response) => {
+    deleteItem(itemId, authUserId, token).then((response) => {
       setLoading(false);
       setItemsUpdated(!itemsUpdated);
     });

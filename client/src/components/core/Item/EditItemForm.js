@@ -16,6 +16,7 @@ const schema = yup.object({
 const EditItemForm = ({
   itemId,
   authUserId,
+  token,
   setShowEditModal,
   itemsUpdated,
   setItemsUpdated,
@@ -70,7 +71,7 @@ const EditItemForm = ({
         if (values.photo) {
           formData.append("photo", values.photo);
         }
-        const response = await updateItem(itemId, authUserId, formData);
+        const response = await updateItem(itemId, authUserId, formData, token);
         if (response.error) {
           setError(response.error);
           setLoading(false);

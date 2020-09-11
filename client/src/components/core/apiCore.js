@@ -63,10 +63,10 @@ export const getCategories = () => {
     .catch((err) => console.log(err));
 };
 
-export const createItem = (item, userId) => {
+export const createItem = (item, userId, token) => {
   return axios({
     method: "post",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-Auth-Token": token },
     url: `${process.env.REACT_APP_API}/item/create/${userId}`,
     data: item,
   })
@@ -78,10 +78,10 @@ export const createItem = (item, userId) => {
     });
 };
 
-export const updateItem = (itemId, userId, item) => {
+export const updateItem = (itemId, userId, item, token) => {
   return axios({
     method: "put",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-Auth-Token": token },
     url: `${process.env.REACT_APP_API}/item/update/${itemId}/${userId}`,
     data: item,
   })

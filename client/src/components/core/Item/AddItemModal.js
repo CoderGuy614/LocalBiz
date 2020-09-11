@@ -5,6 +5,7 @@ import AddItemForm from "./AddItemForm";
 const AddItemModal = ({
   showAddModal,
   setShowAddModal,
+  token,
   itemsUpdated,
   setItemsUpdated,
   bizId,
@@ -30,8 +31,12 @@ const AddItemModal = ({
         <Modal.Title>Add a New Item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AddItemForm bizId={bizId} setSuccess={setSuccess} userId={userId} />
-
+        <AddItemForm
+          bizId={bizId}
+          setSuccess={setSuccess}
+          userId={userId}
+          token={token}
+        />
         <Button variant="secondary" onClick={handleClose} className="my-2">
           Cancel
         </Button>

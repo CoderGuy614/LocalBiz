@@ -7,6 +7,7 @@ const EditModal = ({
   setShowEditModal,
   itemsUpdated,
   setItemsUpdated,
+  token,
   authUserId,
   itemId,
 }) => {
@@ -19,6 +20,7 @@ const EditModal = ({
         <EditItemForm
           itemId={itemId}
           authUserId={authUserId}
+          token={token}
           setShowEditModal={setShowEditModal}
           itemsUpdated={itemsUpdated}
           setItemsUpdated={setItemsUpdated}

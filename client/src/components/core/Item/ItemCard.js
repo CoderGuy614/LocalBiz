@@ -8,6 +8,7 @@ const ItemCard = ({
   item,
   itemsUpdated,
   setItemsUpdated,
+  token,
   authUserId,
   bizOwner,
 }) => {
@@ -66,6 +67,7 @@ const ItemCard = ({
       <DeleteModal
         itemId={_id}
         authUserId={authUserId}
+        token={token}
         showDelete={showDelete}
         itemsUpdated={itemsUpdated}
         setItemsUpdated={setItemsUpdated}
@@ -74,6 +76,7 @@ const ItemCard = ({
       <EditModal
         itemId={_id}
         authUserId={authUserId}
+        token={token}
         showEditModal={showEditModal}
         setShowEditModal={setShowEditModal}
         itemsUpdated={itemsUpdated}
