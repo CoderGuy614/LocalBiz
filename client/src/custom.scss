@@ -33,6 +33,11 @@ $jumbotron-bg: #9ad1d4;
   height: 300px;
 }
 
+.set-location-map {
+  width: 100%;
+  height: 250px;
+}
+
 .biz-sidebar {
   width: 100%;
 }
@@ -74,11 +79,6 @@ $jumbotron-bg: #9ad1d4;
   height: 25px;
   width: auto;
   border-radius: 30%;
-}
-
-.leaflet-container {
-  width: 100%;
-  height: 50vh;
 }
 
 /* import bootstrap to set changes */
