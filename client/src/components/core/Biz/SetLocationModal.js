@@ -1,39 +1,39 @@
 import React from "react";
-import HoursForm from "./HoursForm";
+import LocationForm from "./LocationForm";
 import { Modal, Button, Container } from "react-bootstrap";
 
-const HoursModal = ({
-  showHoursModal,
-  setShowHoursModal,
+const SetLocationModal = ({
+  showSetLocationModal,
+  setShowSetLocationModal,
   bizId,
   token,
   authUserId,
-  hoursUpdated,
-  setHoursUpdated,
+  locationUpdated,
+  setLocationUpdated,
 }) => {
   return (
     <>
       <Modal
-        show={showHoursModal}
-        onHide={() => setShowHoursModal(false)}
+        show={showSetLocationModal}
+        onHide={() => setShowSetLocationModal(false)}
         dialogClassName="modal-lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Business Hours</Modal.Title>
+          <Modal.Title>Set Location</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <HoursForm
+          <LocationForm
             bizId={bizId}
             authUserId={authUserId}
             token={token}
-            hoursUpdated={hoursUpdated}
-            setShowModal={setShowHoursModal}
-            setHoursUpdated={setHoursUpdated}
+            setShowSetLocationModal={setShowSetLocationModal}
+            locationUpdated={locationUpdated}
+            setLocationUpdated={setLocationUpdated}
           />
           <Container>
             <Button
               variant="secondary"
-              onClick={() => setShowHoursModal(false)}
+              onClick={() => setShowSetLocationModal(false)}
             >
               Close
             </Button>
@@ -44,4 +44,4 @@ const HoursModal = ({
   );
 };
 
-export default HoursModal;
+export default SetLocationModal;

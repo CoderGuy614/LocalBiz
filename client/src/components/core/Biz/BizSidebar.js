@@ -4,6 +4,7 @@ import Pin from "../Layout/Pin";
 import Hours from "./Hours";
 import HoursModal from "./HoursModal";
 import SettingsModal from "./SettingsModal";
+import SetLocationModal from "./SetLocationModal";
 import ContactInfo from "./ContactInfo";
 import { Button, Container } from "react-bootstrap";
 
@@ -15,11 +16,14 @@ const BizSidebar = ({
   setHoursUpdated,
   settingsUpdated,
   setSettingsUpdated,
+  locationUpdated,
+  setLocationUpdated,
 }) => {
   const { rating, hours, lat, lng, bizEmail, bizPhone, user, _id } = business;
 
-  const [showModal, setShowModal] = useState(false);
+  const [showHoursModal, setShowHoursModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showSetLocationModal, setShowSetLocationModal] = useState(false);
 
   const map = {
     key: {
@@ -40,14 +44,26 @@ const BizSidebar = ({
           <Pin lat={lat} lng={lng} rating={rating} />
         </GoogleMap>
       </Container>
+      {user && authUserId && authUserId === user._id && (
+        <Button
+          block
+          variant="secondary"
+          className="my-3 mx-1"
+          onClick={() => setShowSetLocationModal(true)}
+        >
+          <i className="fas fa-edit mr-2"></i>
+          Edit Location
+        </Button>
+      )}
+
       <Container>
         <Hours hours={hours} id={_id} />
         <HoursModal
           bizId={_id}
           authUserId={authUserId}
           token={token}
-          showModal={showModal}
-          setShowModal={setShowModal}
+          showHoursModal={showHoursModal}
+          setShowHoursModal={setShowHoursModal}
           hoursUpdated={hoursUpdated}
           setHoursUpdated={setHoursUpdated}
         />
@@ -60,13 +76,23 @@ const BizSidebar = ({
           settingsUpdated={settingsUpdated}
           setSettingsUpdated={setSettingsUpdated}
         />
+
+        <SetLocationModal
+          bizId={_id}
+          authUserId={authUserId}
+          token={token}
+          showSetLocationModal={showSetLocationModal}
+          setShowSetLocationModal={setShowSetLocationModal}
+          locationUpdated={locationUpdated}
+          setLocationUpdated={setLocationUpdated}
+        />
         <ContactInfo email={bizEmail} phone={bizPhone} />
         {user && authUserId && authUserId === user._id && (
           <>
             <Button
               block
               variant="secondary"
-              onClick={() => setShowModal(true)}
+              onClick={() => setShowHoursModal(true)}
             >
               <i className="fas fa-edit mr-2"></i>
               Edit Business Hours

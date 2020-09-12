@@ -20,6 +20,7 @@ const Biz = ({ match }) => {
   const [hoursUpdated, setHoursUpdated] = useState(false);
   const [itemsUpdated, setItemsUpdated] = useState(false);
   const [settingsUpdated, setSettingsUpdated] = useState(false);
+  const [locationUpdated, setLocationUpdated] = useState(false);
   const loadBusiness = () => {
     getBusiness(id).then((data) => {
       if (data.error) {
@@ -82,6 +83,8 @@ const Biz = ({ match }) => {
                 setHoursUpdated={setHoursUpdated}
                 settingsUpdated={settingsUpdated}
                 setSettingsUpdated={setSettingsUpdated}
+                locationUpdated={locationUpdated}
+                setLocationUpdated={setLocationUpdated}
               />
             </Row>
           </Col>
