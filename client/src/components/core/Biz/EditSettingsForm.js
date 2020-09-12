@@ -96,7 +96,6 @@ const EditSettingsForm = ({
       enableReinitialize={true}
       validationSchema={schema}
       onSubmit={async (values) => {
-        console.log("VALUES", values);
         setLoading(true);
         let formData = new FormData();
         formData.append("name", values.name);
@@ -105,9 +104,6 @@ const EditSettingsForm = ({
         formData.append("bizPhone", values.bizPhone);
         if (values.photo) {
           formData.append("photo", values.photo);
-        }
-        for (var key of formData.entries()) {
-          console.log(key[0] + ", " + key[1]);
         }
         const response = await updateBiz(formData, bizId, authUserId, token);
         if (response.error) {

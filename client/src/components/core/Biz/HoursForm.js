@@ -85,7 +85,6 @@ const HoursForm = ({
   const handleSubmit = () => {
     setLoading(true);
     updateHours(values, bizId, authUserId, token).then((data) => {
-      console.log(data);
       setLoading(false);
       setShowModal(false);
       setHoursUpdated(!hoursUpdated);
