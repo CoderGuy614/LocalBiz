@@ -41,7 +41,7 @@ const BizSidebar = ({
           center={map.center}
           zoom={map.zoom}
         >
-          <Pin lat={lat} lng={lng} rating={rating} />
+          <Pin lat={lat} lng={lng} />
         </GoogleMap>
       </Container>
       {user && authUserId && authUserId === user._id && (

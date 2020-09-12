@@ -2,17 +2,8 @@ import React, { useState, useEffect } from "react";
 import GoogleMap from "google-map-react";
 import { Container, Row, Col, Button, Alert } from "react-bootstrap";
 import Loading from "../Layout/Loading";
-import { getBusiness, updateLocation, getCurrentLocation } from "../apiCore";
+import { getBusiness, updateLocation } from "../apiCore";
 
-import { Formik } from "formik";
-import * as yup from "yup";
-
-const schema = yup.object({
-  name: yup.string().required(),
-  description: yup.string().required(),
-  bizEmail: yup.string().email().required(),
-  bizPhone: yup.string().required(),
-});
 const LocationForm = ({
   bizId,
   authUserId,
@@ -41,6 +32,18 @@ const LocationForm = ({
     //eslint-disable-next-line
   }, []);
 
+  const handleSubmit = () => {
+    setLoading(true);
+    updateLocation(newLocation, bizId, authUserId, token).then((data) => {
+      if (data.error) {
+        setError(data.error);
+        setLoading(false);
+      }
+      setLocationUpdated(!locationUpdated);
+      setShowSetLocationModal(false);
+    });
+  };
+
   const showError = () => (
     <Alert
       variant="danger"
@@ -64,11 +67,21 @@ const LocationForm = ({
   const latLng = [lat, lng];
 
   const handleApiLoaded = (map, maps) => {
+    const currentMarker = new maps.Marker({
+      map: map,
+      position: location,
+      draggable: false,
+      clickable: false,
+      icon: "http://maps.google.com/mapfiles/kml/shapes/arrow.png",
+    });
+
     function addMarker(latLng) {
       const newMarker = new maps.Marker({
         map: map,
         position: latLng,
         draggable: true,
+
+        icon: "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png",
       });
       setNewLocation(newMarker.getPosition().toJSON());
       newMarker.addListener("dragend", function () {
@@ -105,8 +118,10 @@ const LocationForm = ({
           onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
         ></GoogleMap>
       </Row>
-      <Row>
-        <Button block onClick={() => console.log(newLocation)}>
+      <Loading loading={loading} />
+      <Row className="my-3">
+        {showError()}
+        <Button block onClick={handleSubmit}>
           Save Location
         </Button>
       </Row>

@@ -59,7 +59,7 @@ const Biz = ({ match }) => {
   useEffect(() => {
     loadBusiness();
     //eslint-disable-next-line
-  }, [hoursUpdated, settingsUpdated]);
+  }, [hoursUpdated, settingsUpdated, locationUpdated]);
 
   const showError = () => (
     <Alert variant="danger" style={{ display: error ? "" : "none" }}>
