@@ -183,7 +183,6 @@ export const createBiz = (biz, userId, token) => {
 };
 
 export const updateBiz = (biz, bizId, userId, token) => {
-  console.log("API CORE BIZ", biz);
   return axios({
     method: "put",
     headers: {

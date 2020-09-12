@@ -70,6 +70,23 @@ exports.create = async (req, res) => {
   });
 };
 
+exports.updateLocation = async (req, res) => {
+  const { lat, lng } = req.body;
+  try {
+    const id = req.biz._id;
+    const updated = await Biz.findByIdAndUpdate(
+      id,
+      { lat, lng },
+      { new: true }
+    );
+    return res.json(updated);
+  } catch (error) {
+    return res.status(400).json({
+      error: err,
+    });
+  }
+};
+
 exports.postHours = async (req, res) => {
   try {
     const id = req.biz._id;
@@ -80,7 +97,6 @@ exports.postHours = async (req, res) => {
     );
     return res.json(updated);
   } catch (error) {
-    console.log(err);
     return res.status(400).json({
       error: err,
     });
@@ -97,31 +113,6 @@ exports.getHours = (req, res) => {
       return res.json(hours);
     });
 };
-
-// exports.updateBiz = async (req, res) => {
-//   console.log("REQ.BODY", req);
-//   const id = req.biz._id;
-//   const { name, description, bizPhone, bizEmail } = req.body;
-//   const profileFields = {};
-//   if (name) profileFields.name = name;
-//   if (description) profileFields.description = description;
-//   if (bizEmail) profileFields.bizEmail = bizEmail;
-//   if (bizPhone) profileFields.bizPhone = bizPhone;
-
-//   try {
-//     let updatedBiz = await Biz.findByIdAndUpdate(
-//       id,
-//       { $set: profileFields },
-//       { new: true }
-//     );
-//     return res.json(updatedBiz);
-//   } catch (error) {
-//     console.log(err);
-//     return res.status(400).json({
-//       error: err,
-//     });
-//   }
-// };
 
 exports.updateBiz = async (req, res) => {
   let form = new formidable.IncomingForm();
@@ -151,7 +142,7 @@ exports.updateBiz = async (req, res) => {
 };
 
 exports.removeBiz = async (req, res) => {
-  // Delete Items Which Belong to the THat Biz
+  // Delete Items Which Belong to the That Biz
   const bizId = req.biz._id;
   try {
     await Item.deleteMany({ business: bizId });

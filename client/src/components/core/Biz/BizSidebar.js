@@ -19,7 +19,17 @@ const BizSidebar = ({
   locationUpdated,
   setLocationUpdated,
 }) => {
-  const { rating, hours, lat, lng, bizEmail, bizPhone, user, _id } = business;
+  const {
+    rating,
+    hours,
+    lat,
+    lng,
+    bizEmail,
+    bizPhone,
+    bizAddress,
+    user,
+    _id,
+  } = business;
 
   const [showHoursModal, setShowHoursModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
@@ -43,6 +53,9 @@ const BizSidebar = ({
         >
           <Pin lat={lat} lng={lng} />
         </GoogleMap>
+      </Container>
+      <Container className="mt-2">
+        <p>Street Address: {bizAddress}</p>
       </Container>
       {user && authUserId && authUserId === user._id && (
         <Button

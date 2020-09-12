@@ -72,6 +72,10 @@ const BizSchema = new Schema({
     type: String,
     default: "000-000-0000",
   },
+  bizAddress: {
+    type: String,
+    default: "Address Not Listed",
+  },
   lat: {
     type: Number,
     default: 13.3633,

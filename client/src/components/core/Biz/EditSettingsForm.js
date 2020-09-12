@@ -21,6 +21,7 @@ const schema = yup.object({
   description: yup.string().required(),
   bizEmail: yup.string().email().required(),
   bizPhone: yup.string().required(),
+  bizAddress: yup.string(),
 });
 const EditSettingsForm = ({
   bizId,
@@ -37,6 +38,7 @@ const EditSettingsForm = ({
     description: "",
     bizEmail: "",
     bizPhone: "",
+    bizAddress: "",
     photo: null,
   });
   const [newPhoto, setNewPhoto] = useState(false);
@@ -102,6 +104,8 @@ const EditSettingsForm = ({
         formData.append("description", values.description);
         formData.append("bizEmail", values.bizEmail);
         formData.append("bizPhone", values.bizPhone);
+        formData.append("bizAddress", values.bizAddress);
+
         if (values.photo) {
           formData.append("photo", values.photo);
         }
@@ -120,6 +124,7 @@ const EditSettingsForm = ({
         description: biz.description,
         bizEmail: biz.bizEmail,
         bizPhone: biz.bizPhone,
+        bizAddress: biz.bizAddress,
         photo: biz.photo,
       }}
     >
@@ -210,7 +215,26 @@ const EditSettingsForm = ({
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
-          {/* Fifth Row  - File Upload */}
+          {/* Fifth Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Street Address</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Address..."
+                name="bizAddress"
+                value={values.bizAddress}
+                onChange={handleChange}
+                isValid={touched.bizAddress && !errors.bizAddress}
+                isInvalid={!!errors.bizAddress && touched.bizAddress}
+              />
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Please Enter your Business Street Address
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Sixth Row  - File Upload */}
           <Form.Row>
             <Form.Group as={Col} md="12" controlId="validationFormik01">
               <Form.Label>Profile Photo</Form.Label>

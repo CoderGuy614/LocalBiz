@@ -8,6 +8,7 @@ const {
   bizList,
   getHours,
   postHours,
+  updateLocation,
   updateBiz,
   removeBiz,
   read,
@@ -19,6 +20,12 @@ router.get("/biz/:bizId", read);
 router.post("/biz/create/:userId", requireSignIn, isAuth, create);
 router.get("/biz/hours/:bizId", getHours);
 router.put("/biz/hours/:bizId/:userId", requireSignIn, isAuth, postHours);
+router.put(
+  "/biz/location/:bizId/:userId",
+  requireSignIn,
+  isAuth,
+  updateLocation
+);
 router.put("/biz/update/:bizId/:userId", requireSignIn, isAuth, updateBiz);
 router.delete("/biz/:bizId/:userId", requireSignIn, isAuth, removeBiz);
 
