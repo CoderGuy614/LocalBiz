@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Form, Alert, Button, Row, Col, Container } from "react-bootstrap";
 import Layout from "../core/Layout/Layout";
 import Loading from "../../components/core/Layout/Loading";
@@ -34,7 +34,6 @@ const Login = () => {
     <Layout title="Login" description="Sign In with Email or Facebook">
       <Container>
         <Loading loading={loading} />
-        {showError()}
         {redirectUser()}
         <Row className="mt-4">
           <Col md={{ span: 6, offset: 3 }}>
@@ -84,7 +83,7 @@ const Login = () => {
                       Please Enter your Password
                     </Form.Control.Feedback>
                   </Form.Group>
-
+                  {showError()}
                   <Button variant="primary" block type="submit">
                     Submit
                   </Button>

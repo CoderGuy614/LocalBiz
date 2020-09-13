@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Form, Container, Col, Row, Button, Alert } from "react-bootstrap";
+import FBLogin from "./FBLogin";
 import Loading from "../core/Layout/Loading";
 import Layout from "../core/Layout/Layout";
 import AuthContext from "../../context/auth/authContext";
@@ -44,7 +45,7 @@ const Signup = () => {
       description="Registered users can post a store and items to sell, leave ratings and comments, and more."
     >
       <Container className="d-flex justify-content-center my-4">
-        <Row className="border border-primary rounded my-auto px-4 pb-4 m-2">
+        <Row className="my-auto px-4 pb-4 m-2">
           <Formik
             validationSchema={schema}
             onSubmit={(values) => register(values)}
@@ -65,6 +66,7 @@ const Signup = () => {
               errors,
             }) => (
               <Form noValidate onSubmit={handleSubmit} className="mt-4">
+                <Loading loading={loading} />
                 {/* First Row */}
                 <Form.Row>
                   <Form.Group as={Col} md="12" controlId="validationFormik01">
@@ -137,7 +139,6 @@ const Signup = () => {
                   </Form.Group>
                 </Form.Row>
                 {/*  Button Row */}
-                <Loading loading={loading} />
                 {showError()}
                 {redirectUser()}
                 <Form.Row>
@@ -150,6 +151,7 @@ const Signup = () => {
                     Continue
                   </Button>
                 </Form.Row>
+                <FBLogin />
               </Form>
             )}
           </Formik>
