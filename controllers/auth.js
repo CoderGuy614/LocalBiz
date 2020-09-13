@@ -1,14 +1,14 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const auth = require("../middleware/auth");
+// const auth = require("../middleware/auth");
 const gravatar = require("gravatar");
 
 //Signup A New User
 exports.signup = async (req, res) => {
-  const { name, email, password, fbSignup, avatar } = req.body;
+  let { name, email, password, fbSignup, avatar } = req.body;
   try {
-    let user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
     // See if the user exists already
     if (user && user.fbSignup === true) {
@@ -54,8 +54,7 @@ exports.signup = async (req, res) => {
     // const { _id, name, email, role } = newUser;
     return res.json({ token, user: newUser });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).json({ error: err.message });
   }
 };
 //SignIn a current User
@@ -84,7 +83,7 @@ exports.signin = (req, res) => {
       });
     }
     // generate a signed token with user id and secret
-    const token = jwt.sign({ _id: user._id }, config.get("jwtSecret"));
+    let token = jwt.sign({ _id: user._id }, config.get("jwtSecret"));
     // persist the token as 't' in cookie with expiry date
     res.cookie("t", token, { expire: new Date() + 99999999 });
     // return response with user and token to frontend client

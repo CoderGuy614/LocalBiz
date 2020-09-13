@@ -8,7 +8,7 @@ const BizListCard = ({ biz }) => {
 
   return (
     <Card style={{ width: "18rem", height: "100%" }}>
-      <Card.Img variant="top" src={photo} style={{ maxHeight: "190px" }} />
+      <Card.Img variant="top" src={photo} style={{ height: "190px" }} />
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <div className="d-flex justify-content-between mb-2">

@@ -118,7 +118,7 @@ const Shop = () => {
         {showAlert()}
         {showLoading()}
         {showAddButton()}
-        <Container fluid className="d-flex flex-wrap">
+        <Container fluid className="d-flex flex-wrap justify-content-center">
           {businesses &&
             businesses.map((biz, i) => (
               <div key={i} className="m-3">
