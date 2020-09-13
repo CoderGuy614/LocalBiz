@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import AddItemForm from "./AddItemForm";
 
@@ -11,19 +11,9 @@ const AddItemModal = ({
   bizId,
   userId,
 }) => {
-  const [success, setSuccess] = useState(false);
-
   const handleClose = () => {
     setShowAddModal(false);
   };
-
-  useEffect(() => {
-    if (success) {
-      setShowAddModal(false);
-      setItemsUpdated(!itemsUpdated);
-    }
-    //eslint-disable-next-line
-  }, [success]);
 
   return (
     <Modal show={showAddModal} onHide={handleClose}>
@@ -33,9 +23,11 @@ const AddItemModal = ({
       <Modal.Body>
         <AddItemForm
           bizId={bizId}
-          setSuccess={setSuccess}
           userId={userId}
           token={token}
+          itemsUpdated={itemsUpdated}
+          setItemsUpdated={setItemsUpdated}
+          setShowAddModal={setShowAddModal}
         />
         <Button variant="secondary" onClick={handleClose} className="my-2">
           Cancel

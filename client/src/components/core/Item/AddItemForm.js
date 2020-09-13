@@ -13,7 +13,14 @@ const schema = yup.object({
   inStock: yup.bool(),
   canDeliver: yup.bool(),
 });
-const AddItemForm = ({ bizId, userId, setSuccess, token }) => {
+const AddItemForm = ({
+  bizId,
+  userId,
+  token,
+  setShowAddModal,
+  itemsUpdated,
+  setItemsUpdated,
+}) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -56,7 +63,8 @@ const AddItemForm = ({ bizId, userId, setSuccess, token }) => {
           setLoading(false);
         } else {
           setLoading(false);
-          setSuccess(true);
+          setShowAddModal(false);
+          setItemsUpdated(!itemsUpdated);
         }
       }}
       initialValues={{
@@ -103,7 +111,8 @@ const AddItemForm = ({ bizId, userId, setSuccess, token }) => {
             <Form.Group as={Col} md="12" controlId="validationFormik03">
               <Form.Label>Description</Form.Label>
               <Form.Control
-                type="description"
+                as="textarea"
+                rows="3"
                 placeholder="description..."
                 name="description"
                 value={values.description}

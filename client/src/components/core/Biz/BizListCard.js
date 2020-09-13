@@ -7,8 +7,8 @@ const BizListCard = ({ biz }) => {
   const { name, description, rating, photo, category, _id } = biz;
 
   return (
-    <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src={photo} style={{ maxHeight: "200px" }} />
+    <Card style={{ width: "18rem", height: "100%" }}>
+      <Card.Img variant="top" src={photo} style={{ maxHeight: "190px" }} />
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <div className="d-flex justify-content-between mb-2">
@@ -18,7 +18,9 @@ const BizListCard = ({ biz }) => {
           <StarRating rating={rating} />
         </div>
 
-        <Card.Text>{description}</Card.Text>
+        <Card.Text style={{ height: "100px" }}>
+          {description.substring(0, 120)}...
+        </Card.Text>
         <Row>
           <Col>
             <Button

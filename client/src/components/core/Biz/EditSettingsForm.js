@@ -17,7 +17,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 
 const schema = yup.object({
-  name: yup.string().required(),
+  name: yup.string().required().max(20),
   description: yup.string().required(),
   bizEmail: yup.string().email().required(),
   bizPhone: yup.string().required(),
@@ -154,7 +154,7 @@ const EditSettingsForm = ({
 
               <Form.Control.Feedback />
               <Form.Control.Feedback type="invalid">
-                Please Enter a Name
+                "Please Enter a Name (Max. 20 characters)"
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
@@ -163,7 +163,8 @@ const EditSettingsForm = ({
             <Form.Group as={Col} md="12" controlId="validationFormik03">
               <Form.Label>Description</Form.Label>
               <Form.Control
-                type="text"
+                as="textarea"
+                rows="3"
                 placeholder="description..."
                 name="description"
                 value={values.description}
