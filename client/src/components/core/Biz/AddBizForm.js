@@ -8,7 +8,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 
 const schema = yup.object({
-  name: yup.string().required().max(20),
+  name: yup.string().required().max(50),
   description: yup.string().required(),
   category: yup.string().required(),
   bizPhone: yup.string().required(),
@@ -118,7 +118,7 @@ const AddBizForm = ({ authUser, token }) => {
 
               <Form.Control.Feedback />
               <Form.Control.Feedback type="invalid">
-                Please Enter the Name of Your Business (Max. 20 characters)
+                Please Enter the Name of Your Business (Max. 50 characters)
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>

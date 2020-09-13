@@ -7,10 +7,12 @@ const BizListCard = ({ biz }) => {
   const { name, description, rating, photo, category, _id } = biz;
 
   return (
-    <Card style={{ width: "18rem", height: "100%" }}>
+    <Card style={{ width: "20rem", height: "100%" }}>
       <Card.Img variant="top" src={photo} style={{ height: "190px" }} />
       <Card.Body>
-        <Card.Title>{name}</Card.Title>
+        <Card.Title>
+          {name.length > 25 ? name.substring(0, 25) + "..." : name}
+        </Card.Title>
         <div className="d-flex justify-content-between mb-2">
           <MDBBadge pill color={category.color}>
             {category.name}
@@ -19,7 +21,9 @@ const BizListCard = ({ biz }) => {
         </div>
 
         <Card.Text style={{ height: "100px" }}>
-          {description.substring(0, 120)}...
+          {description.length > 140
+            ? description.substring(0, 130) + "..."
+            : description}
         </Card.Text>
         <Row>
           <Col>

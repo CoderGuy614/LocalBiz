@@ -1,8 +1,18 @@
 import React, { useState } from "react";
+import ItemCardActions from "./ItemCardActions";
 import DeleteModal from "./DeleteModal";
 import EditModal from "./EditModal";
 
-import { Row, Col, Image, ListGroup, Button } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Button,
+  Tabs,
+  Tab,
+  Form,
+} from "react-bootstrap";
 
 const ItemCard = ({
   item,
@@ -54,15 +64,31 @@ const ItemCard = ({
         </Row>
       </Col>
       <Col xs={8}>
-        <ListGroup variant="flush">
-          <ListGroup.Item>Name: {name}</ListGroup.Item>
-          <ListGroup.Item>Description: {description}</ListGroup.Item>
-          <ListGroup.Item>Price: $ {price}</ListGroup.Item>
-          <ListGroup.Item>In Stock: {translateBool(inStock)}</ListGroup.Item>
-          <ListGroup.Item>
-            Delivery Available: {translateBool(canDeliver)}
-          </ListGroup.Item>
-        </ListGroup>
+        <Tabs defaultActiveKey="info" id="tab01" className="my-2">
+          <Tab eventKey="info" title="Info">
+            <ListGroup variant="flush">
+              <ListGroup.Item>Name: {name}</ListGroup.Item>
+              <ListGroup.Item>Description: {description}</ListGroup.Item>
+              <ListGroup.Item>Price: $ {price}</ListGroup.Item>
+              <ListGroup.Item>
+                In Stock: {translateBool(inStock)}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Delivery Available: {translateBool(canDeliver)}
+              </ListGroup.Item>
+            </ListGroup>
+          </Tab>
+          <Tab eventKey="contact" title="Contact Seller">
+            <Form.Group>
+              <Form.Control
+                as="textarea"
+                rows="5"
+                placeholder="Enter a message..."
+              />
+            </Form.Group>
+            <Button className="btn-secondary btn-sm mb-2"> Send </Button>
+          </Tab>
+        </Tabs>
       </Col>
       <DeleteModal
         itemId={_id}
