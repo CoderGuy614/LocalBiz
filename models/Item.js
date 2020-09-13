@@ -5,13 +5,13 @@ module.exports = mongoose.model("items", {
   name: {
     type: String,
     trim: true,
-    maxlength: 32,
+    maxlength: 200,
     required: [true, "name is required"],
   },
   description: {
     type: String,
     trim: true,
-    maxlength: 2000,
+    maxlength: 1000,
     required: [true, "description is required"],
   },
   inStock: {

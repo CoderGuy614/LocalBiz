@@ -7,8 +7,8 @@ import { Formik } from "formik";
 import * as yup from "yup";
 
 const schema = yup.object({
-  name: yup.string().required(),
-  description: yup.string().required(),
+  name: yup.string().required().max(200),
+  description: yup.string().required().max(1000),
   price: yup.number().required(),
   inStock: yup.bool(),
   canDeliver: yup.bool(),
@@ -94,7 +94,7 @@ const AddItemForm = ({ bizId, userId, setSuccess, token }) => {
 
               <Form.Control.Feedback />
               <Form.Control.Feedback type="invalid">
-                Please Enter an Item Name
+                "Please Enter an Item Name (Max. 200 characters)"
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
@@ -113,7 +113,7 @@ const AddItemForm = ({ bizId, userId, setSuccess, token }) => {
               />
               <Form.Control.Feedback />
               <Form.Control.Feedback type="invalid">
-                Please Enter an Item Description
+                "Please Enter an Item Description (Max. 1000 characters)"
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
