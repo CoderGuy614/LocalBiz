@@ -11,11 +11,20 @@ exports.signup = async (req, res) => {
     let user = await User.findOne({ email });
 
     // See if the user exists already
+    if (user && user.fbSignup === true) {
+      return res.status(400).json({
+        error:
+          "You previously signed up with Facebook. Please Continue with Facebook.",
+      });
+    }
+
+    // See if the user exists already
     if (user) {
       return res
         .status(400)
-        .json({ error: "User Already Exists, Please Sign In" });
+        .json({ error: "This Email is Already Registered, Please Sign In" });
     }
+
     if (!avatar) {
       avatar = gravatar.url(email, {
         s: "200",
@@ -55,11 +64,18 @@ exports.signin = (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email }, (err, user) => {
     if (err || !user) {
-      console.log(err);
       return res.status(400).json({
         error: "User with that email does not exist. Please signup",
       });
     }
+
+    if (!user.authenticate(password) && user.fbSignup === true) {
+      return res.status(401).json({
+        error:
+          "This email address is connected to a FB account.  Please continue with Facebook.",
+      });
+    }
+
     // if user is found make sure the email and password match
     // create authenticate method in user model
     if (!user.authenticate(password)) {
