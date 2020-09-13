@@ -1,14 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FacebookProvider, LoginButton } from "react-facebook";
+import axios from "axios";
+import AuthContext from "../../context/auth/authContext";
 
 const FBLogin = () => {
+  const authContext = useContext(AuthContext);
+  const { register, login, loading, isAuthenticated } = authContext;
   const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
   const handleResponse = (data) => {
-    console.log(data);
+    if (data) {
+      setUser(data.profile);
+    }
   };
-
   const handleError = (error) => {
     setError({ error });
+  };
+
+  useEffect(() => {
+    if (user && user.email) {
+      checkExisting(user.email);
+    }
+    //eslint-disable-next-line
+  }, [user]);
+
+  //Checks if the user has already signed up before, if not it adds them to the DB with their FB account info.
+  const checkExisting = async (email) => {
+    const isExisting = await axios.get(
+      `${process.env.REACT_APP_API}/checkExisting?email=${email}`
+    );
+    if (!isExisting.data) {
+      console.log("NEW  USER SIGNED UP");
+      signupNewFacebookUser();
+    } else {
+      console.log("USER EXISTS", isExisting.data.user);
+      login({ email: user.email, password: user.id });
+      return isExisting;
+    }
+  };
+
+  const signupNewFacebookUser = () => {
+    const name = user.name;
+    const password = user.id;
+    const email = user.email;
+    const avatar = user.picture.data.url;
+    const fbSignup = true;
+    register({ name, email, password, fbSignup, avatar }).then((response) => {
+      console.log("SIGNUP RESPONSE", response);
+    });
   };
 
   return (

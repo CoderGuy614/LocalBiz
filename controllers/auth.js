@@ -6,7 +6,7 @@ const gravatar = require("gravatar");
 
 //Signup A New User
 exports.signup = async (req, res) => {
-  const { name, email, password, fbSignup } = req.body;
+  const { name, email, password, fbSignup, avatar } = req.body;
   try {
     let user = await User.findOne({ email });
 
@@ -16,11 +16,13 @@ exports.signup = async (req, res) => {
         .status(400)
         .json({ error: "User Already Exists, Please Sign In" });
     }
-    const avatar = gravatar.url(email, {
-      s: "200",
-      r: "pg",
-      d: "mm",
-    });
+    if (!avatar) {
+      avatar = gravatar.url(email, {
+        s: "200",
+        r: "pg",
+        d: "mm",
+      });
+    }
     user = new User({
       name,
       email,
@@ -35,10 +37,13 @@ exports.signup = async (req, res) => {
       },
     };
 
-    jwt.sign(payload, config.get("jwtSecret"), (err, token) => {
-      if (err) throw err;
-      res.json({ token, user: newUser });
-    });
+    // jwt.sign(payload, config.get("jwtSecret"), (err, token) => {
+    //   if (err) throw err;
+    //   res.json({ token, user: newUser });
+    // });
+    const token = jwt.sign({ _id: newUser._id }, config.get("jwtSecret"));
+    // const { _id, name, email, role } = newUser;
+    return res.json({ token, user: newUser });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
