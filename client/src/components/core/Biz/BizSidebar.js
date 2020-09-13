@@ -65,7 +65,7 @@ const BizSidebar = ({
           onClick={() => setShowSetLocationModal(true)}
         >
           <i className="fas fa-edit mr-2"></i>
-          Edit Location
+          Edit Map Location
         </Button>
       )}
 

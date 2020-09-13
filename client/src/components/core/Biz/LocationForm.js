@@ -15,8 +15,8 @@ const LocationForm = ({
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState({
-    lat: "",
-    lng: "",
+    lat: null,
+    lng: null,
   });
   const [markers, setMarkers] = useState([]);
   const [newLocation, setNewLocation] = useState(null);
@@ -91,11 +91,8 @@ const LocationForm = ({
     }
 
     map.addListener("click", function (e) {
-      console.log(e);
       if (markers.length < 1) {
         addMarker(e.latLng);
-      } else {
-        console.log(e.latLng);
       }
     });
   };

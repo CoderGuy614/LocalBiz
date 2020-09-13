@@ -13,6 +13,7 @@ const schema = yup.object({
   category: yup.string().required(),
   bizPhone: yup.string().required(),
   bizEmail: yup.string().email().required(),
+  bizAddress: yup.string(),
 });
 const AddBizForm = ({ authUser, token }) => {
   const [categories, setCategories] = useState([]);
@@ -68,6 +69,7 @@ const AddBizForm = ({ authUser, token }) => {
         formData.append("category", values.category);
         formData.append("bizEmail", values.bizEmail);
         formData.append("bizPhone", values.bizPhone);
+        formData.append("bizAddress", values.bizAddress);
         if (values.photo) {
           formData.append("photo", values.photo);
         }
@@ -86,6 +88,7 @@ const AddBizForm = ({ authUser, token }) => {
         category: "",
         bizEmail: "",
         bizPhone: "",
+        bizAddress: "",
         photo: null,
       }}
     >
@@ -204,7 +207,27 @@ const AddBizForm = ({ authUser, token }) => {
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
-          {/* Sixth Row  - File Upload */}
+          {/* Sixth Row */}
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik01">
+              <Form.Label>Street Address</Form.Label>
+              <Form.Control
+                type="text"
+                name="bizAddress"
+                placeholder="Address..."
+                value={values.bizAddress}
+                onChange={handleChange}
+                isValid={touched.bizAddress && !errors.bizAddress}
+                isInvalid={!!errors.bizAddress && touched.bizAddress}
+              />
+
+              <Form.Control.Feedback />
+              <Form.Control.Feedback type="invalid">
+                Please enter a valid street address
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          {/* Seventh Row  - File Upload */}
           <Form.Row>
             <Form.Group as={Col} md="12" controlId="validationFormik01">
               <Form.Label>Profile Photo</Form.Label>
