@@ -29,5 +29,14 @@ exports.create = (req, res) => {
 };
 
 exports.read = (req, res) => {
-  return res.status(200).json({ message: "This will be the read Method" });
+  Message.find({ to: req.biz._id }).exec((err, messages) => {
+    console.log("Messages", messages);
+    if (err) {
+      return res.status(400).json({ error: err });
+    }
+    if (!messages || messages.length === 0) {
+      return res.status(400).json({ error: "No Messages Found" });
+    }
+    return res.json(messages);
+  });
 };
