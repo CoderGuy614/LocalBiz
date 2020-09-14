@@ -12,6 +12,7 @@ const userRoutes = require("./routes/api/users");
 const categoryRoutes = require("./routes/api/categories");
 const itemRoutes = require("./routes/api/items");
 const bizRoutes = require("./routes/api/biz");
+const messageRoutes = require("./routes/api/messages");
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use("/api", authRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", itemRoutes);
 app.use("/api", bizRoutes);
+app.use("/api", messageRoutes);
 
 // Serve static assets in production
 

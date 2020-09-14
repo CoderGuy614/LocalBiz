@@ -55,7 +55,9 @@ const BizSidebar = ({
         </GoogleMap>
       </Container>
       <Container className="mt-2">
-        <p>Street Address: {bizAddress}</p>
+        <p>
+          <strong>Street Address:</strong> {bizAddress}
+        </p>
       </Container>
       {user && authUserId && authUserId === user._id && (
         <Button
