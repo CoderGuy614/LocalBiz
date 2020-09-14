@@ -239,7 +239,7 @@ export const getMessagesByToUser = (authUserId, token) => {
       "Content-Type": "application/json",
       "X-Auth-Token": token,
     },
-    url: `${process.env.REACT_APP_API}/messages/to/${authUserId}`,
+    url: `${process.env.REACT_APP_API}/messages/${authUserId}`,
   })
     .then((response) => {
       return response.data;
