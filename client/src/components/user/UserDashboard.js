@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Layout from "../core/Layout/Layout";
 import UserChat from "./UserChat";
-import { getMessagesByUser } from "../core/apiCore";
+import { getMessagesByToUser } from "../core/apiCore";
 
-const UserDashboard = ({ userId, token }) => {
+const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getMessagesByUser(userId, token)
+    getMessagesByToUser(authUserId, token)
       .then((msgs) => {
         setMessages(msgs);
         setUsers(getUniqueUsers(msgs));
@@ -33,14 +33,16 @@ const UserDashboard = ({ userId, token }) => {
   return (
     <Layout title="Dashboard" description="Manage your customer requests.">
       <Container>
-        <Row>
-          <Col xs={4}>
-            {users.map((usr) => (
-              <UserChat user={usr} key={usr._id} />
-            ))}
-          </Col>
-          <Col xs={8}>"PUT CHATS HERE"</Col>
-        </Row>
+        {users.map((usr) => (
+          <UserChat
+            fromUser={usr}
+            authUserId={authUserId}
+            token={token}
+            isAuthenticated={isAuthenticated}
+            key={usr._id}
+            messages={messages}
+          />
+        ))}
       </Container>
     </Layout>
   );

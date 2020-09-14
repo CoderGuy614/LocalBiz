@@ -26,7 +26,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
               />
             );
           } else {
-            return <Component userId={user._id} token={token} {...props} />;
+            return (
+              <Component
+                authUserId={user._id}
+                token={token}
+                isAuthenticated={isAuthenticated}
+                {...props}
+              />
+            );
           }
         }
       }}

@@ -232,14 +232,14 @@ export const createMessage = (bizId, itemId, userId, text, token) => {
     });
 };
 
-export const getMessagesByUser = (authUserId, token) => {
+export const getMessagesByToUser = (authUserId, token) => {
   return axios({
     method: "get",
     headers: {
       "Content-Type": "application/json",
       "X-Auth-Token": token,
     },
-    url: `${process.env.REACT_APP_API}/messages/${authUserId}`,
+    url: `${process.env.REACT_APP_API}/messages/to/${authUserId}`,
   })
     .then((response) => {
       return response.data;
