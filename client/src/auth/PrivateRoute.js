@@ -4,7 +4,7 @@ import AuthContext from "../context/auth/authContext";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const authContext = useContext(AuthContext);
-  const { loadUser, isAuthenticated } = authContext;
+  const { loadUser, user, token, isAuthenticated } = authContext;
 
   const [loading, setLoading] = useState(true);
 
@@ -26,7 +26,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
               />
             );
           } else {
-            return <Component {...props} />;
+            return <Component userId={user._id} token={token} {...props} />;
           }
         }
       }}

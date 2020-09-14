@@ -11,7 +11,7 @@ const Biz = ({ match }) => {
   const authContext = useContext(AuthContext);
   const { isAuthenticated, loadUser, token } = authContext;
   const authUser = authContext.user;
-  const { id } = match.params;
+  const { bizId } = match.params;
   const [authUserId, setAuthUserId] = useState("");
   const [business, setBusiness] = useState({});
   const [items, setItems] = useState([]);
@@ -22,7 +22,7 @@ const Biz = ({ match }) => {
   const [settingsUpdated, setSettingsUpdated] = useState(false);
   const [locationUpdated, setLocationUpdated] = useState(false);
   const loadBusiness = () => {
-    getBusiness(id).then((data) => {
+    getBusiness(bizId).then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
@@ -32,7 +32,7 @@ const Biz = ({ match }) => {
   };
 
   const loadItems = () => {
-    getItems(id).then((data) => {
+    getItems(bizId).then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
@@ -110,7 +110,9 @@ const Biz = ({ match }) => {
                     itemsUpdated={itemsUpdated}
                     setItemsUpdated={setItemsUpdated}
                     authUserId={authUserId}
+                    isAuthenticated={isAuthenticated}
                     bizOwner={user}
+                    bizId={bizId}
                   />
                 ))
               ) : (
@@ -128,7 +130,7 @@ const Biz = ({ match }) => {
         setShowAddModal={setShowAddModal}
         itemsUpdated={itemsUpdated}
         setItemsUpdated={setItemsUpdated}
-        bizId={id}
+        bizId={bizId}
         userId={authUserId}
         token={token}
       />

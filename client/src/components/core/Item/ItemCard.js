@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import ItemCardActions from "./ItemCardActions";
 import DeleteModal from "./DeleteModal";
 import EditModal from "./EditModal";
+import { createMessage } from "../apiCore";
 
 import {
   Row,
@@ -12,6 +12,7 @@ import {
   Tabs,
   Tab,
   Form,
+  Alert,
 } from "react-bootstrap";
 
 const ItemCard = ({
@@ -19,15 +20,34 @@ const ItemCard = ({
   itemsUpdated,
   setItemsUpdated,
   token,
+  bizId,
+  isAuthenticated,
   authUserId,
   bizOwner,
 }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [text, setText] = useState("");
 
   const translateBool = (bool) => {
     return bool ? "Yes" : "No";
   };
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleSendMessage = () => {
+    if (isAuthenticated && text.length > 0) {
+      const payload = { text };
+      createMessage(bizId, item._id, authUserId, payload, token)
+        .then((msg) => {
+          console.log("MESSAGE SENT", msg);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   const { name, description, photo, price, inStock, canDeliver, _id } = item;
 
   return (
@@ -67,14 +87,20 @@ const ItemCard = ({
         <Tabs defaultActiveKey="info" id="tab01" className="my-2">
           <Tab eventKey="info" title="Info">
             <ListGroup variant="flush">
-              <ListGroup.Item>Name: {name}</ListGroup.Item>
-              <ListGroup.Item>Description: {description}</ListGroup.Item>
-              <ListGroup.Item>Price: $ {price}</ListGroup.Item>
               <ListGroup.Item>
-                In Stock: {translateBool(inStock)}
+                <strong>Name:</strong> {name}
               </ListGroup.Item>
               <ListGroup.Item>
-                Delivery Available: {translateBool(canDeliver)}
+                <strong>Description:</strong> {description}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <strong>Price: $</strong> {price}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <strong>In Stock:</strong> {translateBool(inStock)}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <strong>Delivery Available:</strong> {translateBool(canDeliver)}
               </ListGroup.Item>
             </ListGroup>
           </Tab>
@@ -84,9 +110,19 @@ const ItemCard = ({
                 as="textarea"
                 rows="5"
                 placeholder="Enter a message..."
+                onChange={handleChange}
               />
             </Form.Group>
-            <Button className="btn-secondary btn-sm mb-2"> Send </Button>
+
+            <Button
+              disabled={!isAuthenticated || !text}
+              className="btn-secondary btn-sm mb-2"
+              onClick={handleSendMessage}
+            >
+              {isAuthenticated
+                ? "Send Message"
+                : "Please Login To Send Messages"}
+            </Button>
           </Tab>
         </Tabs>
       </Col>

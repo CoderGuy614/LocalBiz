@@ -213,3 +213,38 @@ export const deleteBiz = (bizId, userId, token) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const createMessage = (bizId, itemId, userId, text, token) => {
+  return axios({
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Auth-Token": token,
+    },
+    url: `${process.env.REACT_APP_API}/messages/create/${bizId}/${itemId}/${userId}`,
+    data: text,
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+export const getMessagesByUser = (authUserId, token) => {
+  return axios({
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Auth-Token": token,
+    },
+    url: `${process.env.REACT_APP_API}/messages/${authUserId}`,
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
