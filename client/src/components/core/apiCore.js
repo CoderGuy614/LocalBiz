@@ -232,7 +232,7 @@ export const createMessage = (bizId, itemId, userId, text, token) => {
     });
 };
 
-export const getMessagesByToUser = (authUserId, token) => {
+export const getMessagesByUser = (authUserId, token) => {
   return axios({
     method: "get",
     headers: {

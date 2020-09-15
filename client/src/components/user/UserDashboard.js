@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Layout from "../core/Layout/Layout";
 import UserChat from "./UserChat";
-import { getMessagesByToUser } from "../core/apiCore";
+import { getMessagesByUser } from "../core/apiCore";
 
 const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
   const [messages, setMessages] = useState([]);
@@ -10,7 +10,7 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getMessagesByToUser(authUserId, token)
+    getMessagesByUser(authUserId, token)
       .then((msgs) => {
         setMessages(msgs);
         setUsers(getUniqueUsers(msgs));
@@ -22,12 +22,12 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
     let uniqueUsers = [];
     let uniqueUserIds = [];
     messages.forEach((msg) => {
-      if (!uniqueUserIds.includes(msg.from._id)) {
+      if (!uniqueUserIds.includes(msg.from._id || msg.to._id)) {
         uniqueUsers.push(msg.from);
         uniqueUserIds.push(msg.from._id);
       }
     });
-    return uniqueUsers;
+    return uniqueUsers.filter((usr) => usr._id !== authUserId);
   };
 
   return (
@@ -35,7 +35,7 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
       <Container>
         {users.map((usr) => (
           <UserChat
-            fromUser={usr}
+            msgUser={usr}
             authUserId={authUserId}
             token={token}
             isAuthenticated={isAuthenticated}

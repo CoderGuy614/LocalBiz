@@ -4,7 +4,7 @@ import MessageListItem from "./MessageListItem";
 
 // Messages All from the same User
 const UserChat = ({
-  fromUser,
+  msgUser,
   authUserId,
   token,
   isAuthenticated,
@@ -37,25 +37,25 @@ const UserChat = ({
           <Row className="justify-content-center">
             <Image
               roundedCircle
-              src={fromUser.avatar}
+              src={msgUser.avatar}
               style={{ height: "75px" }}
             />
           </Row>
           <Row className="justify-content-center">
-            <h5 className="text-muted mt-1">{fromUser.name}</h5>
+            <h5 className="text-muted mt-1">{msgUser.name}</h5>
           </Row>
         </Container>
       </Col>
       <Col xs={8}>
         <ListGroup>
           {items.map((itm) => (
-            <ListGroup.Item>
+            <ListGroup.Item key={itm._id}>
               <MessageListItem
                 item={itm}
                 token={token}
                 messages={messages}
                 isAuthenticated={isAuthenticated}
-                fromUser={fromUser}
+                msgUser={msgUser}
                 authUserId={authUserId}
               />
             </ListGroup.Item>

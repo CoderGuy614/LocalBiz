@@ -21,7 +21,7 @@ const MessageListItem = ({
   token,
   messages,
   isAuthenticated,
-  fromUser,
+  msgUser,
   authUserId,
 }) => {
   const [text, setText] = useState("");
@@ -82,7 +82,7 @@ const MessageListItem = ({
             <MessageDisplay
               item={item}
               messages={messages}
-              fromUser={fromUser}
+              msgUser={msgUser}
               authUserId={authUserId}
             />
             <Form.Group>
