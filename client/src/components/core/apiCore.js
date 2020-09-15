@@ -214,14 +214,14 @@ export const deleteBiz = (bizId, userId, token) => {
     .catch((err) => console.log(err));
 };
 
-export const createMessage = (bizId, itemId, userId, text, token) => {
+export const createMessage = (itemId, fromUserId, toUserId, text, token) => {
   return axios({
     method: "post",
     headers: {
       "Content-Type": "application/json",
       "X-Auth-Token": token,
     },
-    url: `${process.env.REACT_APP_API}/messages/create/${bizId}/${itemId}/${userId}`,
+    url: `${process.env.REACT_APP_API}/messages/create/${itemId}/${fromUserId}/${toUserId}`,
     data: text,
   })
     .then((response) => {
@@ -233,6 +233,7 @@ export const createMessage = (bizId, itemId, userId, text, token) => {
 };
 
 export const getMessagesByUser = (authUserId, token) => {
+  console.log("FETCHING MESSAGES");
   return axios({
     method: "get",
     headers: {

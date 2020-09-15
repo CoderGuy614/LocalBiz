@@ -34,12 +34,10 @@ const MessageListItem = ({
     setText(e.target.value);
   };
 
-  const bizId = messages[0].biz._id;
-
   const handleSendMessage = () => {
     if (isAuthenticated && text.length > 0) {
       const payload = { text };
-      createMessage(bizId, item._id, authUserId, payload, token)
+      createMessage(item._id, authUserId, msgUser._id, payload, token)
         .then((msg) => {
           console.log("MESSAGE SENT", msg);
         })

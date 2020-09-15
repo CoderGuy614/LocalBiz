@@ -40,7 +40,7 @@ const ItemCard = ({
   const handleSendMessage = () => {
     if (isAuthenticated && text.length > 0) {
       const payload = { text };
-      createMessage(bizId, item._id, authUserId, payload, token)
+      createMessage(item._id, authUserId, bizOwner._id, payload, token)
         .then((msg) => {
           console.log("MESSAGE SENT", msg);
         })
