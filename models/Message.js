@@ -13,6 +13,11 @@ const MessageSchema = new Schema({
     ref: "user",
     required: [true, "to user is required"],
   },
+  biz: {
+    type: ObjectId,
+    ref: "biz",
+    required: [true, "biz is required"],
+  },
   item: {
     type: ObjectId,
     ref: "items",
