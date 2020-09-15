@@ -11,6 +11,7 @@ const UserChat = ({
   messages,
 }) => {
   const [items, setItems] = useState([]);
+  const [msgUserMe, setMsgUserMe] = useState(null);
 
   useEffect(() => {
     if (messages) {
@@ -22,13 +23,22 @@ const UserChat = ({
     let uniqueItems = [];
     let uniqueItemIds = [];
     messages.forEach((msg) => {
-      if (!uniqueItemIds.includes(msg.item._id)) {
+      if (
+        !uniqueItemIds.includes(msg.item._id) &&
+        (msg.from._id === msgUser._id || msg.to._id === msgUser._id)
+      ) {
         uniqueItems.push(msg.item);
         uniqueItemIds.push(msg.item._id);
       }
     });
     return uniqueItems;
   };
+
+  useEffect(() => {
+    if (msgUser._id == authUserId) {
+      setMsgUserMe(messages[0].to);
+    }
+  }, []);
 
   return (
     <Row>
@@ -37,12 +47,14 @@ const UserChat = ({
           <Row className="justify-content-center">
             <Image
               roundedCircle
-              src={msgUser.avatar}
+              src={msgUserMe ? msgUserMe.avatar : msgUser.avatar}
               style={{ height: "75px" }}
             />
           </Row>
           <Row className="justify-content-center">
-            <h5 className="text-muted mt-1">{msgUser.name}</h5>
+            <h5 className="text-muted mt-1">
+              {msgUserMe ? msgUserMe.name : msgUser.name}
+            </h5>
           </Row>
         </Container>
       </Col>

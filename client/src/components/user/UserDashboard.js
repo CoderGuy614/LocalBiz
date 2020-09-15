@@ -27,7 +27,8 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
         uniqueUserIds.push(msg.from._id);
       }
     });
-    return uniqueUsers.filter((usr) => usr._id !== authUserId);
+    return uniqueUsers;
+    // return uniqueUsers.filter((usr) => usr._id !== authUserId);
   };
 
   return (
