@@ -1,20 +1,18 @@
 const Message = require("../models/Message");
 
 exports.create = (req, res) => {
-  if (!req.profile || !req.biz || !req.item) {
+  const fromUserId = req.params.fromUserId;
+  const toUserId = req.params.toUserId;
+  const itemId = req.item._id;
+  const { text } = req.body;
+  if (!itemId || !fromUserId || !toUserId || !text) {
     return res
       .status(400)
       .json({ error: "Couldn't send your message. Please try again." });
   }
-  const fromUserId = req.profile._id;
-  const toUserId = req.biz.user._id;
-  const bizId = req.biz._id;
-  const itemId = req.item._id;
-  const { text } = req.body;
   let message = new Message({
     from: fromUserId,
     to: toUserId,
-    biz: bizId,
     item: itemId,
     text,
   });

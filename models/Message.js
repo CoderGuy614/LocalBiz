@@ -16,7 +16,6 @@ const MessageSchema = new Schema({
   biz: {
     type: ObjectId,
     ref: "biz",
-    required: [true, "biz is required"],
   },
   item: {
     type: ObjectId,

@@ -8,7 +8,7 @@ const { bizById } = require("../../controllers/biz");
 const { create, readByUser } = require("../../controllers/message");
 
 router.get("/messages/:userId", readByUser);
-router.post("/messages/create/:bizId/:itemId/:userId", create);
+router.post("/messages/create/:itemId/:fromUserId/:toUserId", create);
 
 router.param("userId", userById);
 router.param("itemId", itemById);

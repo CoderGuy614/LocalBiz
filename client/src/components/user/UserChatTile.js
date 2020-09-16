@@ -4,10 +4,10 @@ import { Container, Row, Col, Image, ListGroup } from "react-bootstrap";
 const UserChatTile = ({ selected, setSelected, msgUser }) => {
   return (
     <Container
-      onClick={() => setSelected(msgUser._id)}
+      onClick={() => setSelected(msgUser)}
       className={
         "border border-rounded p-1 " +
-        (selected === msgUser._id ? "bg-secondary" : "bg-primary")
+        (selected._id === msgUser._id ? "bg-secondary" : "bg-primary")
       }
     >
       <Row className="justify-content-center">
@@ -21,7 +21,8 @@ const UserChatTile = ({ selected, setSelected, msgUser }) => {
       <Row className="justify-content-center">
         <h6
           className={
-            (selected === msgUser._id ? "text-white " : "text-muted ") + "mt-2"
+            (selected._id === msgUser._id ? "text-white " : "text-muted ") +
+            "mt-2"
           }
         >
           {msgUser.name}

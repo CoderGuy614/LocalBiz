@@ -10,7 +10,7 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
   const [error, setError] = useState("");
   const [users, setUsers] = useState([]);
   const [msgUpdated, setMsgUpdated] = useState(false);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState({});
 
   useEffect(() => {
     getMessagesByUser(authUserId, token)
@@ -20,12 +20,6 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
       })
       .catch((err) => setError(err));
   }, [msgUpdated]);
-
-  // useEffect(() => {
-  //   if (users && users.length > 0) {
-  //     setSelected(users[0]._id);
-  //   }
-  // }, []);
 
   const filterMessages = (msgs, user1, user2) => {
     return msgs.filter(
@@ -57,7 +51,9 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
       }
     });
     // return uniqueUsers;
-    return uniqueUsers.filter((usr) => usr._id !== authUserId);
+    const result = uniqueUsers.filter((usr) => usr._id !== authUserId);
+    setSelected(result[0]);
+    return result;
   };
 
   return (
@@ -74,18 +70,15 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
           ))}
         </Col>
         <Col xs={8}>
-          {users.map((usr) => (
-            <UserChat2
-              msgUser={checkIfMe(authUserId, usr)}
-              authUserId={authUserId}
-              token={token}
-              isAuthenticated={isAuthenticated}
-              key={usr._id}
-              messages={filterMessages(messages, authUserId, usr._id)}
-              msgUpdated={msgUpdated}
-              setMsgUpdated={setMsgUpdated}
-            />
-          ))}
+          <UserChat2
+            msgUser={selected}
+            authUserId={authUserId}
+            token={token}
+            isAuthenticated={isAuthenticated}
+            messages={filterMessages(messages, authUserId, selected._id)}
+            msgUpdated={msgUpdated}
+            setMsgUpdated={setMsgUpdated}
+          />
         </Col>
       </Container>
     </Layout>
