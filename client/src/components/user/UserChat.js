@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, ListGroup } from "react-bootstrap";
+import { Row, ListGroup, Alert } from "react-bootstrap";
 import MessageListItem from "./MessageListItem";
 
 // Messages All from the same 2 user conversation
@@ -37,6 +37,12 @@ const UserChat = ({
 
   return (
     <Row>
+      {messages.length === 0 && (
+        <Alert className="w-100 text-center" variant="secondary">
+          <i className="fas fa-hand-point-left fa-2x mr-4"></i> Select a User
+          Chat
+        </Alert>
+      )}
       <ListGroup>
         {items.map((itm) => (
           <ListGroup.Item key={itm._id}>
