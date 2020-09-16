@@ -13,6 +13,7 @@ const UserChat = ({
   setMsgUpdated,
 }) => {
   const [items, setItems] = useState([]);
+  const [selected, setSelected] = useState(true);
 
   useEffect(() => {
     if (messages) {
@@ -38,16 +39,24 @@ const UserChat = ({
   return (
     <Row>
       <Col xs={4}>
-        <Container className="border border-rounded p-1">
+        <Container
+          className={
+            "border border-rounded p-1 " +
+            (selected ? "bg-secondary" : "bg-primary")
+          }
+        >
           <Row className="justify-content-center">
             <Image
               roundedCircle
               src={msgUser.avatar}
-              style={{ height: "75px" }}
+              className="mt-2"
+              style={{ height: "50px" }}
             />
           </Row>
           <Row className="justify-content-center">
-            <h5 className="text-muted mt-1">{msgUser.name}</h5>
+            <h6 className={(selected ? "text-white " : "text-muted ") + "mt-2"}>
+              {msgUser.name}
+            </h6>
           </Row>
         </Container>
       </Col>
