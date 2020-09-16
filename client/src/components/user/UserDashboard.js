@@ -43,17 +43,32 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
   const getUniqueUsers = (messages) => {
     let uniqueUsers = [];
     let uniqueUserIds = [];
+    //Checking for unique users that are not the authUser
     messages.forEach((msg) => {
-      if (!uniqueUserIds.includes(msg.from._id)) {
+      if (
+        !uniqueUserIds.includes(msg.from._id) &&
+        msg.from._id !== authUserId
+      ) {
         uniqueUsers.push(msg.from);
         uniqueUserIds.push(msg.from._id);
-      } else if (!uniqueUserIds.includes(msg.to._id)) {
+      } else if (
+        !uniqueUserIds.includes(msg.to._id) &&
+        msg.to._id !== authUserId
+      ) {
         uniqueUsers.push(msg.to);
         uniqueUserIds.push(msg.to._id);
       }
     });
-    // return uniqueUsers;
-    return uniqueUsers.filter((usr) => usr._id !== authUserId);
+    //Checking for condition of a 1st sent message by auth user
+    messages.forEach((msg) => {
+      if (msg.from._id === authUserId && !uniqueUserIds.includes(msg.to._id)) {
+        uniqueUsers.push(msg.to);
+        uniqueUserIds.push(msg.to._id);
+      }
+    });
+
+    return uniqueUsers;
+    // return uniqueUsers.filter((usr) => usr._id !== authUserId);
   };
 
   const showError = () => (
@@ -67,9 +82,9 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
 
   return (
     <Layout title="Message Center" description="View and respond to messages.">
-      <Container className="d-flex">
+      <Container fluid className="d-sm-flex mt-2">
         {showError()}
-        <Col xs={4}>
+        <Col xs={12} sm={3} med={2}>
           {users.map((usr, index) => (
             <UserChatTile
               key={usr._id}
@@ -80,7 +95,7 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
             />
           ))}
         </Col>
-        <Col xs={8}>
+        <Col xs={12} sm={9} med={10}>
           <UserChat
             msgUser={selected}
             authUserId={authUserId}

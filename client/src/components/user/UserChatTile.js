@@ -12,7 +12,7 @@ const UserChatTile = ({ selected, setSelected, msgUser, index }) => {
     <Container
       onClick={() => setSelected(msgUser)}
       className={
-        "border border-rounded p-1 " +
+        "mt-1 border border-rounded p-1 " +
         (selected._id === msgUser._id ? "bg-secondary" : "bg-primary")
       }
     >

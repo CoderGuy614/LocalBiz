@@ -36,7 +36,7 @@ const MessageDisplay = ({ item, messages, msgUser, authUserId }) => {
           <Image
             src={msg.from.avatar}
             roundedCircle
-            style={{ height: "15px" }}
+            style={{ height: "20px" }}
             className="ml-2"
           />
         </ListGroup.Item>

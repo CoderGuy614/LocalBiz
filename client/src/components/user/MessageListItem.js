@@ -94,13 +94,13 @@ const MessageListItem = ({
 
   return (
     <Row className="m-2 border rounded w-100">
-      <Col xs={4}>
+      <Col xs={12} sm={4} className="d-none d-sm-block">
         <Row className="d-flex">
           <Image className="m-2" src={photo} thumbnail fluid />
         </Row>
         <Row className="m-1 d-flex flex-nowrap"></Row>
       </Col>
-      <Col xs={8}>
+      <Col xs={12} sm={8}>
         <Tabs defaultActiveKey="messages" id="tab01" className="my-2">
           <Tab eventKey="info" title="Info">
             <ListGroup variant="flush">
