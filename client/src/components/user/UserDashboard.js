@@ -52,8 +52,8 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
         uniqueUserIds.push(msg.to._id);
       }
     });
-    return uniqueUsers;
-    // return uniqueUsers.filter((usr) => usr._id !== authUserId);
+    // return uniqueUsers;
+    return uniqueUsers.filter((usr) => usr._id !== authUserId);
   };
 
   const showError = () => (
@@ -63,6 +63,7 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
   );
 
   const filteredMessages = filterMessages(messages, authUserId, selected._id);
+  // const filteredUsers = checkIfMe(authUserId);
 
   return (
     <Layout title="Message Center" description="View and respond to messages.">
