@@ -8,6 +8,7 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
   const [users, setUsers] = useState([]);
+  const [msgUpdated, setMsgUpdated] = useState(false);
 
   useEffect(() => {
     getMessagesByUser(authUserId, token)
@@ -16,7 +17,7 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
         setUsers(getUniqueUsers(msgs));
       })
       .catch((err) => setError(err));
-  }, []);
+  }, [msgUpdated]);
 
   const filterMessages = (msgs, user1, user2) => {
     return msgs.filter(
@@ -62,6 +63,8 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
             isAuthenticated={isAuthenticated}
             key={usr._id}
             messages={filterMessages(messages, authUserId, usr._id)}
+            msgUpdated={msgUpdated}
+            setMsgUpdated={setMsgUpdated}
           />
         ))}
       </Container>

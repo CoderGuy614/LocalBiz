@@ -9,6 +9,8 @@ const UserChat = ({
   token,
   isAuthenticated,
   messages,
+  msgUpdated,
+  setMsgUpdated,
 }) => {
   const [items, setItems] = useState([]);
 
@@ -60,6 +62,8 @@ const UserChat = ({
                 isAuthenticated={isAuthenticated}
                 msgUser={msgUser}
                 authUserId={authUserId}
+                msgUpdated={msgUpdated}
+                setMsgUpdated={setMsgUpdated}
               />
             </ListGroup.Item>
           ))}
