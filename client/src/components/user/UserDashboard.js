@@ -7,43 +7,29 @@ import { getMessagesByUser } from "../core/apiCore";
 
 const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
   const [messages, setMessages] = useState([]);
-  const [filteredMessages, setFilteredMessage] = useState([]);
   const [error, setError] = useState("");
   const [users, setUsers] = useState([]);
   const [msgUpdated, setMsgUpdated] = useState(false);
   const [selected, setSelected] = useState({});
 
   useEffect(() => {
-    let rememberSelected;
-    if (selected) {
-      rememberSelected = selected;
-    }
     getMessagesByUser(authUserId, token)
       .then((msgs) => {
-        if (msgs.length === 0) {
-          return setError("No Messages to Show");
-        }
         setMessages(msgs);
-        setSelected(rememberSelected);
-        setUsers(getUniqueUsers(msgs, authUserId, selected._id));
-        setFilteredMessage(filterMessages(msgs));
+        setUsers(getUniqueUsers(msgs));
       })
       .catch((err) => {
-        console.log("CATCH ERROR", err);
+        console.log(err);
       });
   }, [msgUpdated]);
 
   const filterMessages = (msgs, user1, user2) => {
-    if (!msgs || msgs.length === 0) {
-      return [];
-    } else {
-      return msgs.filter(
-        (m) =>
-          (m.to._id === user1 && m.from._id === user2) ||
-          (m.from._id === user1 && m.to._id === user2) ||
-          user1 === user2
-      );
-    }
+    return msgs.filter(
+      (m) =>
+        (m.to._id === user1 && m.from._id === user2) ||
+        (m.from._id === user1 && m.to._id === user2) ||
+        user1 === user2
+    );
   };
 
   const checkIfMe = (authId, usr) => {
@@ -66,9 +52,8 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
         uniqueUserIds.push(msg.to._id);
       }
     });
-    const result = uniqueUsers.filter((usr) => usr._id !== authUserId);
-    setSelected(result[0]);
-    return result;
+    return uniqueUsers;
+    // return uniqueUsers.filter((usr) => usr._id !== authUserId);
   };
 
   const showError = () => (
@@ -77,14 +62,17 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
     </Alert>
   );
 
+  const filteredMessages = filterMessages(messages, authUserId, selected._id);
+
   return (
     <Layout title="Message Center" description="View and respond to messages.">
       <Container className="d-flex">
         {showError()}
         <Col xs={4}>
-          {users.map((usr) => (
+          {users.map((usr, index) => (
             <UserChatTile
               key={usr._id}
+              index={index}
               selected={selected}
               setSelected={setSelected}
               msgUser={checkIfMe(authUserId, usr)}

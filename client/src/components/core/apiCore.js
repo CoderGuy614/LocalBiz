@@ -233,7 +233,6 @@ export const createMessage = (itemId, fromUserId, toUserId, text, token) => {
 };
 
 export const getMessagesByUser = (authUserId, token) => {
-  console.log("FETCHING MESSAGES");
   return axios({
     method: "get",
     headers: {

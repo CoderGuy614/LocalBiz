@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Image } from "react-bootstrap";
 
-const UserChatTile = ({ selected, setSelected, msgUser }) => {
+const UserChatTile = ({ selected, setSelected, msgUser, index }) => {
+  useEffect(() => {
+    if (index === 0) {
+      setSelected(msgUser);
+    }
+  }, []);
+
   return (
     <Container
       onClick={() => setSelected(msgUser)}

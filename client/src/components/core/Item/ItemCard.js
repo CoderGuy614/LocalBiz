@@ -13,7 +13,9 @@ import {
   Tab,
   Form,
   Alert,
+  Spinner,
 } from "react-bootstrap";
+import { findLastIndex } from "lodash";
 
 const ItemCard = ({
   item,
@@ -27,6 +29,8 @@ const ItemCard = ({
 }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [text, setText] = useState("");
 
   const translateBool = (bool) => {
@@ -39,12 +43,50 @@ const ItemCard = ({
 
   const handleSendMessage = () => {
     if (isAuthenticated && text.length > 0) {
+      setLoading(true);
       const payload = { text };
       createMessage(item._id, authUserId, bizOwner._id, payload, token)
         .then((msg) => {
-          console.log("MESSAGE SENT", msg);
+          if (msg) {
+            setText("");
+            handleSuccess();
+            setLoading(false);
+          }
         })
         .catch((err) => console.log(err));
+    }
+  };
+
+  const handleSuccess = () => {
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 4000);
+  };
+
+  const showButtonSpinner = () => {
+    if (loading) {
+      return (
+        <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />
+      );
+    }
+  };
+
+  const setButtonText = () => {
+    if (!isAuthenticated) {
+      return "Please Login To Send Messages";
+    }
+    if (loading) {
+      return "";
+    }
+    if (success) {
+      return "Message Sent!";
+    } else {
+      return "Send";
     }
   };
 
@@ -110,18 +152,19 @@ const ItemCard = ({
                 as="textarea"
                 rows="5"
                 placeholder="Enter a message..."
+                value={text}
                 onChange={handleChange}
               />
             </Form.Group>
 
             <Button
-              disabled={!isAuthenticated || !text}
+              disabled={!isAuthenticated || !text || success}
               className="btn-secondary btn-sm mb-2"
+              variant={success ? "success" : "secondary"}
               onClick={handleSendMessage}
             >
-              {isAuthenticated
-                ? "Send Message"
-                : "Please Login To Send Messages"}
+              {showButtonSpinner()}
+              {setButtonText()}
             </Button>
           </Tab>
         </Tabs>

@@ -50,9 +50,6 @@ exports.readByUser = (req, res) => {
       if (err) {
         return res.status(400).json({ error: err });
       }
-      if (!messages || messages.length === 0) {
-        return res.status(400).json({ error: "No Messages Found" });
-      }
       return res.json(messages);
     });
 };
