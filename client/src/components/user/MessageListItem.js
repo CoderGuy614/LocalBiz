@@ -101,7 +101,7 @@ const MessageListItem = ({
         <Row className="m-1 d-flex flex-nowrap"></Row>
       </Col>
       <Col xs={8}>
-        <Tabs defaultActiveKey="info" id="tab01" className="my-2">
+        <Tabs defaultActiveKey="messages" id="tab01" className="my-2">
           <Tab eventKey="info" title="Info">
             <ListGroup variant="flush">
               <ListGroup.Item>
@@ -121,7 +121,7 @@ const MessageListItem = ({
               </ListGroup.Item>
             </ListGroup>
           </Tab>
-          <Tab eventKey="contact" title="Message History">
+          <Tab eventKey="messages" title="Message History">
             <MessageDisplay
               item={item}
               messages={messages}

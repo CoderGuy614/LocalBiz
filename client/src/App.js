@@ -13,7 +13,7 @@ import HoursForm from "./components/core//Biz/HoursForm";
 import AddBizForm from "./components/core/Biz/AddBizForm";
 
 import AdminDashboard from "./components/admin/AdminDashboard";
-import UserDashboard2 from "./components/user/UserDashboard2";
+import UserDashboard from "./components/user/UserDashboard";
 import LoginSuccess from "./components/auth/LoginSuccess";
 
 const App = () => {
@@ -36,7 +36,7 @@ const App = () => {
           <PrivateRoute
             exact
             path="/user/dashboard"
-            component={UserDashboard2}
+            component={UserDashboard}
           ></PrivateRoute>
           <Route
             path="/authenticate/facebook/"

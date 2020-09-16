@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Layout from "../core/Layout/Layout";
 import UserChat from "./UserChat";
+import UserChatTile from "./UserChatTile";
 import { getMessagesByUser } from "../core/apiCore";
 
 const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
@@ -9,12 +10,18 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
   const [error, setError] = useState("");
   const [users, setUsers] = useState([]);
   const [msgUpdated, setMsgUpdated] = useState(false);
+  const [selected, setSelected] = useState({});
 
   useEffect(() => {
+    let rememberSelected;
+    if (selected) {
+      rememberSelected = selected;
+    }
     getMessagesByUser(authUserId, token)
       .then((msgs) => {
         setMessages(msgs);
         setUsers(getUniqueUsers(msgs));
+        setSelected(rememberSelected);
       })
       .catch((err) => setError(err));
   }, [msgUpdated]);
@@ -49,24 +56,35 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
       }
     });
     // return uniqueUsers;
-    return uniqueUsers.filter((usr) => usr._id !== authUserId);
+    const result = uniqueUsers.filter((usr) => usr._id !== authUserId);
+    setSelected(result[0]);
+    return result;
   };
 
   return (
-    <Layout title="Dashboard" description="Manage your customer requests.">
-      <Container>
-        {users.map((usr) => (
+    <Layout title="Message Center" description="View and respond to messages.">
+      <Container className="d-flex">
+        <Col xs={4}>
+          {users.map((usr) => (
+            <UserChatTile
+              key={usr._id}
+              selected={selected}
+              setSelected={setSelected}
+              msgUser={checkIfMe(authUserId, usr)}
+            />
+          ))}
+        </Col>
+        <Col xs={8}>
           <UserChat
-            msgUser={checkIfMe(authUserId, usr)}
+            msgUser={selected}
             authUserId={authUserId}
             token={token}
             isAuthenticated={isAuthenticated}
-            key={usr._id}
-            messages={filterMessages(messages, authUserId, usr._id)}
+            messages={filterMessages(messages, authUserId, selected._id)}
             msgUpdated={msgUpdated}
             setMsgUpdated={setMsgUpdated}
           />
-        ))}
+        </Col>
       </Container>
     </Layout>
   );

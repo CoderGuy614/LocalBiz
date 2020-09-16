@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Image, ListGroup } from "react-bootstrap";
+import { Row, ListGroup } from "react-bootstrap";
 import MessageListItem from "./MessageListItem";
 
 // Messages All from the same 2 user conversation
@@ -13,7 +13,6 @@ const UserChat = ({
   setMsgUpdated,
 }) => {
   const [items, setItems] = useState([]);
-  const [selected, setSelected] = useState(true);
 
   useEffect(() => {
     if (messages) {
@@ -38,46 +37,22 @@ const UserChat = ({
 
   return (
     <Row>
-      <Col xs={4}>
-        <Container
-          className={
-            "border border-rounded p-1 " +
-            (selected ? "bg-secondary" : "bg-primary")
-          }
-        >
-          <Row className="justify-content-center">
-            <Image
-              roundedCircle
-              src={msgUser.avatar}
-              className="mt-2"
-              style={{ height: "50px" }}
+      <ListGroup>
+        {items.map((itm) => (
+          <ListGroup.Item key={itm._id}>
+            <MessageListItem
+              item={itm}
+              token={token}
+              messages={messages}
+              isAuthenticated={isAuthenticated}
+              msgUser={msgUser}
+              authUserId={authUserId}
+              msgUpdated={msgUpdated}
+              setMsgUpdated={setMsgUpdated}
             />
-          </Row>
-          <Row className="justify-content-center">
-            <h6 className={(selected ? "text-white " : "text-muted ") + "mt-2"}>
-              {msgUser.name}
-            </h6>
-          </Row>
-        </Container>
-      </Col>
-      <Col xs={8}>
-        <ListGroup>
-          {items.map((itm) => (
-            <ListGroup.Item key={itm._id}>
-              <MessageListItem
-                item={itm}
-                token={token}
-                messages={messages}
-                isAuthenticated={isAuthenticated}
-                msgUser={msgUser}
-                authUserId={authUserId}
-                msgUpdated={msgUpdated}
-                setMsgUpdated={setMsgUpdated}
-              />
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </Col>
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
     </Row>
   );
 };

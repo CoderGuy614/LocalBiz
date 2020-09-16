@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Image, ListGroup } from "react-bootstrap";
+import { Container, Row, Image } from "react-bootstrap";
 
 const UserChatTile = ({ selected, setSelected, msgUser }) => {
   return (
