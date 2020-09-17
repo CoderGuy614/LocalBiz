@@ -35,7 +35,7 @@ const App = () => {
           ></AdminRoute>
           <PrivateRoute
             exact
-            path="/user/dashboard"
+            path="/user/messages"
             component={UserDashboard}
           ></PrivateRoute>
           <Route

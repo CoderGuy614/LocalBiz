@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router-dom";
 import AuthContext from "../../../context/auth/authContext";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Image } from "react-bootstrap";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
@@ -27,10 +27,10 @@ const Navigation = ({ history }) => {
           </Nav.Link>
           {isAuthenticated && user.role === 0 && (
             <Nav.Link
-              href="/user/dashboard"
-              style={isActive(history, "/user/dashboard")}
+              href="/user/messages"
+              style={isActive(history, "/user/messages")}
             >
-              Dashboard
+              Messages
             </Nav.Link>
           )}
           {isAuthenticated && user.role === 1 && (
@@ -45,7 +45,13 @@ const Navigation = ({ history }) => {
         {isAuthenticated && (
           <Nav className="ml-auto">
             <Navbar.Brand className="text-white">
-              Welcome Back, {user.name}
+              Welcome, {user.name}
+              <Image
+                roundedCircle
+                className="ml-2"
+                style={{ height: "35px" }}
+                src={user.avatar}
+              />
             </Navbar.Brand>
             <Nav.Link
               onClick={() =>
