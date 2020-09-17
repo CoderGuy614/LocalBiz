@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, ListGroup, Image } from "react-bootstrap";
+import { Container, ListGroup, Image } from "react-bootstrap";
 
 const MessageDisplay = ({ item, messages, msgUser, authUserId }) => {
   const [filteredMessages, setFilteredMessages] = useState([]);
@@ -8,6 +8,7 @@ const MessageDisplay = ({ item, messages, msgUser, authUserId }) => {
     if (messages) {
       setFilteredMessages(filterMessages(messages));
     }
+    // eslint-disable-next-line
   }, [messages]);
 
   const filterMessages = (messages) => {
@@ -18,14 +19,6 @@ const MessageDisplay = ({ item, messages, msgUser, authUserId }) => {
       (msg) => msg.item._id === item._id
     );
     return filteredByItem;
-  };
-
-  const setJustify = (msg) => {
-    if (msg.from._id === msgUser._id) {
-      return "text-right";
-    } else {
-      return "text-left";
-    }
   };
 
   const setContent = (msg) => {

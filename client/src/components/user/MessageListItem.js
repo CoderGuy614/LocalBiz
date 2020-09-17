@@ -90,7 +90,13 @@ const MessageListItem = ({
     }
   };
 
-  const { name, description, photo, price, inStock, canDeliver, _id } = item;
+  const showError = () => (
+    <Alert variant="danger" style={{ display: error ? "" : "none" }}>
+      {error}
+    </Alert>
+  );
+
+  const { name, description, photo, price, inStock, canDeliver } = item;
 
   return (
     <Row className="m-2 border rounded w-100">
@@ -146,6 +152,7 @@ const MessageListItem = ({
               onClick={handleSendMessage}
             >
               {showButtonSpinner()}
+              {showError()}
               {setButtonText()}
             </Button>
           </Tab>

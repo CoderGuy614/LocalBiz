@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, ListGroup, Alert, Container } from "react-bootstrap";
+import { ListGroup, Alert, Container } from "react-bootstrap";
 import MessageListItem from "./MessageListItem";
 
 // Messages All from the same 2 user conversation
@@ -18,6 +18,7 @@ const UserChat = ({
     if (messages) {
       setItems(getUniqueItems(messages));
     }
+    //eslint-disable-next-line
   }, [messages]);
 
   const getUniqueItems = (messages) => {
@@ -26,7 +27,7 @@ const UserChat = ({
     messages.forEach((msg) => {
       if (
         !uniqueItemIds.includes(msg.item._id) &&
-        (msg.from._id == msgUser._id || msg.to._id == msgUser._id)
+        (msg.from._id === msgUser._id || msg.to._id === msgUser._id)
       ) {
         uniqueItems.push(msg.item);
         uniqueItemIds.push(msg.item._id);

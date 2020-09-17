@@ -6,6 +6,7 @@ const UserChatTile = ({ selected, setSelected, msgUser, index }) => {
     if (index === 0) {
       setSelected(msgUser);
     }
+    //eslint-disable-next-line
   }, []);
 
   return (

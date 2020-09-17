@@ -12,10 +12,8 @@ import {
   Tabs,
   Tab,
   Form,
-  Alert,
   Spinner,
 } from "react-bootstrap";
-import { findLastIndex } from "lodash";
 
 const ItemCard = ({
   item,

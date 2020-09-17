@@ -5,8 +5,7 @@ import AuthContext from "../../context/auth/authContext";
 
 const FBLogin = () => {
   const authContext = useContext(AuthContext);
-  const { register, login, loading, isAuthenticated } = authContext;
-  const [error, setError] = useState("");
+  const { register, login } = authContext;
   const [user, setUser] = useState(null);
   const handleResponse = (data) => {
     if (data) {
@@ -14,7 +13,7 @@ const FBLogin = () => {
     }
   };
   const handleError = (error) => {
-    setError({ error });
+    console.log(error);
   };
 
   useEffect(() => {
@@ -30,10 +29,8 @@ const FBLogin = () => {
       `${process.env.REACT_APP_API}/checkExisting?email=${email}`
     );
     if (!isExisting.data) {
-      console.log("NEW  USER SIGNED UP");
       signupNewFacebookUser();
     } else {
-      console.log("USER EXISTS", isExisting.data.user);
       login({ email: user.email, password: user.id });
       return isExisting;
     }

@@ -20,7 +20,6 @@ const BizSidebar = ({
   setLocationUpdated,
 }) => {
   const {
-    rating,
     hours,
     lat,
     lng,

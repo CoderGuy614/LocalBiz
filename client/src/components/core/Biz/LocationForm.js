@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GoogleMap from "google-map-react";
-import { Container, Row, Col, Button, Alert } from "react-bootstrap";
+import { Container, Row, Button, Alert } from "react-bootstrap";
 import Loading from "../Layout/Loading";
 import { getBusiness, updateLocation } from "../apiCore";
 
@@ -64,10 +64,8 @@ const LocationForm = ({
     zoom: 14,
   };
 
-  const latLng = [lat, lng];
-
   const handleApiLoaded = (map, maps) => {
-    const currentMarker = new maps.Marker({
+    new maps.Marker({
       map: map,
       position: location,
       draggable: false,

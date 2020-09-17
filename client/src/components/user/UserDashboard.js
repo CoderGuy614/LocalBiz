@@ -19,8 +19,9 @@ const UserDashboard = ({ authUserId, token, isAuthenticated }) => {
         setUsers(getUniqueUsers(msgs));
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       });
+    //eslint-disable-next-line
   }, [msgUpdated]);
 
   const filterMessages = (msgs, user1, user2) => {
