@@ -26,12 +26,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(cors());
-app.use("/api", userRoutes);
-app.use("/api", authRoutes);
-app.use("/api", categoryRoutes);
-app.use("/api", itemRoutes);
-app.use("/api", bizRoutes);
-app.use("/api", messageRoutes);
+app.use("/", userRoutes);
+app.use("/", authRoutes);
+app.use("/", categoryRoutes);
+app.use("/", itemRoutes);
+app.use("/", bizRoutes);
+app.use("/", messageRoutes);
 
 // Serve static assets in production
 
