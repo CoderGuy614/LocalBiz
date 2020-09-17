@@ -23,21 +23,13 @@ const Biz = ({ match }) => {
   const [locationUpdated, setLocationUpdated] = useState(false);
   const loadBusiness = () => {
     getBusiness(bizId).then((data) => {
-      if (data.error) {
-        setError(data.error);
-      } else {
-        setBusiness(data);
-      }
+      setBusiness(data);
     });
   };
 
   const loadItems = () => {
     getItems(bizId).then((data) => {
-      if (data.error) {
-        setError(data.error);
-      } else {
-        setItems(data);
-      }
+      setItems(data);
     });
   };
 
