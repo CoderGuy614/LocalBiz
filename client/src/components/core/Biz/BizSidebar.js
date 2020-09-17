@@ -36,7 +36,7 @@ const BizSidebar = ({
 
   const map = {
     key: {
-      key: `${process.env.REACT_APP_MAP_KEY}`,
+      key: `AIzaSyAM9aUfuBQ4zyOslHgtv5uvVzhcRYsjeew`,
     },
     center: { lat, lng },
     zoom: 14,
