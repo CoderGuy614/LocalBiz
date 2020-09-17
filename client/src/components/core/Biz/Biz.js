@@ -101,7 +101,7 @@ const Biz = ({ match }) => {
             )}
 
             <Row className="d-flex justify-content-center">
-              {items.length > 0 ? (
+              {items && items.length > 0 ? (
                 items.map((item) => (
                   <ItemCard
                     key={item._id}
