@@ -31,7 +31,7 @@ const BizListCard = ({ biz }) => {
               style={{ height: "100%", paddingTop: "10px" }}
               block
               variant="secondary"
-              href={`/biz/${_id}`}
+              href={`/${_id}`}
             >
               <i className="fas fa-store-alt fa-2x"></i>
               <br />
