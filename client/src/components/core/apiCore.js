@@ -108,21 +108,21 @@ export const updateHours = (hours, bizId, userId, token) => {
     });
 };
 
-export const getCurrentLocation = (token) => {
-  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-  const googleUrl = `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.REACT_APP_GEOLOCATION_API_KEY}`;
-  return axios({
-    method: "post",
-    headers: { "X-Auth-Token": token },
-    url: papiroxyUrl + googleUrl,
-  })
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      return err.response.data;
-    });
-};
+// export const getCurrentLocation = (token) => {
+//   const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+//   const googleUrl = `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.REACT_APP_GEOLOCATION_API_KEY}`;
+//   return axios({
+//     method: "post",
+//     headers: { "X-Auth-Token": token },
+//     url: proxyUrl + googleUrl,
+//   })
+//     .then((response) => {
+//       return response.data;
+//     })
+//     .catch((err) => {
+//       return err.response.data;
+//     });
+// };
 
 export const updateLocation = (location, bizId, userId, token) => {
   return axios({
