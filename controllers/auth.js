@@ -8,7 +8,7 @@ const gravatar = require("gravatar");
 exports.signup = async (req, res) => {
   let { name, email, password, fbSignup, avatar } = req.body;
   try {
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
 
     // See if the user exists already
     if (user && user.fbSignup === true) {
