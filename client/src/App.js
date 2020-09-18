@@ -21,13 +21,13 @@ const App = () => {
     <AuthState>
       <BrowserRouter>
         <Navigation />
+        <Route exact path="/" component={Shop}></Route>
         <Switch>
-          <Route exact path="/" component={Shop}></Route>
+          <Route exact path="/signup" component={Signup}></Route>
+          <Route exact path="/login" component={Login}></Route>
           <Route exact path="/biz/:bizId" component={Biz}></Route>
           <Route exact path="/post/biz" component={AddBizForm}></Route>
           <Route exact path="/post/hours/:bizId" component={HoursForm}></Route>
-          <Route exact path="/signup" component={Signup}></Route>
-          <Route exact path="/login" component={Login}></Route>
           <AdminRoute
             exact
             path="/admin/dashboard"
