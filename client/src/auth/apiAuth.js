@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const signup = (user) => {
-  return fetch(`api/signup`, {
+  return fetch(`${process.env.REACT_APP_API_URL}/signup`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -21,7 +21,7 @@ export const signin = (user) => {
   return axios({
     method: "post",
     headers: { "Content-Type": "application/json" },
-    url: `api/signin`,
+    url: `${process.env.REACT_APP_API_URL}/signin`,
     data: JSON.stringify(user),
   })
     .then((response) => {
@@ -59,7 +59,7 @@ export const isAuthenticated = () => {
 export const logout = () => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");
-    return fetch(`api/signout`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/signout`, {
       method: "POST",
     })
       .then((response) => {

@@ -3,7 +3,7 @@ import axios from "axios";
 export const getBusinesses = (bizCat) => {
   return axios({
     method: "get",
-    url: `api/biz/list?category=${bizCat}`,
+    url: `${process.env.REACT_APP_API_URL}/biz/list?category=${bizCat}`,
   })
     .then((response) => {
       return response.data;
@@ -16,7 +16,7 @@ export const getBusinesses = (bizCat) => {
 export const getBusiness = (id) => {
   return axios({
     method: "get",
-    url: `api/biz/${id}`,
+    url: `${process.env.REACT_APP_API_URL}/biz/${id}`,
   })
     .then((response) => {
       return response.data;
@@ -29,7 +29,7 @@ export const getBusiness = (id) => {
 export const getItems = (bizId) => {
   return axios({
     method: "get",
-    url: `api/items/${bizId}`,
+    url: `${process.env.REACT_APP_API_URL}/items/${bizId}`,
   })
     .then((response) => {
       return response.data;
@@ -42,7 +42,7 @@ export const getItems = (bizId) => {
 export const getItem = (itemId) => {
   return axios({
     method: "get",
-    url: `api/item/${itemId}`,
+    url: `${process.env.REACT_APP_API_URL}/item/${itemId}`,
   })
     .then((response) => {
       return response.data;
@@ -55,7 +55,7 @@ export const getItem = (itemId) => {
 export const getCategories = () => {
   return axios({
     method: "get",
-    url: `api/categories/list`,
+    url: `${process.env.REACT_APP_API_URL}/categories/list`,
   })
     .then((response) => {
       return response.data;
@@ -67,7 +67,7 @@ export const createItem = (item, userId, token) => {
   return axios({
     method: "post",
     headers: { "Content-Type": "application/json", "X-Auth-Token": token },
-    url: `api/item/create/${userId}`,
+    url: `${process.env.REACT_APP_API_URL}/item/create/${userId}`,
     data: item,
   })
     .then((response) => {
@@ -82,7 +82,7 @@ export const updateItem = (itemId, userId, item, token) => {
   return axios({
     method: "put",
     headers: { "Content-Type": "application/json", "X-Auth-Token": token },
-    url: `api/item/update/${itemId}/${userId}`,
+    url: `${process.env.REACT_APP_API_URL}/item/update/${itemId}/${userId}`,
     data: item,
   })
     .then((response) => {
@@ -97,7 +97,7 @@ export const updateHours = (hours, bizId, userId, token) => {
   return axios({
     method: "put",
     headers: { "Content-Type": "application/json", "X-Auth-Token": token },
-    url: `api/biz/hours/${bizId}/${userId}`,
+    url: `${process.env.REACT_APP_API_URL}/biz/hours/${bizId}/${userId}`,
     data: JSON.stringify(hours),
   })
     .then((response) => {
@@ -128,7 +128,7 @@ export const updateLocation = (location, bizId, userId, token) => {
   return axios({
     method: "put",
     headers: { "Content-Type": "application/json", "X-Auth-Token": token },
-    url: `api/biz/location/${bizId}/${userId}`,
+    url: `${process.env.REACT_APP_API_URL}/biz/location/${bizId}/${userId}`,
     data: JSON.stringify(location),
   })
     .then((response) => {
@@ -142,7 +142,7 @@ export const updateLocation = (location, bizId, userId, token) => {
 export const getHours = (bizId) => {
   return axios({
     method: "get",
-    url: `api/biz/hours/${bizId}`,
+    url: `${process.env.REACT_APP_API_URL}/biz/hours/${bizId}`,
   })
     .then((response) => {
       return response.data;
@@ -156,7 +156,7 @@ export const deleteItem = (itemId, userId, token) => {
     headers: {
       "X-Auth-Token": token,
     },
-    url: `api/item/delete/${itemId}/${userId}`,
+    url: `${process.env.REACT_APP_API_URL}/item/delete/${itemId}/${userId}`,
   })
     .then((response) => {
       return response.data;
@@ -171,7 +171,7 @@ export const createBiz = (biz, userId, token) => {
       "Content-Type": "application/json",
       "X-Auth-Token": token,
     },
-    url: `api/biz/create/${userId}`,
+    url: `${process.env.REACT_APP_API_URL}/biz/create/${userId}`,
     data: biz,
   })
     .then((response) => {
@@ -189,7 +189,7 @@ export const updateBiz = (biz, bizId, userId, token) => {
       "Content-Type": "application/json",
       "X-Auth-Token": token,
     },
-    url: `api/biz/update/${bizId}/${userId}`,
+    url: `${process.env.REACT_APP_API_URL}/biz/update/${bizId}/${userId}`,
     data: biz,
   })
     .then((response) => {
@@ -203,7 +203,7 @@ export const updateBiz = (biz, bizId, userId, token) => {
 export const deleteBiz = (bizId, userId, token) => {
   return axios({
     method: "delete",
-    url: `api/biz/${bizId}/${userId}`,
+    url: `${process.env.REACT_APP_API_URL}/biz/${bizId}/${userId}`,
     headers: {
       "X-Auth-Token": token,
     },
@@ -221,7 +221,7 @@ export const createMessage = (itemId, fromUserId, toUserId, text, token) => {
       "Content-Type": "application/json",
       "X-Auth-Token": token,
     },
-    url: `api/messages/create/${itemId}/${fromUserId}/${toUserId}`,
+    url: `${process.env.REACT_APP_API_URL}/messages/create/${itemId}/${fromUserId}/${toUserId}`,
     data: text,
   })
     .then((response) => {
@@ -239,7 +239,7 @@ export const getMessagesByUser = (authUserId, token) => {
       "Content-Type": "application/json",
       "X-Auth-Token": token,
     },
-    url: `api/messages/${authUserId}`,
+    url: `${process.env.REACT_APP_API_URL}/messages/${authUserId}`,
   })
     .then((response) => {
       return response.data;

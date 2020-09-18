@@ -26,7 +26,7 @@ const FBLogin = () => {
   //Checks if the user has already signed up before, if not it adds them to the DB with their FB account info.
   const checkExisting = async (email) => {
     const isExisting = await axios.get(
-      `${process.env.REACT_APP_API}/checkExisting?email=${email}`
+      `${process.env.REACT_APP_API_URL}/checkExisting?email=${email}`
     );
     if (!isExisting.data) {
       signupNewFacebookUser();
