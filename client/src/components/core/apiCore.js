@@ -16,7 +16,7 @@ export const getBusinesses = (bizCat) => {
 export const getBusiness = (id) => {
   return axios({
     method: "get",
-    url: `api/biz/${id}`,
+    url: `/biz/api/biz/${id}`,
   })
     .then((response) => {
       return response.data;
@@ -29,7 +29,7 @@ export const getBusiness = (id) => {
 export const getItems = (bizId) => {
   return axios({
     method: "get",
-    url: `api/items/${bizId}`,
+    url: `/biz/api/items/${bizId}`,
   })
     .then((response) => {
       return response.data;
