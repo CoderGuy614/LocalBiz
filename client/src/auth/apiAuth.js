@@ -1,19 +1,17 @@
 import axios from "axios";
 
 export const signup = (user) => {
-  return fetch(`/api/signup`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
+  return axios({
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    url: `/api/signup`,
+    data: JSON.stringify(user),
   })
     .then((response) => {
-      return response.json();
+      return response.data;
     })
     .catch((err) => {
-      console.log(err);
+      return err.response.data;
     });
 };
 
@@ -59,12 +57,15 @@ export const isAuthenticated = () => {
 export const logout = () => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");
-    return fetch(`/api/signout`, {
-      method: "POST",
+    return axios({
+      method: "post",
+      url: `/api/signout`,
     })
       .then((response) => {
-        return response.json();
+        return response.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        return err.response.data;
+      });
   }
 };
