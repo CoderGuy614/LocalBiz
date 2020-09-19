@@ -17,7 +17,7 @@ const BizListCard = ({ biz }) => {
           <MDBBadge pill color={category.color}>
             {category.name}
           </MDBBadge>
-          <StarRating rating={rating} />
+          {/* <StarRating rating={rating} /> */}
         </div>
 
         <Card.Text style={{ height: "100px" }}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Jumbotron } from "react-bootstrap";
+import { Jumbotron, Image } from "react-bootstrap";
 import MiniUserProfile from "./MiniUserProfile";
 
 const Layout = ({
@@ -20,7 +20,14 @@ const Layout = ({
             {user && <MiniUserProfile user={user} />}
           </div>
           <div className="ml-auto">
-            {photo && <img style={{ maxWidth: "150px" }} src={photo} alt="" />}
+            {photo && (
+              <Image
+                fluid
+                src={photo}
+                style={{ maxWidth: "150px" }}
+                className="d-none d-sm-block"
+              />
+            )}
           </div>
         </div>
       </Jumbotron>
