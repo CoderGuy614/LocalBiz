@@ -8,10 +8,12 @@ const FBLogin = () => {
   const { register, login } = authContext;
   const [user, setUser] = useState(null);
   const handleResponse = (data) => {
-    if (data) {
+    console.log(data);
+    if (data.profile) {
       setUser(data.profile);
     }
   };
+
   const handleError = (error) => {
     console.log(error);
   };
@@ -42,9 +44,7 @@ const FBLogin = () => {
     const email = user.email;
     const avatar = user.picture.data.url;
     const fbSignup = true;
-    register({ name, email, password, fbSignup, avatar }).then((response) => {
-      console.log("SIGNUP RESPONSE", response);
-    });
+    register({ name, email, password, fbSignup, avatar });
   };
 
   return (
