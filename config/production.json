@@ -1,5 +1,5 @@
 {
-  "mongoURI": "mongodb+srv://jlutz110:Mongoloid99$@jonnylutzdata.bgylllk.mongodb.net/",
+  "mongoURI": "mongodb+srv://jlutz110:<pw>@jonnylutzdata.bgylllk.mongodb.net/",
   "jwtSecret": "secret",
   "CLOUDINARY_CLOUD_NAME": "deduwxk82",
   "CLOUDINARY_API_KEY": "235169449299162",
