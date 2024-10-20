@@ -12,7 +12,7 @@ exports.categoryById = (req, res, next, id) => {
     next();
   });
 };
-
+   
 exports.create = (req, res) => {
   const category = new Category(req.body);
   category.save((err, data) => {
@@ -30,9 +30,6 @@ exports.read = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  console.log("req.body", req.body);
-  console.log("category update param", req.params.categoryId);
-
   const category = req.category;
   category.name = req.body.name;
   category.save((err, data) => {
