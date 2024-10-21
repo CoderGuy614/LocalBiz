@@ -110,10 +110,10 @@ const Shop = () => {
   return (
     <Layout
       title="LocalBiz"
-      description="Browse Local Businesses in Siem Reap, Cambodia."
-      photo={
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Flag_of_Cambodia.svg/1200px-Flag_of_Cambodia.svg.png"
-      }
+      description="Browse Local Businesses"
+      // photo={
+      //   "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Flag_of_Cambodia.svg/1200px-Flag_of_Cambodia.svg.png"
+      // }
     >
       <Container fluid>
         <Filters categories={categories} setBizCat={setBizCat} />

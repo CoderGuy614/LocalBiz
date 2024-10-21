@@ -151,7 +151,7 @@ const Signup = () => {
                     Continue
                   </Button>
                 </Form.Row>
-                <FBLogin />
+                {/* <FBLogin /> */}
               </Form>
             )}
           </Formik>

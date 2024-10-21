@@ -93,9 +93,9 @@ const Login = () => {
           </Col>
         </Row>
         <Row className="mt-4">
-          <Col md={{ span: 6, offset: 3 }}>
+          {/* <Col md={{ span: 6, offset: 3 }}>
             <FBLogin />
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </Layout>

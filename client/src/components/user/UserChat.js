@@ -25,6 +25,7 @@ const UserChat = ({
     let uniqueItems = [];
     let uniqueItemIds = [];
     messages.forEach((msg) => {
+      if(!msg.item) return [];
       if (
         !uniqueItemIds.includes(msg.item._id) &&
         (msg.from._id === msgUser._id || msg.to._id === msgUser._id)
