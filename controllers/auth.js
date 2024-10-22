@@ -50,7 +50,7 @@ exports.signup = async (req, res) => {
     //   if (err) throw err;
     //   res.json({ token, user: newUser });
     // });
-    const token = jwt.sign({ _id: newUser._id }, config.get("jwtSecret"));
+    const token = jwt.sign({ _id: newUser._id }, process.env.jwtSecret);
     // const { _id, name, email, role } = newUser;
     return res.json({ token, user: newUser });
   } catch (err) {
@@ -83,7 +83,7 @@ exports.signin = (req, res) => {
       });
     }
     // generate a signed token with user id and secret
-    let token = jwt.sign({ _id: user._id }, config.get("jwtSecret"));
+    let token = jwt.sign({ _id: user._id }, process.env.jwtSecret)
     // persist the token as 't' in cookie with expiry date
     res.cookie("t", token, { expire: new Date() + 99999999 });
     // return response with user and token to frontend client
