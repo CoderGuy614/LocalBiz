@@ -5,7 +5,9 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const functions = require('firebase-functions');
 require("dotenv").config();
+
 
 const authRoutes = require("./routes/api/auth");
 const userRoutes = require("./routes/api/users");
@@ -46,3 +48,5 @@ if (process.env.NODE_ENV === "production") {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`The server is running on ${PORT}`));
+
+exports.api = functions.https.onRequest(app);
