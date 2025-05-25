@@ -1,0 +1,22 @@
+{
+    "providers": {
+      "awscloudformation": {
+        "AuthRoleName": "amplify-localbiz-dev-123456-authRole",
+        "UnauthRoleArn": "arn:aws:iam::123456789012:role/amplify-localbiz-dev-123456-unauthRole",
+        "AuthRoleArn": "arn:aws:iam::123456789012:role/amplify-localbiz-dev-123456-authRole",
+        "Region": "us-east-1",
+        "DeploymentBucketName": "amplify-localbiz-dev-123456-deployment",
+        "UnauthRoleName": "amplify-localbiz-dev-123456-unauthRole",
+        "StackName": "amplify-localbiz-dev-123456",
+        "StackId": "arn:aws:cloudformation:us-east-1:123456789012:stack/amplify-localbiz-dev-123456/abcdef"
+      }
+    },
+    "hosting": {
+      "amplifyhosting": {
+        "service": "amplifyhosting",
+        "type": "cicd",
+        "lastPushTimeStamp": "2023-01-01T00:00:00.000Z"
+      }
+    }
+  }
+  
