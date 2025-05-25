@@ -1,16 +1,18 @@
 version: 1
-applications:
-  - frontend:
-      phases:
-        preBuild:
-          commands:
-            - npm install
-            - npm install --prefix client
-        build:
-          commands:
-            - npm run heroku-postbuild
-      artifacts:
-        baseDirectory: client/build
-        files:
-          - '**/*'
-    appRoot: /
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+        - npm install --prefix client
+    build:
+      commands:
+        - npm run heroku-postbuild
+  artifacts:
+    baseDirectory: client/build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - client/node_modules/**/*
