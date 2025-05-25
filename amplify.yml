@@ -1,22 +1,12 @@
 version: 1
-backend:
-  phases:
-    build:
-      commands:
-        - npm install
-        - npm install --prefix client
-  artifacts:
-    baseDirectory: /
-    files:
-      - '**/*'
 frontend:
   phases:
     preBuild:
       commands:
-        - cd client && npm install
+        - npm install
     build:
       commands:
-        - cd client && npm run build
+        - npm run heroku-postbuild
   artifacts:
     baseDirectory: client/build
     files:
