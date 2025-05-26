@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.scss";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AuthState from "./context/auth/AuthState";

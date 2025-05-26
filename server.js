@@ -28,12 +28,11 @@ app.use(cookieParser());
 
 
 app.use(cors({
-  origin: true, // This allows all origins
+  origin: true,
   credentials: false
 }));
 
 app.use(cors(corsOptions));
-// app.options('*', cors(corsOptions));
 
 
 app.use("/api", userRoutes);
