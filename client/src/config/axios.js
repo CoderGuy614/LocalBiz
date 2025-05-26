@@ -5,7 +5,7 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://r5wa3jwp5s.us-east-1.awsapprunner.com';
 
 // Enable credentials for cross-origin requests
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 
 // Add default headers
 axios.defaults.headers.common['Content-Type'] = 'application/json';
