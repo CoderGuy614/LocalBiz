@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import * as queryString from "query-string";
 import { signup } from "../../auth/apiAuth";
-import axios from "axios";
+import axios from '../../config/axios';
+
 
 const LoginSuccess = () => {
   const [user, setUser] = useState(null);

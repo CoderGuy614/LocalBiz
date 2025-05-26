@@ -1,5 +1,5 @@
 const express = require("express");
-const connectDB = require("./config/db");
+const connectDB = require("./config/db"); 
 const path = require("path");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -26,7 +26,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(cors());
+// Update CORS to allow your frontend URL
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://master.d28l3w9jtysc89.amplifyapp.com'], 
+  credentials: true
+}));
+
 app.use("/api", userRoutes);
 app.use("/api", authRoutes);
 app.use("/api", categoryRoutes);
@@ -35,7 +40,6 @@ app.use("/api", bizRoutes);
 app.use("/api", messageRoutes);
 
 // Serve static assets in production
-
 if (process.env.NODE_ENV === "production") {
   // Set static folder
   app.use(express.static("client/build"));

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FacebookProvider, LoginButton } from "react-facebook";
-import axios from "axios";
+import axios from '../../config/axios';
+
 import AuthContext from "../../context/auth/authContext";
 
 const FBLogin = () => {

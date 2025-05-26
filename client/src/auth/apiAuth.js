@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios from '../config/axios';
+
 
 export const signup = (user) => {
   return axios({

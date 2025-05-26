@@ -23,7 +23,7 @@
     "react-facebook": "^8.1.4",
     "react-moment": "^0.9.7",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "3.4.3",
     "react-tooltip": "^4.2.9",
     "sass": "^1.80.3",
     "semantic-ui-react": "^1.2.1",
@@ -51,8 +51,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000",
-  "devDependencies": {
-    "babel-jest": "^24.9.0"
-  }
+  "proxy": "http://localhost:5000"
 }
