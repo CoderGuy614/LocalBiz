@@ -1,3 +1,5 @@
+// Set config directory path
+process.env.NODE_CONFIG_DIR = __dirname + '/localbiz-backend/config';
 const express = require("express");
 const connectDB = require("./localbiz-backend/config/db"); 
 const path = require("path");
@@ -31,8 +33,6 @@ app.use(cors({
   origin: true,
   credentials: false
 }));
-
-app.use(cors(corsOptions));
 
 
 app.use("/api", userRoutes);
