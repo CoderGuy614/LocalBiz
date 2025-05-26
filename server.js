@@ -1,5 +1,5 @@
 const express = require("express");
-const connectDB = require("./config/db"); 
+const connectDB = require("./localbiz-backend/config/db"); 
 const path = require("path");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -8,12 +8,12 @@ const cors = require("cors");
 require("dotenv").config();
 
 
-const authRoutes = require("./routes/api/auth");
-const userRoutes = require("./routes/api/users");
-const categoryRoutes = require("./routes/api/categories");
-const itemRoutes = require("./routes/api/items");
-const bizRoutes = require("./routes/api/biz");
-const messageRoutes = require("./routes/api/messages");
+const authRoutes = require("./localbiz-backend/routes/api/auth");
+const userRoutes = require("./localbiz-backend/routes/api/users");
+const categoryRoutes = require("./localbiz-backend/routes/api/categories");
+const itemRoutes = require("./localbiz-backend/routes/api/items");
+const bizRoutes = require("./localbiz-backend/routes/api/biz");
+const messageRoutes = require("./localbiz-backend/routes/api/messages");
 
 const app = express();
 
@@ -27,10 +27,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Update CORS to allow your frontend URL
+// In your backend server.js file
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://master.d28l3w9jtysc89.amplifyapp.com'], 
+  origin: [
+    'http://localhost:3000', 
+    'https://master.d28l3w9jtysc89.amplifyapp.com',
+    'https://d28l3w9jtysc89.amplifyapp.com' 
+  ],
   credentials: true
 }));
+app.options('*', cors());
 
 app.use("/api", userRoutes);
 app.use("/api", authRoutes);
