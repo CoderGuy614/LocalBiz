@@ -1,68 +1,87 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# LocalBiz Frontend
 
-## Available Scripts
+Frontend client for the LocalBiz application, a platform connecting users with local businesses and their products/services.
 
-In the project directory, you can run:
+## Technologies
 
-### `yarn start`
+- React
+- React Router
+- Axios
+- Bootstrap/SCSS
+- Context API for state management
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- User authentication (signup, login, logout)
+- Business listings with filtering options
+- Business profiles with hours, location, and contact information
+- Product/service listings for each business
+- User messaging system
+- Interactive maps for business locations
+- Responsive design for mobile and desktop
 
-### `yarn test`
+## Setup
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository
+   ```
+   git clone https://github.com/yourusername/localbiz-client.git
+   cd localbiz-client
+   ```
 
-### `yarn build`
+2. Install dependencies
+   ```
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Set up environment variables
+   Create a `.env` file in the root directory with:
+   ```
+   REACT_APP_API_URL=https://r5wa3jwp5s.us-east-1.awsapprunner.com
+   REACT_APP_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+   ```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+4. Run the development server
+   ```
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+5. Build for production
+   ```
+   npm run build
+   ```
 
-### `yarn eject`
+## Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- `/src/components/` - React components
+  - `/core/` - Core components (Layout, Navigation, etc.)
+  - `/auth/` - Authentication components
+  - `/user/` - User dashboard components
+  - `/admin/` - Admin components
+- `/src/context/` - Context API for state management
+- `/src/auth/` - Authentication utilities
+- `/src/scss/` - SCSS styles
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## API Integration
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The frontend connects to the LocalBiz backend API. API base URL configuration is in `src/config/axios.js`.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Deployment
 
-## Learn More
+This frontend is deployed on AWS Amplify at:
+https://master.d28l3w9jtysc89.amplifyapp.com
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Development
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To run both frontend and backend concurrently (from root directory):
 
-### Code Splitting
+```
+npm run dev
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Contributing
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
