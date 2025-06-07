@@ -41,7 +41,7 @@ const Signup = () => {
 
   return (
     <Layout
-      title="Sign Up with Email or Facebook"
+      title="Sign Up with Email"
       description="Registered users can post a store and items to sell, leave ratings and comments, and more."
     >
       <Container className="d-flex justify-content-center my-4">

@@ -31,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <Layout title="Login" description="Sign In with Email or Facebook">
+    <Layout title="Login" description="Sign In with Email">
       <Container>
         <Loading loading={loading} />
         {redirectUser()}
